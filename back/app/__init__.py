@@ -1,0 +1,2 @@
+"""Aplicacao RAG do TitasBot."""
+

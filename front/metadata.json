@@ -1,0 +1,5 @@
+{
+  "name": "TitãsBot",
+  "description": "Chatbot da equipe Titãs da Robótica do IFES Colatina, utilizando RAG para responder perguntas com base em um livro de iniciação científica e exibir imagens.",
+  "requestFramePermissions": []
+}

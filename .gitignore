@@ -1,0 +1,31 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env/secrets
+.env
+*.env
+!*.env.example
+
+# Backend local runtime artifacts
+back/.runtime_chroma_db/
+back/*.sqlite3
+back/*.sqlite3-journal
+
+# Frontend
+front/node_modules/
+front/dist/
+
+# Logs/temp
+*.log
+*.tmp
