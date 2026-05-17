@@ -115,7 +115,11 @@ def is_fact_question(question: str) -> bool:
 
 def is_list_question(question: str) -> bool:
     q = normalize_text(question)
-    return any(h in q for h in ("lista", "listar", "quais", "nomes", "todos os", "todos as"))
+    return any(h in q for h in (
+        "lista", "listar", "quais", "nomes", "todos os", "todas as",
+        "classificacao", "classificacoes", "resultado", "resultados",
+        "premio", "premios", "medalha", "medalhas", "podio", "podios"
+    ))
 
 
 def should_expand_query(question: str) -> bool:
@@ -185,26 +189,39 @@ def conversational_intent(question: str) -> str:
     if not q:
         return "none"
 
-    if any(k in q for k in ("bom dia", "boa tarde", "boa noite", "oi", "ola", "olá")):
-        return "greeting"
-    if any(k in q for k in ("obrigad", "valeu")):
-        return "thanks"
-    if any(k in q for k in ("tchau", "falou")):
-        return "bye"
-    if any(k in q for k in ("que legal", "legal", "bacana", "massa", "top", "show", "entendi")):
-        return "ack"
+    num_words = len(q.split())
+
+    # 1. INTENÇÕES SOCIAIS (Travadas para frases curtas de até 4 ou 5 palavras)
+    if num_words <= 5:
+        if re.search(r'\b(bom dia|boa tarde|boa noite|oi|ola|olá)\b', q):
+            return "greeting"
+        if re.search(r'\b(obrigad[oa]|valeu|agradecid[oa])\b', q):
+            return "thanks"
+        if re.search(r'\b(tchau|falou|adeus|ate mais)\b', q):
+            return "bye"
+        if re.search(r'\b(que legal|legal|bacana|massa|top|show|entendi)\b', q):
+            return "ack"
+
+    # Confirmações exatas (1 ou 2 palavras no máximo)
     if q in {"sim", "nao", "não", "ok", "perfeito", "certo", "blz", "beleza"}:
         return "confirm_short"
-    if any(k in q for k in ("continue", "pode seguir", "segue", "continue nisso", "aprofunde")):
-        return "continue"
-    if any(k in q for k in ("resuma", "resume", "resumir", "resumo")):
-        return "summarize"
-    if any(k in q for k in ("em topicos", "em tópicos", "em lista", "em tabela")):
-        return "reformat"
-    if any(k in q for k in ("mais curto", "mais resumido", "objetivo")):
-        return "shorter"
-    if any(k in q for k in ("mais detalhado", "detalhe mais", "aprofunda mais")):
-        return "detailed"
-    if any(k in q for k in ("novo assunto", "mudar assunto", "limpar contexto", "zera contexto")):
-        return "reset_context"
+
+    # 2. COMANDOS DE FORMATAÇÃO E CONTINUIDADE
+    # (Travados para frases de até 6 palavras. Se for maior que isso, é pergunta de conteúdo!)
+    if num_words <= 6:
+        if re.search(r'\b(continue|pode seguir|segue|continue nisso|aprofunde)\b', q):
+            return "continue"
+        # Trocado "resuma/resume" solto por algo mais restrito
+        if re.search(r'\b(resuma|me de um resumo|faz um resumo|resume isso)\b', q):
+            return "summarize"
+        if re.search(r'\b(em topicos|em tópicos|em lista|em tabela|formato de lista)\b', q):
+            return "reformat"
+        # Trocado o "objetivo" solto
+        if re.search(r'\b(mais curto|mais resumido|seja objetivo|mais direto|forma objetiva)\b', q):
+            return "shorter"
+        if re.search(r'\b(mais detalhado|detalhe mais|aprofunda mais|com mais detalhes)\b', q):
+            return "detailed"
+        if re.search(r'\b(novo assunto|mudar assunto|limpar contexto|zera contexto)\b', q):
+            return "reset_context"
+
     return "none"

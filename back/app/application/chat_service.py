@@ -414,22 +414,24 @@ class TitasBotService:
     @staticmethod
     def _social_response(question: str, previous_answer: str | None = None) -> str:
         q = normalize_text(question)
-        if "bom dia" in q:
+
+        if re.search(r'\b(bom dia)\b', q):
             return "Bom dia! Pode mandar sua pergunta sobre os Titãs da Robótica."
-        if "boa tarde" in q:
+        if re.search(r'\b(boa tarde)\b', q):
             return "Boa tarde! Estou pronto para te ajudar com as informações da equipe."
-        if "boa noite" in q:
+        if re.search(r'\b(boa noite)\b', q):
             return "Boa noite! Pode perguntar que eu te ajudo com a base dos Titãs da Robótica."
-        if any(k in q for k in ("obrigad", "valeu")):
+        if re.search(r'\b(obrigad[oa]|valeu)\b', q):
             return "De nada! Se quiser, posso aprofundar qualquer ponto ou trazer a resposta em formato de lista."
-        if any(k in q for k in ("tchau", "falou")):
+        if re.search(r'\b(tchau|falou)\b', q):
             return "Até mais! Quando quiser, é só voltar com outra pergunta sobre os Titãs da Robótica."
-        if any(k in q for k in ("oi", "ola", "olá")):
+        if re.search(r'\b(oi|ola|olá)\b', q):
             return "Oi! Pode mandar sua pergunta sobre a equipe Titãs da Robótica."
-        if any(k in q for k in ("entendi", "que legal", "legal", "bacana", "massa", "top", "show")):
+        if re.search(r'\b(entendi|que legal|legal|bacana|massa|top|show)\b', q):
             if previous_answer:
                 return "Que bom! Se quiser, eu também posso detalhar isso por ano, categoria ou participantes."
             return "Que bom! Pode mandar a próxima pergunta e eu continuo te ajudando."
+
         return "Perfeito. Se quiser, posso continuar e aprofundar o próximo ponto."
 
     def _conversational_response(
