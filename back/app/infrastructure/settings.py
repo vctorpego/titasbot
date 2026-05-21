@@ -39,9 +39,8 @@ def get_settings() -> Settings:
         base_dir = default_base_dir
 
     local_base = os.getenv("CHROMA_BASE_DIR") or os.getenv("TEMP") or os.getenv("LOCALAPPDATA") or os.path.expanduser("~")
-    chroma_db_path = Path(
-        os.getenv("CHROMA_DB_PATH", str(Path(local_base) / "chatbot_chroma_db"))
-    )
+    chroma_db_env = os.getenv("CHROMA_DB_PATH")
+    chroma_db_path = Path(chroma_db_env) if chroma_db_env else Path(local_base) / "chatbot_chroma_db"
     keywords_raw = os.getenv("TABLE_PDF_KEYWORDS", "tabela,tabelas,podio,podios,lista,cadastro")
     table_pdf_keywords = tuple(k.strip().lower() for k in keywords_raw.split(",") if k.strip())
 

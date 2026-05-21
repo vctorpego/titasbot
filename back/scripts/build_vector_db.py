@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-from pathlib import Path
-
-from dotenv import load_dotenv
-
+from app.infrastructure.env import load_project_env
 from app.infrastructure.ingestion import IndexingInterrupted, build_vector_db
 from app.infrastructure.net_env import clear_broken_local_proxy
 from app.infrastructure.settings import get_settings
@@ -11,8 +8,7 @@ from app.infrastructure.settings import get_settings
 
 def main() -> None:
     clear_broken_local_proxy()
-    env_path = Path(__file__).resolve().parents[1] / ".env"
-    load_dotenv(dotenv_path=env_path)
+    load_project_env()
     settings = get_settings()
 
     print(f"Base PDF: {settings.base_dir}")

@@ -9,7 +9,7 @@ from typing import Dict, List, Tuple
 from langchain_chroma.vectorstores import Chroma
 
 from app.infrastructure.settings import Settings
-from app.infrastructure.text_utils import extract_terms, tokenize
+from app.infrastructure.text_utils import extract_terms, normalize_text, tokenize
 
 
 @dataclass
@@ -140,6 +140,7 @@ class HybridRetriever:
         q_tokens = tokenize(question)
         q_numeric_tokens = {t for t in q_tokens if t.isdigit()}
         question_norm = question.lower()
+        question_match_norm = normalize_text(question)
         list_intent = any(k in question_norm for k in ["lista", "listar", "quais", "todos os", "nomes"])
         student_list_intent = list_intent and any(k in question_norm for k in ["aluno", "alunos", "estudante", "estudantes", "integrante", "integrantes"])
         competition_intent = any(k in question_norm for k in ["compet", "podio", "colocacao", "classificacao", "torneio"])
@@ -188,12 +189,21 @@ class HybridRetriever:
         max_bm25 = max(v["bm25_raw"] for v in merged.values()) or 1.0
         ranked: List[RetrievedChunk] = []
         for entry in merged.values():
-            content_tokens = tokenize(entry["content"][:1500])
+            content = entry["content"]
+            content_norm = normalize_text(content[:2000])
+            content_tokens = tokenize(content[:1500])
             vector_score = max(0.0, min(1.0, entry["vector_score"]))
             bm25_score = entry["bm25_raw"] / max_bm25
 
             coverage = (len(q_tokens & content_tokens) / len(q_tokens)) if q_tokens else 0.0
             numeric_hit = 1.0 if (q_numeric_tokens and (q_numeric_tokens & content_tokens)) else 0.0
+            content_numeric_tokens = {t for t in content_tokens if t.isdigit()}
+            year_adjust = 0.0
+            if q_numeric_tokens:
+                if numeric_hit:
+                    year_adjust += 0.22
+                elif content_numeric_tokens:
+                    year_adjust -= 0.18
             doc_kind = str(entry.get("doc_kind", "context"))
 
             intent_boost = 0.0
@@ -201,8 +211,13 @@ class HybridRetriever:
                 intent_boost += 0.12
             if student_list_intent and doc_kind == "table":
                 intent_boost += 0.16
-            if student_list_intent and any(k in entry["content"].lower() for k in ["aluno", "alunos", "estudante", "integrante", "cadastro", "equipe administrativa"]):
+            if student_list_intent and any(k in content_norm for k in ["aluno", "alunos", "estudante", "integrante", "cadastro", "equipe administrativa"]):
                 intent_boost += 0.12
+            if student_list_intent:
+                for team in ("futebol 2d", "cospace", "drone", "osorin", "pratica", "sek", "teorica"):
+                    if team in question_match_norm and team in content_norm:
+                        intent_boost += 0.18
+                        break
             if competition_intent and doc_kind == "table":
                 intent_boost += 0.08
             if context_intent and doc_kind == "context":
@@ -215,6 +230,7 @@ class HybridRetriever:
                 + 0.15 * coverage
                 + 0.05 * numeric_hit
                 + intent_boost
+                + year_adjust
             )
 
             ranked.append(

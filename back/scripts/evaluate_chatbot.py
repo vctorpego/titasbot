@@ -6,9 +6,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
-
 from app.application.chat_service import TitasBotService
+from app.infrastructure.env import load_project_env
 from app.infrastructure.net_env import clear_broken_local_proxy
 from app.infrastructure.settings import get_settings
 from app.infrastructure.text_utils import normalize_text
@@ -77,8 +76,7 @@ def _check_case(answer: str, case: dict[str, Any]) -> tuple[bool, float, list[st
 
 def main() -> None:
     clear_broken_local_proxy()
-    env_path = Path(__file__).resolve().parents[1] / ".env"
-    load_dotenv(dotenv_path=env_path)
+    load_project_env()
     settings = get_settings()
     bot = TitasBotService(settings)
 

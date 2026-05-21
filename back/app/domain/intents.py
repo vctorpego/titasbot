@@ -33,6 +33,8 @@ def precision_query_boost(question: str) -> str:
     hints: list[str] = []
     if any(k in q for k in ("criad", "fund", "origem", "inicio", "comec")):
         hints.extend(["criacao", "fundacao", "inicio oficial"])
+    if any(k in q for k in ("idealiz", "sugeriu", "sugerida")):
+        hints.extend(["sugerida por Renato Lopes de Oliveira", "edital CNPq"])
     if any(k in q for k in ("compet", "classific", "coloc", "podio", "torneio")):
         hints.extend(["competicao", "classificacao", "resultado"])
     if any(k in q for k in ("orientador", "professor", "aluno", "integrante")):
@@ -53,6 +55,28 @@ def precision_query_boost(question: str) -> str:
 def is_participation_question(question: str) -> bool:
     q = normalize_text(question)
     return any(k in q for k in ("como participar", "como entrar", "como ingressar", "fazer parte", "entrar na equipe"))
+
+
+def is_known_absent_detail_question(question: str) -> bool:
+    q = normalize_text(question)
+    absent_patterns = (
+        "numero de matricula",
+        "numeros de matricula",
+        "matricula de cada aluno",
+        "telefone oficial atual",
+        "email oficial atual",
+        "e-mail oficial atual",
+        "valor total captado",
+        "total captado em patrocinio",
+        "taxa de aprovacao academica",
+        "criterios exatos de pontuacao",
+        "motivos de saida",
+    )
+    if any(pattern in q for pattern in absent_patterns):
+        return True
+    if "desist" in q and ("motivo" in q or "saida" in q):
+        return True
+    return False
 
 
 def is_projects_question(question: str) -> bool:

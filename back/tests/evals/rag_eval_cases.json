@@ -1,0 +1,402 @@
+[
+  {
+    "id": "origem_primeiro_nome",
+    "category": "historia",
+    "input": "Qual era o primeiro nome da equipe Titãs da Robótica?",
+    "expected_output": "O primeiro nome da equipe foi Asimov.",
+    "must_contain": ["Asimov"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "origem_ano_criacao",
+    "category": "historia",
+    "input": "Em que ano a equipe foi criada?",
+    "expected_output": "O início oficial da equipe de robótica Asimov ocorreu em 2015.",
+    "must_contain": ["2015"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "origem_idealizador",
+    "category": "historia",
+    "input": "Quem idealizou a criação da equipe?",
+    "expected_output": "A ideia da criação da equipe foi sugerida por Renato Lopes de Oliveira.",
+    "must_contain": ["Renato Lopes de Oliveira"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"]
+  },
+  {
+    "id": "resultado_2015",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2015?",
+    "expected_output": "Em 2015, a equipe Asimov conquistou 1° lugar na TRUFES Regional na modalidade SEK e 3° lugar na LARC Internacional na modalidade SEK.",
+    "must_contain": ["SEK", "1", "TRUFES", "3", "LARC"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2021",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2021?",
+    "expected_output": "Em 2021, a equipe obteve 2° lugar em Futebol 2D na IRONCUP Nacional e medalha de bronze na modalidade Teórica da OBR Nacional.",
+    "must_contain": ["Futebol 2D", "2", "IRONCUP", "Teórica", "Bronze"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2022",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2022?",
+    "expected_output": "Em 2022, a equipe teve 2° lugar em Futebol 2D na IRONCUP Nacional, 1° lugar em Prática na OBR Regional, 12° lugar em Prática na OBR Nacional, 3° lugar em SEK na CBR Nacional, medalha de bronze e medalha de prata na Teórica da OBR Nacional.",
+    "must_contain": ["Futebol 2D", "IRONCUP", "Prática", "OBR", "SEK", "CBR"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2023",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2023?",
+    "expected_output": "Em 2023, a equipe conquistou 1° lugar em Prática na OBR Regional, 1° lugar em Prática na OBR Nacional e 1° lugar em SEK na CBR Nacional.",
+    "must_contain": ["Prática", "OBR", "SEK", "CBR", "1"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2024",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2024?",
+    "expected_output": "Em 2024, a equipe teve 2° lugar em Futebol 2D na CBR Nacional, 3° lugar em Futebol 2D na IRONCUP Nacional, 1° e 3° lugares em Prática na OBR Regional, 6° lugar em Prática na OBR Nacional, 5° lugar em RoboCup Rescue no Mundial, 1° lugar em SEK na CBR Nacional e honra ao mérito na Teórica da OBR Nacional.",
+    "must_contain": ["Futebol 2D", "CBR", "IRONCUP", "Prática", "RoboCup Rescue", "5", "SEK"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2025",
+    "category": "resultados",
+    "input": "Quais foram os resultados da temporada de 2025 por categoria?",
+    "expected_output": "Em 2025, a equipe teve resultados como Futebol 2D 1° lugar na CBR Nacional e 6° lugar na RoboCup Mundial, Prática 1° e 2° lugar na OBR Regional e 2° lugar na OBR Nacional, Rescue Line 19° lugar na RoboCup Mundial, SuperTeam 1° lugar na RoboCup Mundial e na CBR Nacional, Challenge 1° lugar na CBR Nacional e Teórica com medalha de ouro na OBR Nacional.",
+    "must_contain": ["Futebol 2D", "Challenge", "SuperTeam", "Rescue Line", "Teórica", "ouro"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "mundial_2024",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe no Mundial em 2024?",
+    "expected_output": "No Mundial RoboCup de 2024, a equipe alcançou o 5° lugar na categoria RoboCup Rescue.",
+    "must_contain": ["2024", "5", "RoboCup Rescue"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "patrocinadores_lista",
+    "category": "patrocinadores",
+    "input": "Liste os patrocinadores da equipe.",
+    "expected_output": "A lista de patrocinadores inclui Apex Partners Gestão de Ativos, Basis Tecnologia da Informação, Fábrica de Esquadrias Galon, Frisa, FULLTECH, Im Digital, Imagination Media, Matriz Sistemas, Metalosa Indústria Metalúrgica, Moveedu Cursos Profissionalizantes, Seek Informática, SIAD, SmartIrriga e Vixteam Consultoria & Sistemas.",
+    "must_contain": ["Apex Partners", "Basis", "Frisa", "Vixteam", "SIAD"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "projeto_escudos_faciais",
+    "category": "projetos",
+    "input": "O que foi o projeto de escudos faciais?",
+    "expected_output": "Durante a pandemia de COVID-19, o Ifes Campus Colatina produziu e distribuiu escudos faciais por impressão 3D para proteger profissionais de saúde e trabalhadores de serviços essenciais, em parceria com a Ufes e órgãos de saúde.",
+    "must_contain": ["escudos faciais", "COVID", "impressão 3D", "Ufes"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"]
+  },
+  {
+    "id": "projeto_videolaringoscopio",
+    "category": "projetos",
+    "input": "O que foi o projeto do videolaringoscópio?",
+    "expected_output": "O projeto do videolaringoscópio 3D foi uma ação de extensão na pandemia de COVID-19, liderada pelo professor Ricardo Tedesco, para produzir dispositivos de baixo custo que ajudassem na intubação segura de pacientes em ventilação mecânica.",
+    "must_contain": ["videolaringoscópio", "Ricardo Tedesco", "baixo custo", "COVID"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"]
+  },
+  {
+    "id": "projeto_osorin",
+    "category": "projetos",
+    "input": "O que é o projeto OSORIN?",
+    "expected_output": "OSORIN é uma plataforma robótica móvel para ensino de ROS e SLAM, construída com arquitetura aberta, peças impressas em 3D, microcontroladores, sensores e motores, com recursos como mapeamento, navegação e detecção de objetos.",
+    "must_contain": ["OSORIN", "ROS", "SLAM"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"]
+  },
+  {
+    "id": "alunos_futebol_2d_2021",
+    "category": "integrantes",
+    "input": "Liste os alunos da equipe de Futebol 2D em 2021.",
+    "expected_output": "Os alunos da equipe Futebol 2D em 2021 foram Amanda Ferreira Merelis, Jean Pandolfi, Lucas Boeloni Rodrigues da Rocha, Mateus Padovan Pereira e Mikael Botassi de Oliveira.",
+    "must_contain": ["Amanda Ferreira Merelis", "Jean Pandolfi", "Lucas Boeloni Rodrigues da Rocha", "Mateus Padovan Pereira", "Mikael Botassi de Oliveira"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "alunos_sek_2021",
+    "category": "integrantes",
+    "input": "Liste os alunos da equipe SEK em 2021.",
+    "expected_output": "Os alunos da equipe SEK em 2021 foram Alisson Luiz de Souza Vighini, Arthur Cardoso Neitzel, Luiz Fernando Martinelli Zorzanelli e Priscila Fabrete Candido.",
+    "must_contain": ["Alisson Luiz de Souza Vighini", "Arthur Cardoso Neitzel", "Luiz Fernando Martinelli Zorzanelli", "Priscila Fabrete Candido"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "fora_escopo_2026",
+    "category": "fora_de_escopo",
+    "input": "Quais competições os Titãs da Robótica disputaram em 2026?",
+    "expected_output": "A base atual não contém dados confiáveis sobre competições disputadas em 2026.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "fora_escopo_telefone",
+    "category": "fora_de_escopo",
+    "input": "Qual é o telefone oficial atual de contato da equipe?",
+    "expected_output": "A base atual não contém telefone oficial atual de contato da equipe.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "fora_escopo_valor_patrocinio",
+    "category": "fora_de_escopo",
+    "input": "Qual é o valor total captado em patrocínio pela equipe desde a criação?",
+    "expected_output": "A base atual não contém o valor total captado em patrocínio pela equipe desde a criação.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "resultado_2016",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2016?",
+    "expected_output": "Em 2016, a equipe Asimov teve Futebol 2D em 1° lugar na LARC Internacional, Prática em 1° lugar na OBR Regional e 30° lugar na OBR Nacional, SEK em 1° lugar na LARC Internacional, 1° e 2° lugares na TRUFES Regional, e Teórica com medalha de bronze na OBR Nacional.",
+    "must_contain": ["Futebol 2D", "LARC", "Prática", "30", "SEK", "TRUFES", "Bronze"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2017",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2017?",
+    "expected_output": "Em 2017, a equipe Asimov conquistou 1° lugar em CoSpace na LARC, 1° lugar em Futebol 2D na IRONCUP e na LARC, 1° lugar em Humanoide na LARC, 8° lugar em Prática na OBR Regional, 8° lugar em Seguidor de Linha na IRONCUP, 2° e 3° lugares em SEK na TRUFES, 4° lugar em SEK na LARC e medalha de bronze na Teórica da OBR Nacional.",
+    "must_contain": ["CoSpace", "Futebol 2D", "Humanoide", "Seguidor de Linha", "SEK", "Teórica"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2018",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2018?",
+    "expected_output": "Em 2018, a equipe Asimov teve 2° lugar em CoSpace na LARC Internacional, 1° lugar em Futebol 2D na LARC Nacional, 2° lugar em Futebol 2D na IRONCUP Internacional, 3° lugar em Prática na OBR Regional, 10° lugar em Seguidor de Linha na IRONCUP Nacional, 1° e 2° lugares em SEK na TRUFES Regional e medalha de bronze na Teórica da OBR Nacional.",
+    "must_contain": ["CoSpace", "Futebol 2D", "IRONCUP", "Prática", "Seguidor de Linha", "SEK"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2019",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2019?",
+    "expected_output": "Em 2019, a equipe Titãs da Robótica teve 2° lugar em CoSpace na LARC Internacional, 3° lugar em Futebol 2D na IRONCUP Nacional e na LARC Internacional, 2° lugar em Prática na OBR Regional, 42° lugar em Prática na OBR Nacional, 12° lugar em RoboCup Soccer no Mundial, 1° lugar em SEK na LARC Internacional, 2° lugar em SEK na TRUFES Regional e medalhas de bronze e prata na Teórica da OBR Nacional.",
+    "must_contain": ["CoSpace", "Futebol 2D", "RoboCup Soccer", "SEK", "Bronze", "Prata"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "resultado_2020",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe na temporada de 2020?",
+    "expected_output": "Em 2020, a equipe Titãs da Robótica conquistou 1° lugar em Futebol 2D na IRONCUP Nacional, 1° lugar em Futebol 2D na CBR Nacional, 1° lugar em Futebol 2D na TRUFES Regional, 14° lugar em Seguidor de Linha na IRONCUP Nacional e 2° lugar em SEK na CBR Nacional.",
+    "must_contain": ["Futebol 2D", "IRONCUP", "CBR", "TRUFES", "Seguidor de Linha", "SEK"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "categorias_2024",
+    "category": "categorias",
+    "input": "Quais categorias a equipe disputou em 2024?",
+    "expected_output": "Em 2024, as categorias/modalidades registradas incluem Futebol 2D, Prática, RoboCup Rescue, SEK e Teórica.",
+    "must_contain": ["Futebol 2D", "Prática", "RoboCup Rescue", "SEK", "Teórica"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "categorias_2025",
+    "category": "categorias",
+    "input": "Quais categorias a equipe disputou em 2025?",
+    "expected_output": "Em 2025, as categorias/modalidades registradas incluem Futebol 2D, Prática, Rescue Line, SuperTeam, Challenge e Teórica.",
+    "must_contain": ["Futebol 2D", "Prática", "Rescue Line", "SuperTeam", "Challenge", "Teórica"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "orientadores_2015",
+    "category": "orientadores",
+    "input": "Quem foram os orientadores da equipe em 2015?",
+    "expected_output": "Em 2015, os orientadores da equipe Asimov foram Igor Carlos Pulini e Renan Osório Rios, ambos ligados à equipe SEK.",
+    "must_contain": ["Igor Carlos Pulini", "Renan Osório Rios"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "orientadores_2021",
+    "category": "orientadores",
+    "input": "Quem foram os orientadores da equipe em 2021?",
+    "expected_output": "Em 2021, os orientadores listados incluem Joanita Araújo Espanhol, Jean Eduardo Glazar, Igor Carlos Pulini, Renan Osório Rios, Giovany Frossard Teixeira, Ailton Souza Duarte, Alextian Bartholomeu Liberato, Ricardo Tedesco da Silva, Julio César Goldner Vendramini e Dione Souza Albuquerque de Lima.",
+    "must_contain": ["Joanita Araújo Espanhol", "Igor Carlos Pulini", "Renan Osório Rios", "Giovany Frossard Teixeira", "Ricardo Tedesco da Silva"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "orientadores_2024",
+    "category": "orientadores",
+    "input": "Quem foram os orientadores da equipe em 2024?",
+    "expected_output": "Em 2024, os orientadores listados foram Gustavo Ludovico Guidoni, Giovany Frossard Teixeira, Eduardo Max Amaro Amaral, Ricardo Tedesco da Silva, Julio César Goldner Vendramini, Igor Carlos Pulini, Renan Osório Rios e Allan Fernandes Balardino.",
+    "must_contain": ["Gustavo Ludovico Guidoni", "Giovany Frossard Teixeira", "Eduardo Max Amaro Amaral", "Allan Fernandes Balardino"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "orientadores_total_historico",
+    "category": "orientadores",
+    "input": "Quantos orientadores diferentes já passaram pela equipe no total?",
+    "expected_output": "Ao todo, 19 orientadores colaboraram com a equipe ao longo de sua história.",
+    "must_contain": ["19", "orientadores"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "campeonatos_lista",
+    "category": "competicoes",
+    "input": "Liste todos os campeonatos em que a equipe já participou.",
+    "expected_output": "Os campeonatos citados na base incluem TRUFES, LARC, IRONCUP, OBR, CBR e RoboCup.",
+    "must_contain": ["TRUFES", "LARC", "IRONCUP", "OBR", "CBR", "RoboCup"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "mundial_anos",
+    "category": "competicoes",
+    "input": "Em quais anos a equipe participou do Mundial RoboCup?",
+    "expected_output": "A base registra participações no Mundial RoboCup em 2019, 2024 e 2025.",
+    "must_contain": ["2019", "2024", "2025"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "mundial_2019",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe no Mundial em 2019?",
+    "expected_output": "No Mundial RoboCup de 2019, a equipe participou em RoboCup Soccer/Soccer 2D e conquistou a 12ª colocação.",
+    "must_contain": ["2019", "RoboCup", "Soccer", "12"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "mundial_2025",
+    "category": "resultados",
+    "input": "Qual foi a classificação da equipe no Mundial em 2025?",
+    "expected_output": "No Mundial RoboCup de 2025, a base registra Futebol 2D em 6° lugar, Rescue Line em 19° lugar e SuperTeam em 1° lugar.",
+    "must_contain": ["Futebol 2D", "6", "Rescue Line", "19", "SuperTeam", "1"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "podios_larc_cbr",
+    "category": "resultados",
+    "input": "Quais foram os pódios da equipe na LARC/CBR por modalidade?",
+    "expected_output": "Na LARC/CBR, a base registra Futebol 2D com 5 primeiros lugares, 1 segundo e 1 terceiro; SEK/Challenge com 5 primeiros, 1 segundo e 2 terceiros; CoSpace com 1 primeiro e 2 segundos; e Humanoide com 1 primeiro lugar.",
+    "must_contain": ["Futebol 2D", "SEK", "Challenge", "CoSpace", "Humanoide"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "podios_obr",
+    "category": "resultados",
+    "input": "Quais foram os pódios da equipe na OBR?",
+    "expected_output": "Na OBR, a base registra Prática Estadual com 5 primeiros lugares, 2 segundos e 2 terceiros; Prática Nacional com 1 primeiro e 1 segundo; e Teórica com 1 ouro, 2 pratas, 5 bronzes e 1 honra ao mérito.",
+    "must_contain": ["Prática Estadual", "Prática Nacional", "Teórica", "ouro", "prata", "bronze"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "tecnologias_equipe",
+    "category": "tecnologias",
+    "input": "Quais tecnologias a equipe utiliza atualmente?",
+    "expected_output": "A base cita tecnologias como ROS, SLAM, YOLO, transmissão de imagem via Wi-Fi, impressão 3D, MicroPython, Pybricks, LEGO EV3 e LEGO Spike Prime em projetos e robôs da equipe.",
+    "must_contain": ["ROS", "SLAM", "YOLO", "impressão 3D", "MicroPython"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"]
+  },
+  {
+    "id": "robos_famosos",
+    "category": "robos",
+    "input": "Quais robôs famosos marcaram a trajetória da equipe?",
+    "expected_output": "A base destaca robôs como Carniça, Ligeirinho, Polly, Tristim e OSORIN.",
+    "must_contain": ["Carniça", "Ligeirinho", "Polly", "Tristim", "OSORIN"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"]
+  },
+  {
+    "id": "alunos_cospace_2021",
+    "category": "integrantes",
+    "input": "Liste os alunos da equipe CoSpace em 2021.",
+    "expected_output": "Os alunos da equipe CoSpace em 2021 foram Guilherme Furtado Ronconi Vieiras, Guilherme Ratti Moraes e Pedro Henrique Marcillino de Souza.",
+    "must_contain": ["Guilherme Furtado Ronconi Vieiras", "Guilherme Ratti Moraes", "Pedro Henrique Marcillino de Souza"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "alunos_pratica_2021",
+    "category": "integrantes",
+    "input": "Liste os alunos da equipe Prática em 2021.",
+    "expected_output": "Os alunos da equipe Prática em 2021 foram Andre Gabrescht Rossi, João Guilherme Adamkosky Botti, Rodrigo Martins Coelho Júnior e Victor Costa de Coura.",
+    "must_contain": ["Andre Gabrescht Rossi", "João Guilherme Adamkosky Botti", "Rodrigo Martins Coelho Júnior", "Victor Costa de Coura"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "alunos_teorica_2021",
+    "category": "integrantes",
+    "input": "Liste os alunos da equipe Teórica em 2021.",
+    "expected_output": "A equipe Teórica em 2021 incluiu Aldair Schmitberger Junior, Gabriel Macedo Liberato, Iarlen Lucas Pimenta de Sousa, Joel Hanerth, Lara Calegario Guedes, Lucas Stefenoni Ramos, Luiz Eduardo Bravin, Maria Regina Crislane Zeni, Matheus Goldner Alves de Oliveira, Maytê Chaves Ferreira e Paulo Andre dos Santos Lagasse.",
+    "must_contain": ["Aldair Schmitberger Junior", "Gabriel Macedo Liberato", "Joel Hanerth", "Lara Calegario Guedes", "Paulo Andre dos Santos Lagasse"],
+    "must_not_contain": ["Nao encontrei informacao suficiente"],
+    "critical_retrieval": true
+  },
+  {
+    "id": "fora_escopo_email",
+    "category": "fora_de_escopo",
+    "input": "Qual é o e-mail oficial atual da equipe para novos candidatos?",
+    "expected_output": "A base atual não contém e-mail oficial atual da equipe para novos candidatos.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "fora_escopo_matriculas",
+    "category": "fora_de_escopo",
+    "input": "Qual era o número de matrícula de cada aluno que participou da equipe?",
+    "expected_output": "A base atual não contém números de matrícula dos alunos.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "fora_escopo_criterios_selecao",
+    "category": "fora_de_escopo",
+    "input": "Quais critérios exatos de pontuação interna a equipe usa para selecionar integrantes?",
+    "expected_output": "A base atual não contém os critérios exatos de pontuação interna usados para selecionar integrantes.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "fora_escopo_desistencias",
+    "category": "fora_de_escopo",
+    "input": "Quais alunos desistiram da equipe e quais foram os motivos de saída de cada um?",
+    "expected_output": "A base atual não contém uma lista confiável de alunos que desistiram nem os motivos de saída de cada um.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  },
+  {
+    "id": "fora_escopo_taxa_aprovacao",
+    "category": "fora_de_escopo",
+    "input": "Qual foi a taxa de aprovação acadêmica dos integrantes em cada ano?",
+    "expected_output": "A base atual não contém a taxa de aprovação acadêmica dos integrantes por ano.",
+    "must_contain": ["Nao encontrei informacao suficiente"],
+    "expect_insufficient": true
+  }
+]

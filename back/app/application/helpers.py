@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from hashlib import md5
+from pathlib import Path
 from typing import Iterable
 
 from app.domain.constants import INSUFFICIENT_MSG, TEAM_ANCHORS
@@ -106,6 +107,22 @@ def normalize_sources(answer: str, chunks: list[RetrievedChunk], used_ids: list[
     if not clean:
         clean = INSUFFICIENT_MSG
     return clean
+
+
+def summarize_sources(chunks: list[RetrievedChunk]) -> list[str]:
+    sources: list[str] = []
+    seen = set()
+    for chunk in chunks:
+        source_name = Path(chunk.source).name or chunk.source
+        label = source_name
+        if chunk.page is not None:
+            label = f"{source_name} (pagina {chunk.page + 1})"
+        key = normalize_text(label)
+        if key in seen:
+            continue
+        seen.add(key)
+        sources.append(label)
+    return sources
 
 
 def answer_targets_question(question: str, answer: str) -> bool:

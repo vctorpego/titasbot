@@ -4,14 +4,12 @@ import json
 import threading
 from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from pathlib import Path
-from typing import Dict
 from uuid import uuid4
 
-from dotenv import load_dotenv
-
+from app.application.helpers import summarize_sources
 from app.application.chat_use_cases import ask_question, review_answer
 from app.application.chat_service import TitasBotService
+from app.infrastructure.env import load_project_env
 from app.infrastructure.settings import get_settings
 from app.presentation.cli_chat import is_confirmation_feedback, is_equivalence_feedback, is_error_feedback
 
@@ -27,14 +25,6 @@ class SessionState:
     last_answer: str | None = None
 
 
-env_path = Path(__file__).resolve().parents[3] / ".env"
-load_dotenv(dotenv_path=env_path)
-settings = get_settings()
-bot = TitasBotService(settings)
-sessions: Dict[str, SessionState] = {}
-sessions_lock = threading.Lock()
-
-
 def _json_response(handler: BaseHTTPRequestHandler, status: int, payload: dict) -> None:
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     handler.send_response(status)
@@ -47,7 +37,11 @@ def _json_response(handler: BaseHTTPRequestHandler, status: int, payload: dict) 
     handler.wfile.write(body)
 
 
-def _get_or_create_session(session_id: str | None) -> tuple[str, SessionState]:
+def _get_or_create_session(
+    sessions: dict[str, SessionState],
+    sessions_lock: threading.Lock,
+    session_id: str | None,
+) -> tuple[str, SessionState]:
     sid = session_id.strip() if isinstance(session_id, str) and session_id.strip() else str(uuid4())
     with sessions_lock:
         state = sessions.get(sid)
@@ -58,8 +52,17 @@ def _get_or_create_session(session_id: str | None) -> tuple[str, SessionState]:
 
 
 class ChatHandler(BaseHTTPRequestHandler):
+    bot: TitasBotService | None = None
+    sessions: dict[str, SessionState] = {}
+    sessions_lock = threading.Lock()
+
     def log_message(self, fmt: str, *args) -> None:
         return
+
+    def _bot(self) -> TitasBotService:
+        if self.bot is None:
+            raise RuntimeError("Servidor nao inicializado.")
+        return self.bot
 
     def do_OPTIONS(self) -> None:
         self.send_response(204)
@@ -70,7 +73,7 @@ class ChatHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if self.path == "/health":
-            _json_response(self, 200, {"ok": True, "documents_ready": bot.has_documents()})
+            _json_response(self, 200, {"ok": True, "documents_ready": self._bot().has_documents()})
             return
 
         if self.path == "/":
@@ -97,6 +100,7 @@ class ChatHandler(BaseHTTPRequestHandler):
             _json_response(self, 404, {"error": "Not found"})
             return
 
+        bot = self._bot()
         if not bot.has_documents():
             _json_response(self, 400, {"error": "Base vetorial vazia. Rode criar_db.py primeiro."})
             return
@@ -114,7 +118,11 @@ class ChatHandler(BaseHTTPRequestHandler):
             _json_response(self, 400, {"error": "Campo 'question' e obrigatorio."})
             return
 
-        session_id, state = _get_or_create_session(payload.get("session_id"))
+        session_id, state = _get_or_create_session(
+            self.sessions,
+            self.sessions_lock,
+            payload.get("session_id"),
+        )
 
         if is_error_feedback(question) or is_confirmation_feedback(question) or is_equivalence_feedback(question):
             if not state.last_question or not state.last_answer:
@@ -124,6 +132,7 @@ class ChatHandler(BaseHTTPRequestHandler):
                     {
                         "session_id": session_id,
                         "answer": "Posso revisar, mas preciso de uma pergunta anterior para corrigir.",
+                        "sources": [],
                     },
                 )
                 return
@@ -142,6 +151,7 @@ class ChatHandler(BaseHTTPRequestHandler):
                     "session_id": session_id,
                     "answer": result.answer,
                     "retrieval_query": result.retrieval_query,
+                    "sources": summarize_sources(result.chunks),
                 },
             )
             return
@@ -162,11 +172,17 @@ class ChatHandler(BaseHTTPRequestHandler):
                 "session_id": session_id,
                 "answer": result.answer,
                 "retrieval_query": result.retrieval_query,
+                "sources": summarize_sources(result.chunks),
             },
         )
 
 
 def main() -> None:
+    load_project_env()
+    settings = get_settings()
+    ChatHandler.bot = TitasBotService(settings)
+    ChatHandler.sessions = {}
+    ChatHandler.sessions_lock = threading.Lock()
     server = ThreadingHTTPServer((HOST, PORT), ChatHandler)
     print(f"TitasBot Web ativo em http://{HOST}:{PORT}")
     print("Health: GET /health")

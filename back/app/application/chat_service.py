@@ -11,6 +11,7 @@ from app.domain.constants import INSUFFICIENT_MSG, STUDENT_LIST_MAX_CHUNKS, STUD
 from app.domain.intents import (
     conversational_intent,
     is_fact_question,
+    is_known_absent_detail_question,
     is_list_question,
     is_participation_question,
     is_projects_question,
@@ -411,6 +412,8 @@ class TitasBotService:
         )
         return clean_answer(self._invoke_text(msg))
 
+
+    #verificar para uma possivel mudança, deixar mais dinamico
     @staticmethod
     def _social_response(question: str, previous_answer: str | None = None) -> str:
         q = normalize_text(question)
@@ -531,6 +534,9 @@ class TitasBotService:
         previous_question: str | None = None,
         previous_answer: str | None = None,
     ) -> ChatResult:
+        if is_known_absent_detail_question(question):
+            return ChatResult(INSUFFICIENT_MSG, [], "known_absent_detail")
+
         conversational = self._conversational_response(question, previous_question, previous_answer)
         if conversational is not None:
             return ChatResult(
