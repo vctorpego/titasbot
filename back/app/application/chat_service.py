@@ -3,7 +3,8 @@
 import re
 
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
+
+from app.infrastructure.llm_factory import build_chat_model, to_text
 
 from app.core.models import ChatResult
 from app.infrastructure.settings import Settings
@@ -61,7 +62,11 @@ class TitasBotService:
         self.settings = settings
         self.vectorstore = get_vectorstore(settings)
         self.retriever = HybridRetriever(self.vectorstore, settings)
-        self.model = ChatOpenAI(model=settings.chat_model, temperature=settings.chat_temperature)
+        self.model = build_chat_model(
+            settings.chat_model,
+            temperature=settings.chat_temperature,
+            provider=(settings.chat_provider or None),
+        )
 
         self.gen_prompt = ChatPromptTemplate.from_template(GEN_PROMPT)
         self.fact_prompt = ChatPromptTemplate.from_template(FACT_PROMPT)
@@ -148,7 +153,7 @@ class TitasBotService:
 
     def _invoke_text(self, message) -> str:
         try:
-            return self.model.invoke(message).content.strip()
+            return to_text(self.model.invoke(message)).strip()
         except Exception:
             return ""
 

@@ -99,7 +99,10 @@ export default function App() {
         {
           id: (Date.now() + 1).toString(),
           role: 'ai',
-          content: 'Desculpe, ocorreu um erro ao processar sua pergunta. Por favor, tente novamente.',
+          content:
+            error instanceof Error
+              ? error.message
+              : 'Desculpe, ocorreu um erro ao processar sua pergunta. Por favor, tente novamente.',
         },
       ]);
     } finally {

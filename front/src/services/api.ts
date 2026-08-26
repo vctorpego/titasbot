@@ -44,7 +44,16 @@ export async function sendMessageToBackend(message: string): Promise<ChatRespons
     });
 
     if (!response.ok) {
-      throw new Error(`Erro na API: ${response.status}`);
+      let message = `Erro na API: ${response.status}`;
+
+      try {
+        const errorData = await response.json();
+        message = errorData?.error || errorData?.message || message;
+      } catch {
+        // Keep the HTTP status message when the response is not JSON.
+      }
+
+      throw new Error(message);
     }
 
     const data = await response.json();
@@ -64,6 +73,15 @@ export async function sendMessageToBackend(message: string): Promise<ChatRespons
     };
   } catch (error) {
     console.error('Erro ao comunicar com o backend Python:', error);
-    throw new Error('Nao foi possivel conectar ao servidor. Verifique se o backend Python esta rodando.');
+
+    if (error instanceof TypeError) {
+      throw new Error('Nao foi possivel conectar ao servidor. Verifique se o backend Python esta rodando.');
+    }
+
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error('Ocorreu um erro desconhecido ao comunicar com o servidor.');
   }
 }

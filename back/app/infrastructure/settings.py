@@ -27,6 +27,7 @@ class Settings:
     max_pdf_pages: int
     ingest_batch_size: int
     ingest_retry_attempts: int
+    chat_provider: str = ""
 
 
 def get_settings() -> Settings:
@@ -53,8 +54,9 @@ def get_settings() -> Settings:
         embedding_model=os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
         embedding_request_timeout_s=float(os.getenv("EMBEDDING_REQUEST_TIMEOUT_S", "45")),
         embedding_max_retries=int(os.getenv("EMBEDDING_MAX_RETRIES", "2")),
-        chat_model=os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini"),
+        chat_model=os.getenv("OPENAI_CHAT_MODEL", "gpt-5"),
         chat_temperature=float(os.getenv("CHAT_TEMPERATURE", "0")),
+        chat_provider=os.getenv("CHAT_PROVIDER", ""),
         chunk_size=int(os.getenv("CHUNK_SIZE", "900")),
         chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "180")),
         similarity_k=int(os.getenv("SIMILARITY_K", "12")),

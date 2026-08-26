@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q01_quem_sao_titas_robotica",
+    "number": 1,
+    "category": "historia",
+    "question": "Quem são os Titãs da Robótica?",
+    "expected_output": "Os Titãs da Robótica são a equipe de robótica do Ifes Campus Colatina, composta por estudantes e orientadores que desenvolvem projetos e participam de competições científicas e tecnológicas.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q02_qual_era_primeiro_nome_equipe",
+    "number": 2,
+    "category": "historia",
+    "question": "Qual era o primeiro nome da equipe Titãs da Robótica?",
+    "expected_output": "O primeiro nome da equipe era Asimov.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q03_por_equipe_mudou_nome",
+    "number": 3,
+    "category": "historia",
+    "question": "Por que a equipe mudou de nome?",
+    "expected_output": "A equipe mudou de nome por questões legais de registro de marca.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q04_ano_equipe_foi_criada",
+    "number": 4,
+    "category": "historia",
+    "question": "Em que ano a equipe foi criada?",
+    "expected_output": "A equipe foi proposta em 2014, com a submissão do projeto de pesquisa \"Robótica educacional para o aprendizado de programação\" ao CNPq. Após a aprovação do projeto, as atividades passaram a ser desenvolvidas em 2015, no Ifes Campus Colatina.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q05_quem_idealizou_criacao_equipe",
+    "number": 5,
+    "category": "historia",
+    "question": "Quem idealizou a criação da equipe?",
+    "expected_output": "A equipe de robótica foi idealizada por Renato Lopes de Oliveira, enquanto cursava a graduação em Sistemas de Informação no Ifes Campus Colatina.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q06_qual_foi_objetivo_principal_criacao",
+    "number": 6,
+    "category": "historia",
+    "question": "Qual foi o objetivo principal da criação da equipe?",
+    "expected_output": "O objetivo principal da criação da equipe foi usar a robótica como abordagem pedagógica para fortalecer o ensino de programação, incentivar o protagonismo dos estudantes em competições de robótica e contribuir para a redução da evasão escolar nos cursos de informática do Ifes Campus Colatina.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q07_ano_equipe_participou_primeira_competicao",
+    "number": 7,
+    "category": "historia",
+    "question": "Em que ano a equipe participou da primeira competição?",
+    "expected_output": "A equipe competiu pela primeira vez em 2015 na LARC.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q08_quais_foram_classificacoes_equipe_temporada",
+    "number": 8,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2015?",
+    "expected_output": "SEK: 1° lugar — TRUFES (Regional)\nSEK: 3° lugar — LARC (Internacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q09_quais_foram_classificacoes_equipe_temporada",
+    "number": 9,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2016?",
+    "expected_output": "Futebol 2D: 1° lugar — LARC (Internacional)\nPrática: 1° lugar — OBR (Regional)\nPrática: 30° lugar — OBR (Nacional)\nSEK: 1° lugar — LARC (Internacional)\nSEK: 1° lugar — TRUFES (Regional)\nSEK: 2° lugar — TRUFES (Regional)\nTeórica: Medalha de Bronze — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q10_quais_foram_classificacoes_equipe_temporada",
+    "number": 10,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2017?",
+    "expected_output": "CoSpace: 1° lugar — LARC (Internacional)\nFutebol 2D: 1° lugar — IRONCUP (Nacional)\nFutebol 2D: 1° lugar — LARC (Internacional)\nHumanoide: 1° lugar — LARC (Internacional)\nPrática: 8° lugar — OBR (Regional)\nSeguidor de Linha: 8° lugar — IRONCUP (Nacional)\nSEK: 2° lugar — TRUFES (Regional)\nSEK: 3° lugar — TRUFES (Regional)\nSEK: 4° lugar — LARC (Internacional)\nTeórica: Medalha de Bronze — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q11_quais_foram_classificacoes_equipe_temporada",
+    "number": 11,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2018?",
+    "expected_output": "CoSpace: 2° lugar — LARC (Internacional)\nFutebol 2D: 1° lugar — LARC (Nacional)\nFutebol 2D: 2° lugar — IRONCUP (Internacional)\nPrática: 3° lugar — OBR (Regional)\nSeguidor de Linha: 10° lugar — IRONCUP (Nacional)\nSEK: 1° lugar — TRUFES (Regional)\nSEK: 2° lugar — TRUFES (Regional)\nTeórica: Medalha de Bronze — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q12_quais_foram_classificacoes_equipe_temporada",
+    "number": 12,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2019?",
+    "expected_output": "CoSpace: 2° lugar — LARC (Internacional)\nFutebol 2D: 3° lugar — IRONCUP (Nacional)\nFutebol 2D: 3° lugar — LARC (Internacional)\nPrática: 2° lugar — OBR (Regional)\nPrática: 42° lugar — OBR (Nacional)\nRoboCup Soccer: 12° lugar — ROBOCUP (Mundial)\nSEK: 1° lugar — LARC (Internacional)\nSEK: 2° lugar — TRUFES (Regional)\nTeórica: Medalha de Bronze — OBR (Nacional)\nTeórica: Medalha de Prata — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q13_quais_foram_classificacoes_equipe_temporada",
+    "number": 13,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2020?",
+    "expected_output": "Futebol 2D: 1° lugar — IRONCUP (Nacional)\nFutebol 2D: 1° lugar — CBR (Nacional)\nFutebol 2D: 1° lugar — TRUFES (Regional)\nSeguidor de Linha: 14° lugar — IRONCUP (Nacional)\nSEK: 2° lugar — CBR (Nacional)\nSEK: 2° lugar — TRUFES (Regional)\nTeórica: Medalha de Bronze — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q14_quais_foram_classificacoes_equipe_temporada",
+    "number": 14,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2021?",
+    "expected_output": "Futebol 2D: 2° lugar — IRONCUP (Nacional)\nPrática: 1° lugar — OBR (Regional)\nPrática: 12° lugar — OBR (Nacional)\nSEK: 3° lugar — CBR (Nacional)\nTeórica: Medalha de Bronze — OBR (Nacional)\nTeórica: Medalha de Prata — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q15_quais_foram_classificacoes_equipe_temporada",
+    "number": 15,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2022?",
+    "expected_output": "Futebol 2D: 2° lugar — IRONCUP (Nacional)\nPrática: 1° lugar — OBR (Regional)\nPrática: 12° lugar — OBR (Nacional)\nSEK: 3° lugar — CBR (Nacional)\nTeórica: Medalha de Bronze — OBR (Nacional)\nTeórica: Medalha de Prata — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q16_quais_foram_classificacoes_equipe_temporada",
+    "number": 16,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2023?",
+    "expected_output": "Prática: 1° lugar — OBR (Regional)\nPrática: 1° lugar — OBR (Nacional)\nSEK: 1° lugar — CBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q17_quais_foram_classificacoes_equipe_temporada",
+    "number": 17,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2024?",
+    "expected_output": "Futebol 2D: 2° lugar — CBR (Nacional)\nFutebol 2D: 3° lugar — IRONCUP (Nacional)\nPrática: 1° lugar — OBR (Regional)\nPrática: 3° lugar — OBR (Regional)\nPrática: 6° lugar — OBR (Nacional)\nRoboCup Rescue: 5° lugar — ROBOCUP (Mundial)\nSEK: 1° lugar — CBR (Nacional)\nTeórica: 2 Medalhas de Honra ao Mérito — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q18_quais_foram_classificacoes_equipe_temporada",
+    "number": 18,
+    "category": "resultados",
+    "question": "Quais foram as classificações da equipe na temporada de 2025?",
+    "expected_output": "Futebol 2D: 1° lugar — CBR (Nacional)\nFutebol 2D: 6° lugar — ROBOCUP (Mundial)\nPrática: 1° lugar — OBR (Regional)\nPrática: 2° lugar — OBR (Regional)\nPrática: 2° lugar — OBR (Nacional)\nRescue Line: 19° lugar — ROBOCUP (Mundial)\nSuperTeam: 1° lugar — ROBOCUP (Mundial)\nSuperTeam: 1° lugar — CBR (Nacional)\nChallenge: 1° lugar — CBR (Nacional)\nTeórica: 1 Medalha de Ouro — OBR (Nacional)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q19_quem_foram_orientadores_equipe_2015",
+    "number": 19,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2015?",
+    "expected_output": "Igor Carlos Pulini (SEK)\nRenan Osório Rios (SEK)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q20_quem_foram_orientadores_equipe_2016",
+    "number": 20,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2016?",
+    "expected_output": "Jean Eduardo Glazar (Futebol 2D)\nGiovany Frossard (Futebol 2D)\nDiego Rossi Mafioletti (Prática)\nIgor Carlos Pulini (SEK)\nRenan Osório Rios (SEK)\nJosiane Dalmasio (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q21_quem_foram_orientadores_equipe_2017",
+    "number": 21,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2017?",
+    "expected_output": "Jean Eduardo Glazar (CoSpace)\nGiovany Frossard Teixeira (Futebol 2D)\nJulio César Goldner Vendramini (Humanoide)\nDiego Rossi Mafioletti (Prática e Seguidor de Linha)\nIgor Carlos Pulini (SEK)\nRenan Osório Rios (SEK)\nLuiz Fernando Reinoso (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q22_quem_foram_orientadores_equipe_2018",
+    "number": 22,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2018?",
+    "expected_output": "Joanita Araújo Espanhol (ADM)\nJean Eduardo Glazar (CoSpace)\nGiovany Frossard Teixeira (Futebol 2D)\nJulio César Goldner Vendramini (Humanoide, Prática, Seguidor de Linha)\nIgor Carlos Pulini (Lego Sumô e SEK)\nRenan Osório Rios (Lego Sumô e SEK)\nFábio Luiz Bigati (Teórica)\nLuiz Fernando Reinoso (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q23_quem_foram_orientadores_equipe_2019",
+    "number": 23,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2019?",
+    "expected_output": "Joanita Araújo Espanhol (ADM)\nJean Eduardo Glazar (CoSpace)\nGiovany Frossard Teixeira (Futebol 2D)\nArthur Belato (OBI)\nJulio César Goldner Vendramini (Prática)\nIgor Carlos Pulini (SEK)\nRenan Osório Rios (SEK)\nAndré Avelino (Teórica)\nDione Souza Albuquerque de Lima (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q24_quem_foram_orientadores_equipe_2020",
+    "number": 24,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2020?",
+    "expected_output": "Joanita Araújo Espanhol (ADM)\nJean Eduardo Glazar (CoSpace)\nGiovany Frossard Teixeira (Futebol 2D)\nIgor Carlos Pulini (Lego Sumô e SEK)\nRenan Osório Rios (Lego Sumô, SEK e Teórica)\nJulio César Goldner Vendramini (Seguidor de Linha e Prática)\nDione Souza Albuquerque de Lima (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q25_quem_foram_orientadores_equipe_2021",
+    "number": 25,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2021?",
+    "expected_output": "Joanita Araújo Espanhol (ADM)\nJean Eduardo Glazar (CoSpace)\nIgor Carlos Pulini (Drone e SEK)\nRenan Osório Rios (Drone, SEK e Teórica)\nGiovany Frossard Teixeira (Futebol 2D)\nAilton Souza Duarte (Osorin)\nAlextian Bartholomeu Liberato (Osorin)\nRicardo Tedesco da Silva (Osorin)\nJulio César Goldner Vendramini (Prática e Seguidor de Linha)\nDione Souza Albuquerque de Lima (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q26_quem_foram_orientadores_equipe_2022",
+    "number": 26,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2022?",
+    "expected_output": "Igor Carlos Pulini (Drone e SEK)\nRenan Osório Rios (Drone, SEK e Teórica)\nGiovany Frossard Teixeira (Futebol 2D)\nAlextian Bartholomeu Liberato (Osorin)\nRicardo Tedesco da Silva (Osorin)\nJulio César Goldner Vendramini (Prática)\nDione Souza Albuquerque de Lima (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q27_quem_foram_orientadores_equipe_2023",
+    "number": 27,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2023?",
+    "expected_output": "Gustavo Ludovico Guidoni (Drone)\nRicardo Tedesco da Silva (Drone, Osorin e Prática)\nGiovany Frossard Teixeira (Futebol 2D)\nEduardo Max Amaro Amaral (Osorin)\nAlextian Bartholomeu Liberato (Prática)\nJulio César Goldner Vendramin (Prática)\nIgor Carlos Pulini (SEK)\nRenan Osório Rios (SEK e Teórica)\nDione Souza Albuquerque de Lima (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q28_quem_foram_orientadores_equipe_2024",
+    "number": 28,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2024?",
+    "expected_output": "Gustavo Ludovico Guidoni (Drone)\nGiovany Frossard Teixeira (Futebol 2D)\nEduardo Max Amaro Amaral (Luva Robótica e Osorin)\nRicardo Tedesco da Silva (Osorin)\nJulio César Goldner Vendramini (Prática)\nIgor Carlos Pulini (SEK)\nRenan Osório Rios (SEK)\nAllan Fernandes Balardino (Teórica)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q29_quem_foram_orientadores_equipe_2025",
+    "number": 29,
+    "category": "orientadores",
+    "question": "Quem foram os orientadores da equipe em 2025?",
+    "expected_output": "Julio César Goldner Vendramini (Challenge e Prática)\nGustavo Ludovico Guidoni (Drone)\nGiovany Frossard Teixeira (Futebol 2D)\nEduardo Max Amaro Amaral (Pesquisa)\nIgor Carlos Pulini (Pesquisa)\nJaimel de Oliveira Lima (Pesquisa e Teórica)\nRenan Osório Rios (Pesquisa)",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q30_quantos_estudantes_participaram_equipe_total",
+    "number": 30,
+    "category": "metricas_historicas",
+    "question": "Quantos estudantes participaram da equipe no total?",
+    "expected_output": "Desde sua fundação, a equipe Titãs da Robótica contou com a participação ativa de 191 estudantes. Entre eles, 152 são alunos do sexo masculino e 39 do sexo feminino.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q31_liste_todos_subgrupos_ja_existiram",
+    "number": 31,
+    "category": "metricas_historicas",
+    "question": "Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.",
+    "expected_output": "Os subgrupos que já fizeram parte da equipe Titãs da Robótica são:\nADM\nChallenge\nCoSpace\nDrone\nFutebol 2D\nHumanoide\nLego Sumô\nOBI\nOsorin\nPesquisa\nPrática\nSeguidor de Linha\nSEK\nTeórica",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q32_liste_todos_campeonatos_equipe_ja",
+    "number": 32,
+    "category": "metricas_historicas",
+    "question": "Liste todos os campeonatos em que a equipe já participou.",
+    "expected_output": "TRUFES — Torneio de Robótica da Ufes\nLARC — Latin American Robotics Competition\nOBR — Olimpíada Brasileira de Robótica\nIRONCup — Copa Nacional de Robótica do Inatel\nCBR — Competição Brasileira de Robótica\nRoboCup — Copa do Mundo de Robôs\nOBI — Olimpíada Brasileira de Informática",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q33_quais_anos_equipe_participou_mundial",
+    "number": 33,
+    "category": "resultados",
+    "question": "Em quais anos a equipe participou do Mundial RoboCup?",
+    "expected_output": "A equipe Titãs da Robótica participou do Mundial RoboCup em 2019, 2024 e 2025.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q34_quais_projetos_ensino_pesquisa_extensao",
+    "number": 34,
+    "category": "projetos",
+    "question": "Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?",
+    "expected_output": "Os projetos de ensino, pesquisa e extensão que envolveram os Titãs da Robótica são:\n10 anos dos Titãs da Robótica: do estadual ao mundial.\nAplicativo IFeira Colatina.\nCaderno Digital.\nConstrução de uma estrutura robótica de reabilitação baseada no framework ROS.\nDesafios na realização de oficinas de robótica em escolas públicas: um relato de experiência.\nDesenvolvimento de biblioteca Python para robótica educacional com compatibilidade ao kit LEGO EV3 em Linux embarcado.\nEspaços do Saber.\nJogos Digitais: Princípios, Conceitos e Práticas.\nPlataforma Robótica Móvel Utilizada no Ensino de ROS e SLAM.\nProgramação para Leigos com App Inventor.\nProgramação para Leigos com o Raspberry Pi.\nPrograme-se.\nProtagonismo Estudantil através da Robótica Educacional.\nProtetores faciais e laringoscópios.\nProtótipos Educacionais: Utilizando o Arduino para o Aprendizado de Programação Inicial.\nRobótica educacional para o aprendizado de programação.\nUtilização do Scratch como Ferramenta de Ensino no Desenvolvimento de Robôs Interativos.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q35_quais_tecnologias_sao_utilizadas_pela",
+    "number": 35,
+    "category": "tecnologia",
+    "question": "Quais tecnologias são utilizadas pela equipe Titãs da Robótica?",
+    "expected_output": "A equipe utiliza kits LEGO Mindstorms EV3 e Spike Prime, plataformas Arduino e Raspberry Pi, além de recursos de impressão 3D. Esses materiais são empregados na construção e programação dos robôs, envolvendo sensores, motores, atuadores e controladores. As principais linguagens de programação utilizadas são Scratch, Python, C e C++.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q36_como_participar_equipe_titas_robotica",
+    "number": 36,
+    "category": "institucional",
+    "question": "Como participar da equipe Titãs da Robótica?",
+    "expected_output": "Qualquer estudante do Ifes Campus Colatina, independentemente do curso, pode participar da equipe Titãs da Robótica. A seleção é feita com base no perfil, interesse e disponibilidade dos estudantes para atividades extracurriculares. Além disso, é necessário manter rendimento escolar satisfatório em todas as disciplinas, tanto para ingressar quanto para permanecer na equipe.",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q37_liste_todos_patrocinadores_equipe_titas",
+    "number": 37,
+    "category": "financeiro",
+    "question": "Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.",
+    "expected_output": "Apex Partners Gestão de Ativos\nBasis Tecnologia da Informação\nFábrica de Esquadrias Galon\nFrisa\nFULLTECH\nIm Digital\nImagination Media\nMatriz Sistemas\nMetalosa Industria Metalúrgica\nMoveedu Cursos Profissionalizantes\nSeek Informatica\nSIAD\nSmartIrriga\nVixteam Consultoria & Sistemas",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q38_liste_todos_orientadores_ja_passaram",
+    "number": 38,
+    "category": "orientadores",
+    "question": "Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.",
+    "expected_output": "Ailton Souza Duarte\nAlan Balardino\nAlextian Bartholomeu Liberato\nAndré Avelino\nArthur Belato\nDiego Rossi Mafioletti\nDione Souza Albuquerque de Lima\nEduardo Max Amaro Amaral\nFabio Bigati\nGiovany Frossard Teixeira\nGustavo Ludovico Guidoni\nIgor Carlos Pulini\nJaimel de Oliveira Lima\nJean Eduardo Glazar\nJoanita Araújo Espanhol\nJosiane Dalmasio Clabunde\nJulio Cesar Goldner Vendramini\nLuis Fernando Reinoso\nRenan Osório Rios\nRicardo Tedesco da Silva",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q39_liste_todos_estudantes_ja_passaram",
+    "number": 39,
+    "category": "metricas_historicas",
+    "question": "Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.",
+    "expected_output": "Os estudantes que já fizeram parte da equipe Titãs da Robótica são:\nAldair Schmitberger Junior\nAlexandre Ferreira Costa\nAlexsander Benica Gonçalves\nAlisson Luiz de Souza Vighini\nÁlisson Melquíades\nÁlvaro Paulo Melquiades da Silva\nAmanda Ferreira Merelis\nAmanda Margon Nicoli\nAna Clara Chieppe Vargas\nAna Luiza Rogerio de Menezes Ahnert\nAndré Bergamini Peter Krause\nAndré Corrente Corrêa\nAndré Gabrescht Rossi\nAndré Garcia Holtz\nAnna Luísa Reis Becevelli\nAnna Raquel Sandrini\nAnna Tália dos Reis Soares\nArthur Cardoso Neitzel\nArthur Fernandes de Paiva Costa\nArthur Ferreira Guedes\nArthur Martins Caletti\nArthur Parpaiola Gonçalves\nArthur Poubel Belato\nArtur Muniz Foletto\nArtur Schaefer\nBárbara Esteves da Silva\nBeatriz Marques Franco\nBernardo Dias de Souza\nBernardo Pereira Muller\nBernardo Schmiedel Raymundo\nBernardo Werneck Teixeira\nBianca Patrício Rodrigues\nBrenda Comper\nBreno Fernandes Luchi\nBreno Maia Costa\nBruno Orletti Gava\nCaian Monteiro de Oliveira Meireles\nCaio Gomes Braga\nCamila Stacul Moura\nCarla Tohnes\nCarlos Alberto Rodrigues Netto\nChristian Rodrigues da Silva\nDaniel Fieni Pereira\nDaniel Tadeu Donateli\nDavi Curto Pessanha\nDavi Ragazzi Muniz\nDouglas Allan Braga\nDouglas Braga Soares\nEdgar Alves Arrigoni\nEduarda Azevedo de Oliveira\nElis Fernandes de Moraes\nEster da Silva Nunes\nFelipe Lorenzoni Cazotti\nGabriel Dominicini da Fonseca\nGabriel Garcia Tissianel\nGabriel Lasaro\nGabriel Macedo Liberato\nGabriel Mallaguetti Rodrigues de Souza\nGabriel Rocha do Nascimento\nGabriela Araújo dos Santos\nGeanderson Lemonte\nGhabriel Borges Campi\nGuibson Oliveira Krause\nGuilherme Furtado Ronconi Vieiras\nGuilherme Ratti Moraes\nGustavo da Costa Zucolotto\nGustavo Linhaus Fernandes\nGustavo Nunes Guedes\nHeitor Falconi Cassaro\nHenrique Almeida de Oliveira\nHenrique Frisso Oliveira\nHéricles Santos Fernandes\nIarlen Lucas Pimenta de Sousa\nIsabela Garcia Tissianel\nIsadora dos Santos Massarioli\nIsaias Constantino dos Santos\nIzadora Vanderlei Bonifacio\nJean Pandolfi\nJean Rodrigues Vieira\nJhenifer de Barros Belem\nJhordan Pereira Ortolani\nJoão Guilherme Adamkosky Botti\nJoão Lucas Trimolett Rebuli\nJoão Pedro Correia\nJoão Pedro Ferron Bravin\nJoão Pedro Gonçalves Pulini\nJoão Ricardo Mattedi Cetto\nJoão Vitor Jacobsen Ramos\nJoel Hanerth\nJosé Acácio de Alvarenga Valandro\nJuliano Monteiro Gonçalves\nJúlio César Bridi\nJúlio Cézar Lemonte\nKadichari Gomes Marçal Lima\nKaroliny Andrisen do Prado Neppel\nKássio Pereira Schaider\nLara Calegario Guedes\nLarissa de Oliveira Andreatta\nLaura Alves Rodrigues\nLayla Maria dos Santos Couto\nLaysa Jacome dos Santos Costalonga\nLeonan Pereira Pinto\nLeonardo Batista\nLisânia Soares Miranda\nLorenzo Henrique Willians da Silva Rebelo\nLucas Boeloni Rodrigues da Rocha\nLucas Folador Nunes\nLucas Gatti Fernandes\nLucas Giubert\nLucas Perim\nLucas Stefenoni Ramos\nLucio Ribeiro\nLuis Antonio Marchetti Lubiana\nLuiz Eduardo Bravin\nLuiz Felipe Reali Falqueto\nLuiz Fernando Binda Pimenta\nLuiz Fernando Martinelli Zorzanelli\nLuiz Gustavo Gomes Damasceno\nLuiz Henrique Loureiro Galvão\nMarcelo Mandato Junior\nMarco Antonio de Paula Dornel\nMaria Clara Crisostomo Gama\nMaria Regina Crislane Zeni\nMariana Rodrigues Hubner\nMariany Meireles Barbosa Lima\nMarlon Onorio\nMateus Barauna Schader\nMateus Beltrame Gasparini\nMateus Krause\nMateus Padovan Pereira\nMateus Werneck\nMatheus Goldner Alves de Oliveira\nMatheus Luciano Sesana Goldner\nMatheus Oliveira Jagi\nMatheus Saick de Martin\nMatheus Soprani Silva\nMatheus Spelta Zacche\nMatheus Zambaldi Marim\nMaykel Rodrigues\nMaytê Chaves Ferreira\nMiguel Pevidor Cruz\nMikael Botassi de Oliveira\nMilena de Sales\nMurilo Antonio Spalenza\nMurilo Rossoni Delesposte\nNatanael Alves Belmiro\nNícolas Louzada Borchardt Gomes\nNícolas Pagini Perin\nNicolly do Carmo Reis\nNycolas Eduardo Fernandes Monjardim\nPaulo Andre dos Santos Lagasse\nPaulo Araujo dos Santos\nPaulo Henrique Araujo Loss\nPaulo Sérgio Amorim Mônico\nPedro Henrique Alves\nPedro Henrique Juvereth de Castro\nPedro Henrique Marcillino de Souza\nPedro Iglesias Abreu\nPedro José Bello Barcellos\nPedro Lucas Alves Pereira\nPriscila Fabrete Candido\nRacla Alves Mendes Nascimento\nRafael dos Santos\nRenan Frassi Fornaciari\nRenato Lopes de Oliveira\nRicardo Souza Violetti\nRichard Joanathan Holz Ditbenner\nRoberto Mendes Kiefer\nRodney Schultz Kuster\nRodrigo Adão dos Santos\nRodrigo Gasparini do Livramento\nRodrigo Martins Coelho Júnior\nRonan Gonçalves Jardim\nSávio Araújo Pagung\nTeo Giambarba Roseiro\nThayane Leal Gomes\nVictor Alyson Fraga Correa\nVictor Cordeiro de Sousa\nVictor Costa de Coura\nVictor Hugo Salles\nVictor Lopes Pego\nVinícius Eduardo Daleprane\nVinícius Machado de Souza\nVinícius Rossmann Nunes\nVinicius Zorzanelli\nVinycius Fernandes da Rocha\nVitor Nicchio Alves\nWaschington Luiz Menezes Filho\nWilliam Wallace Cristo Bulian\nYasmin Zambaldi Marim\nYkaro Schmitd Amaral",
+    "scored": true,
+    "skip_reason": ""
+  },
+  {
+    "id": "q40_qual_valor_total_captado_patrocinio",
+    "number": 40,
+    "category": "financeiro",
+    "question": "Qual é o valor total captado em patrocínio pela equipe desde a criação?",
+    "expected_output": "A base de dados atual não contém informações confiáveis para responder a essa pergunta.",
+    "scored": true,
+    "skip_reason": ""
+  }
+]

@@ -17,10 +17,18 @@ __pycache__/
 *.env
 !*.env.example
 
+# Python venvs
+venv/
+.venv/
+env/
+back/venv/
+
 # Backend local runtime artifacts
 back/.runtime_chroma_db/
 back/*.sqlite3
 back/*.sqlite3-journal
+back/.deepeval/
+back/avaliacao_modelos/
 
 # Frontend
 front/node_modules/

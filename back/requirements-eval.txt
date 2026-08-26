@@ -1,0 +1,17 @@
+# Dependencias adicionais para a avaliacao comparativa multi-provedor.
+# Instale DEPOIS de: pip install -r requirements.txt
+# (requirements.txt esta em UTF-16; estas ficam num arquivo separado UTF-8 para
+#  evitar corromper o encoding do arquivo principal.)
+
+# Provedores extras usados na comparacao atual (3: OpenAI + Anthropic + DeepSeek).
+langchain-anthropic==1.2.0
+langchain-deepseek==1.1.0
+# Gemini nao entra na comparacao, mas e suportado como avaliador do DeepEval
+# (DEEPEVAL_EVAL_PROVIDER=google_genai) -- ver README.
+langchain-google-genai==4.1.1
+
+# Metodologia de referencia (similaridade semantica + lexical). sentence-transformers
+# puxa torch/transformers; o modelo paraphrase-multilingual-MiniLM-L12-v2 (~470 MB)
+# e baixado no 1o uso. rouge-score calcula a similaridade lexical (ROUGE-L).
+sentence-transformers
+rouge-score
