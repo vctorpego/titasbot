@@ -15,8 +15,13 @@ back/venv/
 back/.venv/
 back/env/
 back/tests/
+# Resultados das avaliacoes e material da defesa: nada disso roda em
+# producao e junto passa de 13 MB na imagem.
 back/avaliacao_modelos/
+back/avaliacao_metricas/
 back/avaliacao_rag_4_metricas/
+back/docs/
+estudo_defesa/
 back/requirements-eval.txt
 back/eval_run.log
 front/node_modules/

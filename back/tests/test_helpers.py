@@ -24,4 +24,4 @@ def test_summarize_sources_uses_file_name_and_page() -> None:
         ),
     ]
 
-    assert summarize_sources(chunks) == ["tabelas - livro titas.pdf (pagina 25)"]
+    assert summarize_sources(chunks) == ["tabelas - livro titas.pdf (página 25)"]

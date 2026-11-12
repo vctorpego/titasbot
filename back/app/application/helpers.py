@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from hashlib import md5
-from pathlib import Path
+from pathlib import PurePosixPath
 from typing import Iterable
 
 from app.domain.constants import INSUFFICIENT_MSG, TEAM_ANCHORS
@@ -118,14 +118,26 @@ def normalize_sources(answer: str, chunks: list[RetrievedChunk], used_ids: list[
     return clean
 
 
+def source_file_name(source: str) -> str:
+    """Nome do arquivo, venha o caminho do Windows ou do Linux.
+
+    O indice vetorial guarda o caminho absoluto de onde foi gerado. Um
+    indice criado no Windows e lido dentro do container Linux nao seria
+    cortado por Path().name, que ali nao reconhece a barra invertida como
+    separador: a fonte apareceria como o caminho inteiro.
+    """
+    cleaned = source.replace("\\", "/").rstrip("/")
+    return PurePosixPath(cleaned).name or source
+
+
 def summarize_sources(chunks: list[RetrievedChunk]) -> list[str]:
     sources: list[str] = []
     seen = set()
     for chunk in chunks:
-        source_name = Path(chunk.source).name or chunk.source
+        source_name = source_file_name(chunk.source)
         label = source_name
         if chunk.page is not None:
-            label = f"{source_name} (pagina {chunk.page + 1})"
+            label = f"{source_name} (página {chunk.page + 1})"
         key = normalize_text(label)
         if key in seen:
             continue

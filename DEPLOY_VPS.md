@@ -40,15 +40,15 @@ Decisoes que valem registrar:
 ## Preparacao inicial (uma vez)
 
 ```bash
-scp -i ~/.ssh/titasbot_vps deploy/vps/provision.sh root@IP_DA_VPS:/root/
-ssh -i ~/.ssh/titasbot_vps root@IP_DA_VPS 'bash /root/provision.sh'
+scp -i ~/.ssh/titasbot_vps deploy/vps/provision.sh root@vps73870.publiccloud.com.br:/root/
+ssh -i ~/.ssh/titasbot_vps root@vps73870.publiccloud.com.br 'bash /root/provision.sh'
 ```
 
 Depois, envie a stack e crie o `.env`:
 
 ```bash
-scp -i ~/.ssh/titasbot_vps deploy/vps/docker-compose.yml deploy/vps/Caddyfile root@IP_DA_VPS:/opt/titasbot/
-ssh -i ~/.ssh/titasbot_vps root@IP_DA_VPS
+scp -i ~/.ssh/titasbot_vps deploy/vps/docker-compose.yml deploy/vps/Caddyfile root@vps73870.publiccloud.com.br:/opt/titasbot/
+ssh -i ~/.ssh/titasbot_vps root@vps73870.publiccloud.com.br
 # no servidor:
 nano /opt/titasbot/.env     # modelo em deploy/vps/.env.example
 cd /opt/titasbot && docker compose up -d
@@ -76,7 +76,7 @@ Para reexecutar sem commit novo: aba **Actions > Deploy producao > Run workflow*
 Toda imagem tambem e publicada com a tag do commit:
 
 ```bash
-ssh -i ~/.ssh/titasbot_vps root@IP_DA_VPS
+ssh -i ~/.ssh/titasbot_vps root@vps73870.publiccloud.com.br
 cd /opt/titasbot
 sed -i 's|:latest|:SHA_DO_COMMIT_BOM|' .env   # ou edite TITASBOT_IMAGE
 docker compose pull && docker compose up -d
