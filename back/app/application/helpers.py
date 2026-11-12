@@ -37,7 +37,7 @@ def split_sentences(text: str) -> list[str]:
 
 def build_history(previous_question: str | None, previous_answer: str | None) -> str:
     if not previous_question or not previous_answer:
-        return "Sem historico relevante."
+        return "Sem histórico relevante."
     short_answer = re.sub(r"\s+", " ", previous_answer.split("Fontes usadas:")[0]).strip()[:280]
     return f"Pergunta anterior: {previous_question}\nResumo da resposta anterior: {short_answer}"
 
@@ -59,6 +59,15 @@ def parse_ids(text: str, limit: int) -> list[int]:
 def clean_answer(answer: str) -> str:
     clean = re.sub(r"\n?Fontes usadas:.*$", "", answer, flags=re.IGNORECASE | re.DOTALL).strip()
     return clean or INSUFFICIENT_MSG
+
+
+def is_insufficient(text: str) -> bool:
+    """Compara com INSUFFICIENT_MSG ignorando acentuacao/caixa.
+
+    O modelo pode devolver a mensagem padrao com ou sem acentos; a comparacao
+    precisa reconhecer as duas formas para que os fallbacks continuem valendo.
+    """
+    return normalize_text(text or "") == normalize_text(INSUFFICIENT_MSG)
 
 
 def has_min_evidence(chunks: list[RetrievedChunk]) -> bool:

@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import json
+import mimetypes
+import os
 import threading
 from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import unquote, urlparse
 from uuid import uuid4
 
 from app.application.helpers import summarize_sources
@@ -14,8 +18,8 @@ from app.infrastructure.settings import get_settings
 from app.presentation.cli_chat import is_confirmation_feedback, is_equivalence_feedback, is_error_feedback
 
 
-HOST = "127.0.0.1"
-PORT = 8000
+DEFAULT_HOST = "127.0.0.1"
+DEFAULT_PORT = 8000
 
 
 @dataclass
@@ -53,6 +57,7 @@ def _get_or_create_session(
 
 class ChatHandler(BaseHTTPRequestHandler):
     bot: TitasBotService | None = None
+    static_dir: Path | None = None
     sessions: dict[str, SessionState] = {}
     sessions_lock = threading.Lock()
 
@@ -76,21 +81,7 @@ class ChatHandler(BaseHTTPRequestHandler):
             _json_response(self, 200, {"ok": True, "documents_ready": self._bot().has_documents()})
             return
 
-        if self.path == "/":
-            html = (
-                "<!doctype html><html><head><meta charset='utf-8'><title>TitasBot</title></head>"
-                "<body style='font-family:Arial;padding:24px'>"
-                "<h2>TitasBot Web</h2>"
-                "<p>Endpoint de saude: <code>/health</code></p>"
-                "<p>Endpoint de chat: <code>POST /chat</code></p>"
-                "<pre>{\"question\":\"qual foi o primeiro nome da equipe?\",\"session_id\":\"opcional\"}</pre>"
-                "</body></html>"
-            ).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(html)))
-            self.end_headers()
-            self.wfile.write(html)
+        if self._serve_static_asset():
             return
 
         _json_response(self, 404, {"error": "Not found"})
@@ -176,15 +167,73 @@ class ChatHandler(BaseHTTPRequestHandler):
             },
         )
 
+    def _serve_static_asset(self) -> bool:
+        static_dir = self.static_dir
+        if static_dir is None:
+            return False
+
+        parsed_path = unquote(urlparse(self.path).path)
+        relative_path = parsed_path.lstrip("/") or "index.html"
+        requested = (static_dir / relative_path).resolve()
+
+        try:
+            requested.relative_to(static_dir)
+        except ValueError:
+            _json_response(self, 404, {"error": "Not found"})
+            return True
+
+        if requested.is_dir():
+            requested = requested / "index.html"
+
+        if not requested.exists() or not requested.is_file():
+            requested = static_dir / "index.html"
+            if not requested.exists():
+                return False
+
+        content_type = mimetypes.guess_type(str(requested))[0] or "application/octet-stream"
+        body = requested.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-cache" if requested.name == "index.html" else "public, max-age=31536000")
+        self.end_headers()
+        self.wfile.write(body)
+        return True
+
+
+def _runtime_host() -> str:
+    return os.getenv("HOST", DEFAULT_HOST)
+
+
+def _runtime_port() -> int:
+    return int(os.getenv("PORT", str(DEFAULT_PORT)))
+
+
+def _static_dir() -> Path | None:
+    configured = os.getenv("FRONT_DIST_DIR")
+    candidates = []
+    if configured:
+        candidates.append(Path(configured))
+    candidates.append(Path(__file__).resolve().parents[3] / "front" / "dist")
+
+    for candidate in candidates:
+        resolved = candidate.resolve()
+        if (resolved / "index.html").exists():
+            return resolved
+    return None
+
 
 def main() -> None:
     load_project_env()
     settings = get_settings()
     ChatHandler.bot = TitasBotService(settings)
+    ChatHandler.static_dir = _static_dir()
     ChatHandler.sessions = {}
     ChatHandler.sessions_lock = threading.Lock()
-    server = ThreadingHTTPServer((HOST, PORT), ChatHandler)
-    print(f"TitasBot Web ativo em http://{HOST}:{PORT}")
+    host = _runtime_host()
+    port = _runtime_port()
+    server = ThreadingHTTPServer((host, port), ChatHandler)
+    print(f"TitasBot Web ativo em http://{host}:{port}")
     print("Health: GET /health")
     print("Chat:   POST /chat")
     server.serve_forever()

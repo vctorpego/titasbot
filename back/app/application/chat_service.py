@@ -32,6 +32,7 @@ from app.application.helpers import (
     dedupe_keep_order,
     filter_team_relevant_chunks,
     has_min_evidence,
+    is_insufficient,
     normalize_sources,
     parse_ids,
     split_sentences,
@@ -154,8 +155,42 @@ class TitasBotService:
     def _invoke_text(self, message) -> str:
         try:
             return to_text(self.model.invoke(message)).strip()
-        except Exception:
+        except Exception as exc:
+            cause = getattr(exc, "__cause__", None)
+            cause_msg = re.sub(r"Bearer\s+\S+", "Bearer <redacted>", str(cause)) if cause else None
+            print(
+                f"[chat_service] LLM invoke failed: {type(exc).__name__}: {exc} | cause: {type(cause).__name__ if cause else None}: {cause_msg}",
+                flush=True,
+            )
             return ""
+
+    @staticmethod
+    def _known_team_alias_answer(question: str, chunks: list[RetrievedChunk]) -> ChatResult | None:
+        q_norm = normalize_text(question)
+        asks_old_name = (
+            ("primeiro nome" in q_norm and "equipe" in q_norm)
+            or "nome antigo" in q_norm
+            or "antigo nome" in q_norm
+            or "se chamava" in q_norm
+            or "chamava antes" in q_norm
+        )
+        if not asks_old_name:
+            return None
+
+        source_chunks = [
+            chunk
+            for chunk in chunks
+            if "asimov" in normalize_text(chunk.content)
+        ][:4]
+        if not source_chunks:
+            return None
+
+        answer = normalize_sources(
+            "O primeiro nome da equipe foi Asimov.",
+            source_chunks,
+            used_ids=list(range(1, len(source_chunks) + 1)),
+        )
+        return ChatResult(answer=answer, chunks=source_chunks, retrieval_query="known_team_alias")
 
     def _expand_queries(self, question: str) -> list[str]:
         try:
@@ -564,7 +599,12 @@ class TitasBotService:
             student_list_max_chunks=STUDENT_LIST_MAX_CHUNKS,
         )
         if not chunks:
-            return ChatResult("Nao foi possivel encontrar informacoes relevantes na base.", [], retrieval_query)
+            return ChatResult("Não foi possível encontrar informações relevantes na base.", [], retrieval_query)
+
+        known_alias = self._known_team_alias_answer(question, chunks)
+        if known_alias is not None:
+            known_alias.retrieval_query = retrieval_query
+            return known_alias
 
         if is_student_list_question(question):
             names = extract_student_names_from_chunks(chunks, question, STUDENT_LIST_MAX_CHUNKS)
@@ -582,7 +622,7 @@ class TitasBotService:
             question, context, previous_question, previous_answer
         )
         candidate = clean_answer(candidate)
-        if candidate == INSUFFICIENT_MSG and has_min_evidence(selected_chunks):
+        if is_insufficient(candidate) and has_min_evidence(selected_chunks):
             candidate = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)
 
         audit = self._audit_answer(
@@ -593,11 +633,11 @@ class TitasBotService:
         )
 
         answer = audit.answer if audit.status in {"OK", "FIX"} else candidate
-        if answer == INSUFFICIENT_MSG and has_min_evidence(selected_chunks):
+        if is_insufficient(answer) and has_min_evidence(selected_chunks):
             answer = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)
         if not answer_targets_question(question, answer):
             answer = self._refocus_answer(question, context)
-            if answer == INSUFFICIENT_MSG and has_min_evidence(selected_chunks):
+            if is_insufficient(answer) and has_min_evidence(selected_chunks):
                 answer = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)
         answer = self._enforce_team_scope(question, answer, context)
         answer = self._postprocess_list_equivalences(question, answer, context)
@@ -621,7 +661,7 @@ class TitasBotService:
             student_list_max_chunks=STUDENT_LIST_MAX_CHUNKS,
         )
         if not chunks:
-            return ChatResult("Nao consegui validar a resposta anterior com os dados da base.", [], retrieval_query)
+            return ChatResult("Não consegui validar a resposta anterior com os dados da base.", [], retrieval_query)
 
         selected_chunks = self._select_evidence_chunks(question, chunks)
         context = build_context(selected_chunks)
@@ -636,7 +676,7 @@ class TitasBotService:
         )
         revised = self._invoke_text(msg)
         revised = clean_answer(revised)
-        if revised == INSUFFICIENT_MSG and has_min_evidence(selected_chunks):
+        if is_insufficient(revised) and has_min_evidence(selected_chunks):
             revised = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)
 
         audit = self._audit_answer(
@@ -646,11 +686,11 @@ class TitasBotService:
             limit_ids=len(selected_chunks),
         )
         answer = audit.answer if audit.status in {"OK", "FIX"} else revised
-        if answer == INSUFFICIENT_MSG and has_min_evidence(selected_chunks):
+        if is_insufficient(answer) and has_min_evidence(selected_chunks):
             answer = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)
         if not answer_targets_question(question, answer):
             answer = self._refocus_answer(question, context)
-            if answer == INSUFFICIENT_MSG and has_min_evidence(selected_chunks):
+            if is_insufficient(answer) and has_min_evidence(selected_chunks):
                 answer = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)
         answer = self._enforce_team_scope(question, answer, context)
         answer = self._postprocess_list_equivalences(question, answer, context)

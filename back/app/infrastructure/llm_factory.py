@@ -82,7 +82,12 @@ def build_chat_model(
     do client), a funcao devolve um wrapper fino que tenta com `temperature` e,
     se a API recusar especificamente por causa dele, tenta de novo sem o
     parametro -- sem exigir uma lista manual de quais modelos aceitam ou nao.
+
+    Timeout: provedores compativeis com a API OpenAI, incluindo DeepSeek,
+    aceitam `timeout`. Sem um teto explicito, uma chamada de avaliacao pode
+    ficar presa por tempo indefinido em instabilidade de rede/provedor.
     """
+    kwargs.setdefault("timeout", 120)
     resolved = resolve_provider(model, provider)
     with_temp = init_chat_model(model, model_provider=resolved, temperature=temperature, **kwargs)
     without_temp = None

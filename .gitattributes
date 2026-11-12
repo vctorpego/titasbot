@@ -1,0 +1,7 @@
+# Scripts e arquivos de configuracao que rodam em Linux precisam de LF,
+# mesmo quando editados no Windows: um CRLF no shebang quebra o container.
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+Caddyfile text eol=lf

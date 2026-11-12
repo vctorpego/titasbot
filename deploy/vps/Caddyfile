@@ -1,0 +1,25 @@
+# Proxy reverso do TitasBot.
+# SITE_ADDRESS vem do .env:
+#   - um dominio (ex.: titasbot.exemplo.com.br) => HTTPS automatico Let's Encrypt
+#   - ":80"                                      => so HTTP, para acesso por IP
+
+{$SITE_ADDRESS} {
+	encode zstd gzip
+
+	reverse_proxy app:8080 {
+		transport http {
+			dial_timeout 10s
+			# Uma pergunta aciona varias chamadas de LLM em sequencia
+			# (geracao + auditoria + escopo). Os timeouts padrao de 1 min
+			# cortariam respostas legitimas.
+			response_header_timeout 300s
+			read_timeout 300s
+			write_timeout 300s
+		}
+	}
+
+	log {
+		output stdout
+		format console
+	}
+}

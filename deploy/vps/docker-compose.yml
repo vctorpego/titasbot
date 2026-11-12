@@ -1,0 +1,75 @@
+# Stack de producao do TitasBot na VPS.
+# Fica em /opt/titasbot/docker-compose.yml no servidor.
+#
+# A imagem NAO e construida aqui: o GitHub Actions constroi e publica em
+# ghcr.io a cada push na main, e a VPS so faz `docker compose pull`.
+# Com 1 GB de RAM, compilar o frontend (npm) no servidor derrubaria a maquina.
+
+name: titasbot
+
+services:
+  app:
+    image: ${TITASBOT_IMAGE:-ghcr.io/vctorpego/titasbot:latest}
+    container_name: titasbot-app
+    restart: unless-stopped
+    # .env guarda OPENAI_API_KEY e as demais chaves (nunca vai para o git).
+    env_file:
+      - .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8080
+      BASE_DIR: /app/back/base
+      CHROMA_DB_PATH: /data/chroma
+      CHROMA_COLLECTION: titas_docs
+      FRONT_DIST_DIR: /app/front/dist
+    volumes:
+      # Indice vetorial persistente: sobrevive a deploys e evita reprocessar
+      # os PDFs (e pagar embeddings) a cada atualizacao.
+      - chroma:/data
+    expose:
+      - "8080"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=5)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      # A 1a subida pode gerar o indice vetorial inteiro; nao marque como
+      # unhealthy enquanto isso.
+      start_period: 15m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  proxy:
+    image: caddy:2.10-alpine
+    container_name: titasbot-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      # Dominio do site. Com um dominio real, o Caddy emite e renova o
+      # certificado Let's Encrypt sozinho. Sem dominio, use ":80".
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  chroma:
+  caddy_data:
+  caddy_config:

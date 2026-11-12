@@ -55,6 +55,40 @@ $env:DEEPEVAL_CASE_SET="all"; $env:DEEPEVAL_METRIC_SET="full"; .\venv\Scripts\de
 
 Os evals usam `OPENAI_API_KEY` e exigem a base vetorial ja criada.
 
+## Estudo comparativo de metricas: tradicionais x LLM (atual)
+
+Objetivo do TCC: descobrir **qual metodo avalia melhor** as respostas do chatbot -- metricas
+tradicionais (BLEU, chrF, ROUGE, METEOR, F1, cosseno, BERTScore e a formula do projeto de
+referencia) ou metricas do DeepEval que usam LLM (GEval Correctness, Answer Relevancy,
+Faithfulness e Hallucination). Metodologia completa em `docs/metodologia_metricas.md`.
+
+- **Modelos medianos** (com e sem RAG): `gpt-5-mini`, `claude-haiku-4-5-20251001`, `deepseek-chat`.
+- **Verdade**: gabarito oficial decomposto em fatos-chave (`tests/evals/metric_eval_annotations.json`);
+  resposta correta se cobrir o minimo de fatos do seu tipo (fato curto 100%, descritiva 75%, listas 80%).
+- **Meta-avaliacao**: cada metrica vira classificador; AUC, varredura de thresholds **global** e
+  **estratificada por tipo de resposta**, validacao cruzada leave-one-model-out, ranking de modelos,
+  custo, tempo e estabilidade das metricas DeepEval.
+- **LLM de apoio do DeepEval**: GPT (`DEEPEVAL_EVAL_PROVIDER` / `DEEPEVAL_EVAL_MODEL`, padrao `gpt-5-nano`).
+
+```powershell
+pip install -r requirements-eval.txt
+.\venv\Scripts\python.exe -m nltk.downloader wordnet omw-1.4   # para o METEOR (opcional)
+
+# 1) respostas (pago; retomavel)  -- smoke test: $env:EVAL_CASE_LIMIT="3"; $env:EVAL_MODELS="deepseek"
+.\venv\Scripts\python.exe scripts\generate_answers.py
+# 2) metricas; primeiro veja quantas avaliacoes DeepEval faltam
+$env:EVAL_DRY_RUN="1"; .\venv\Scripts\python.exe scripts\score_answers.py; Remove-Item Env:EVAL_DRY_RUN
+.\venv\Scripts\python.exe scripts\score_answers.py
+# 3) analise (sem API) -> avaliacao_metricas/comparacao_metricas.html
+.\venv\Scripts\python.exe scripts\analyze_metrics.py
+```
+
+Revisao humana: no explorador do HTML, marque rotulos que discordar da verdade automatica, baixe
+`rotulos_revisados.csv`, salve em `avaliacao_metricas/` e rode so a etapa 3 de novo.
+
+As secoes abaixo (`evaluate_models.py` e `evaluate_rag_four_metrics.py`) sao as rodadas anteriores
+do projeto, mantidas como historico.
+
 ## Avaliacao comparativa de modelos (multi-provedor)
 
 Compara **3 provedores** (OpenAI, Anthropic/Claude e DeepSeek), cada um em **duas condicoes**
@@ -109,6 +143,29 @@ Saidas em `avaliacao_modelos/`:
 - `metricas_referencia_por_threshold.csv` (taxa de aprovacao do avaliador de referencia)
 - `avaliacao_modelos.json`
 - `avaliacao_modelos.html`, `comparacao_metricas.html`, `como_funciona.html` (visualizador)
+
+## Avaliacao RAG em 4 metricas
+
+Executa uma rodada menor e mais explicavel, focada somente no DeepSeek e em 20
+perguntas oficiais do gabarito. A avaliacao separa o RAG em duas etapas:
+
+- **Recuperacao**: `Hit@5` e `Precision@5`, usando evidencias anotadas em
+  `tests/evals/rag_stage_eval_cases.json`.
+- **Geracao**: `Answer Correctness` e `Faithfulness`, medidas pelo DeepEval
+  contra o gabarito e o contexto recuperado.
+
+```powershell
+$env:EVAL_DEEPSEEK_MODEL="deepseek-chat"
+$env:DEEPEVAL_EVAL_MODEL="gpt-5-nano"
+$env:DEEPEVAL_EVAL_PROVIDER="openai"
+.\venv\Scripts\python.exe scripts\evaluate_rag_four_metrics.py
+```
+
+Saidas em `avaliacao_rag_4_metricas/`:
+
+- `rag_4_metricas.json`
+- `rag_4_metricas.csv`
+- `rag_4_metricas.html`
 
 ### Configuracoes (env)
 

@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 const SESSION_KEY = 'titasbot_session_id';
 
 export interface ChatResponse {
@@ -69,13 +69,13 @@ export async function sendMessageToBackend(message: string): Promise<ChatRespons
         data.response ||
         data.text ||
         data.resposta ||
-        'Resposta recebida, mas o formato nao foi reconhecido pelo frontend.',
+        'Resposta recebida, mas o formato não foi reconhecido pelo frontend.',
     };
   } catch (error) {
     console.error('Erro ao comunicar com o backend Python:', error);
 
     if (error instanceof TypeError) {
-      throw new Error('Nao foi possivel conectar ao servidor. Verifique se o backend Python esta rodando.');
+      throw new Error('Não foi possível conectar ao servidor. Verifique se o backend Python está rodando.');
     }
 
     if (error instanceof Error) {

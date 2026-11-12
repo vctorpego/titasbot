@@ -164,7 +164,7 @@ export default function App() {
             </motion.div>
             <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-center text-gray-900 dark:text-gray-100">Como posso ajudar?</h2>
             <div className="text-gray-500 dark:text-gray-400 text-center mb-10 max-w-md text-sm leading-relaxed">
-              <p>Olá, eu sou o TitãsBot, o assistente virtual da equipe Titãs da Robótica do IFES Colatina.</p>
+              <p>Olá, eu sou o TitãsBot, o assistente virtual da equipe Titãs da Robótica do Ifes – Campus Colatina.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">
@@ -252,7 +252,7 @@ export default function App() {
             </div>
           </form>
           <div className="text-center mt-3">
-            <span className="text-[11px] text-gray-500 font-medium">© Ifes Colatina. Todos os direitos reservados.</span>
+            <span className="text-[11px] text-gray-500 font-medium">© Ifes – Campus Colatina. Todos os direitos reservados.</span>
           </div>
         </div>
       </div>
