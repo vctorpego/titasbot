@@ -62,12 +62,15 @@ from app.infrastructure.text_utils import extract_terms, normalize_text
 from app.infrastructure.vectorstore import get_vectorstore
 
 # Termos que nao distinguem um assunto de outro: identidade da equipe (estao
-# em quase todo trecho) e palavras de instrucao de lista.
+# em quase todo trecho), palavras interrogativas e de instrucao. Se a
+# pergunta so tiver termos assim ("Quem sao os Titas da Robotica?"), o
+# fallback volta a usar todos os termos, como antes.
 _GENERIC_QUESTION_TERMS = frozenset(
     {
         "equipe", "titas", "robotica", "asimov", "ifes", "campus", "colatina",
         "liste", "listar", "lista", "todos", "todas", "ordem", "alfabetica",
-        "quais", "qual", "voces", "ja", "foram", "existiram",
+        "quais", "qual", "quem", "porque", "voces", "ja", "foram", "existiram",
+        "fale", "conte", "explique", "diga", "me", "gostaria", "saber",
     }
 )
 

@@ -89,6 +89,16 @@ def test_extractive_fallback_ignores_sentences_only_about_the_team() -> None:
     assert "encontrei" in answer.lower()
 
 
+def test_extractive_fallback_still_works_when_question_is_only_about_the_team() -> None:
+    # Sem termo especifico ("Quem sao os Titas da Robotica?"), o fallback usa
+    # todos os termos, como antes -- frases sobre a equipe sao a resposta.
+    bot = TitasBotService.__new__(TitasBotService)
+    chunks = [_ctx_chunk("Os Titãs da Robótica são a equipe de robótica do Ifes Campus Colatina, criada em 2015.")]
+    answer = bot._extractive_fallback_answer("Quem são os Titãs da Robótica?", chunks)
+    assert "encontrei" not in answer.lower()
+    assert "Titãs" in answer
+
+
 def test_extractive_fallback_keeps_sentences_on_topic() -> None:
     bot = TitasBotService.__new__(TitasBotService)
     chunks = [_ctx_chunk("Os patrocinadores da equipe ao longo dos anos incluíram empresas de tecnologia da região.")]
