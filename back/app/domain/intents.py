@@ -43,6 +43,14 @@ def precision_query_boost(question: str) -> str:
         hints.extend(["ingresso", "processo seletivo", "estudantes do ifes", "elegibilidade"])
     if any(k in q for k in ("projeto", "projetos")):
         hints.extend(["ensino", "pesquisa", "extensao", "acoes", "iniciativas"])
+    if any(k in q for k in ("tecnolog", "ferramenta", "linguagem", "plataforma", "equipamento")):
+        # O atalho da tela inicial ("Quais tecnologias utilizam?") nao tem
+        # sujeito nem termo de dominio; sem isto a busca as vezes trazia
+        # trechos que so citavam uma linguagem de passagem.
+        hints.extend([
+            "tecnologias utilizadas pela equipe", "kits de robótica", "linguagens de programação",
+            "plataformas", "sensores", "componentes eletrônicos", "impressão 3D",
+        ])
     if any(k in q for k in ("patrocin", "apoiador", "parceir")):
         hints.extend(["patrocinadores", "apoiadores", "parceiros", "apoio financeiro", "empresas"])
     if any(k in q for k in ("competicao", "competicoes", "obr", "cbr", "robocup", "larc")):

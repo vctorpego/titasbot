@@ -132,7 +132,11 @@ expansao da consulta, selecao de evidencias, geracao, auditoria, escopo de
 equipe e canonicalizacao de listas). Sao os modelos da familia GPT-5, que
 gastam tempo raciocinando em cada etapa.
 
-Caminhos para encurtar, em ordem de risco: baixar o `reasoning_effort` das
-chamadas auxiliares, rodar em paralelo as etapas independentes, ou usar um
-modelo menor so nas etapas de apoio. Qualquer um mexe no pipeline descrito no
-TCC — avalie antes de mudar.
+**Otimizado na mesma noite** (commit `5978585`): mediana de ~57 s para
+~15–18 s, com a mesma qualidade, via `CHAT_REASONING_EFFORT=low` e
+`CHAT_FAST_REASONING_EFFORT=minimal` mais ajustes de prompt e dois bugs de
+recuperacao. Analise completa, medicoes e como desfazer em
+`estudo_defesa/OTIMIZACAO_TEMPO_RESPOSTA.md`.
+
+Para ver o tempo de cada etapa no log: `CHAT_LOG_TIMINGS=1` no `.env`,
+`docker compose up -d` e `docker compose logs -f app`.
