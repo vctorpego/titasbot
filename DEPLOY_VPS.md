@@ -1,5 +1,7 @@
 # Deploy do TitasBot na VPS (Locaweb)
 
+**No ar em <https://vps73870.publiccloud.com.br>.**
+
 Substitui o deploy no Cloud Run (`DEPLOY_GCP.md`), que no plano gratuito ficava
 lento e instavel.
 
@@ -106,7 +108,31 @@ docker compose -f /opt/titasbot/docker-compose.yml restart app
 
 ## Dominio e HTTPS
 
-Com um dominio apontando para o IP da VPS, basta editar `SITE_ADDRESS` no
-`/opt/titasbot/.env` e rodar `docker compose up -d`: o Caddy emite e renova o
-certificado Let's Encrypt sozinho. Sem dominio, `SITE_ADDRESS=:80` serve o site
-por HTTP no IP (o navegador marca como "nao seguro").
+HTTPS esta ativo em `vps73870.publiccloud.com.br`, o proprio hostname da
+Locaweb: ele ja resolve publicamente, entao o Caddy obteve o certificado
+Let's Encrypt por ACME (tls-alpn-01) e renova sozinho. Nao foi preciso comprar
+dominio.
+
+Para trocar por um dominio proprio: aponte o DNS para 191.252.109.57, edite
+`SITE_ADDRESS` no `/opt/titasbot/.env` e rode `docker compose up -d`.
+`SITE_ADDRESS=:80` volta para HTTP puro no IP.
+
+## Tempo de resposta
+
+Medicao de 2026-11-11, pelas mesmas perguntas:
+
+| Pergunta | gpt-5-nano | gpt-5-mini |
+|---|---|---|
+| Pergunta direta ("primeiro nome da equipe") | 12,2 s | 8,7 s |
+| Pergunta aberta / de lista | ~82 s | ~84 s |
+
+O gargalo **nao e o modelo**: trocar nano por mini nao mudou o tempo. Uma
+resposta passa por varias chamadas de LLM encadeadas (decisao de contexto,
+expansao da consulta, selecao de evidencias, geracao, auditoria, escopo de
+equipe e canonicalizacao de listas). Sao os modelos da familia GPT-5, que
+gastam tempo raciocinando em cada etapa.
+
+Caminhos para encurtar, em ordem de risco: baixar o `reasoning_effort` das
+chamadas auxiliares, rodar em paralelo as etapas independentes, ou usar um
+modelo menor so nas etapas de apoio. Qualquer um mexe no pipeline descrito no
+TCC — avalie antes de mudar.
