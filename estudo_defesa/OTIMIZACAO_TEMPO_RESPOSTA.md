@@ -161,7 +161,7 @@ tecnologias trouxe LEGO EV3, Spike Prime, Arduino, Raspberry Pi e impressão
 | "Por que mudou?" | entendeu: registro de marca | 13 s |
 | "Oi, tudo bem?" | saudação | 0,1 s |
 
-29 testes unitários passam (9 novos em `tests/test_latency_optimizations.py`),
+30 testes unitários passam (12 novos em `tests/test_latency_optimizations.py`),
 e o CI roda todos antes de publicar.
 
 ## Limitações que continuam (não mexi)
