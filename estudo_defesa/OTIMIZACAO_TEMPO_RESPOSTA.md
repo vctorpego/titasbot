@@ -10,7 +10,7 @@ publicado em <https://vps73870.publiccloud.com.br>.
 |---|---|---|
 | Tempo mediano (bancada, 12 perguntas) | **56,8 s** | **~15–18 s** |
 | Pior caso (bancada) | 103,7 s | ~26 s |
-| Produção, perguntas abertas | 81–96 s | PROD_DEPOIS |
+| **Produção, as mesmas 12 perguntas** | perguntas abertas em 81–96 s | **mediana 16,1 s, máx. 23,0 s** |
 | "O que são os Titãs da Robótica?" | 68 s, 1.812 caracteres | 13 s, ~580 caracteres |
 | Atalhos da tela inicial falhando com "não encontrei" | aleatório (seu print) | 0 de 12 execuções |
 | "Liste os patrocinadores" | 0 de 14 sempre | 14 de 14 em parte das execuções |
@@ -145,6 +145,22 @@ Itens da referência que cada resposta acerta, várias execuções:
 
 Atalhos da tela inicial, 3 execuções cada: **0 falhas em 12**, entre 12 e 22 s.
 
+**Em produção** (site real, depois do deploy): classificações 7/9 e
+orientadores 7/8 — iguais ao baseline —, nenhuma palavra sem acento, nenhum
+título "Resumo"/"Fatos" e nenhum vazamento da regra sobre Asimov. A lista de
+tecnologias trouxe LEGO EV3, Spike Prime, Arduino, Raspberry Pi e impressão
+3D, como a referência.
+
+**Conversa com seguimento** (testada no site, na mesma sessão):
+
+| Turno | Resposta | Tempo |
+|---|---|---|
+| "Quem foram os orientadores em 2018?" | os 8 orientadores | 17 s |
+| "E em 2019?" | entendeu o seguimento: os 9 de 2019 | 18 s |
+| "Qual era o primeiro nome da equipe?" | Asimov | 5 s |
+| "Por que mudou?" | entendeu: registro de marca | 13 s |
+| "Oi, tudo bem?" | saudação | 0,1 s |
+
 29 testes unitários passam (9 novos em `tests/test_latency_optimizations.py`),
 e o CI roda todos antes de publicar.
 
@@ -159,11 +175,28 @@ Todas já existiam no baseline **e** no seu estudo de setembro:
 - **Quem idealizou.** Às vezes aponta "conflito" entre Renato Lopes de
   Oliveira e Renan Osório Rios — a base cita os dois em papéis diferentes.
 - **Projetos.** Lista 2 ou 3; a referência tem bem mais.
+- **Participação.** Melhorou ("em regra, estudantes do Ifes"), mas ainda dá
+  foco aos cursos técnicos e de SI e às vezes omite o rendimento escolar. A
+  causa: **os PDFs não dizem "qualquer estudante, independentemente do
+  curso"** — a sua referência vai além do que está na base. A correção certa
+  é acrescentar esse texto à base de conhecimento, não forçar pelo prompt
+  (seria o modelo afirmar algo sem evidência).
 - **Patrocinadores.** Acerta os 14 só quando a busca traz o trecho da lista.
 - **Variação entre execuções.** Os modelos GPT-5 **não aceitam
   `temperature=0`** — o código descarta o parâmetro e o modelo roda com
   temperatura padrão. A mesma pergunta pode sair diferente a cada vez. Isso
   vale também para as respostas do seu estudo.
+
+## Para o dia da defesa
+
+- **Não faça push na `main` durante a apresentação.** Cada deploy recria o
+  container e o site fica ~15 s fora do ar (vi dois erros 502 durante um
+  deploy). Mudanças só em `.md` ou em `estudo_defesa/` não disparam mais
+  deploy.
+- Faça uma pergunta qualquer alguns minutos antes de começar: confirma que
+  está tudo no ar.
+- Os atalhos da tela inicial levam ~13–23 s. Perguntas factuais diretas
+  ("primeiro nome da equipe") respondem em ~4 s, e saudações na hora.
 
 ## Impacto no TCC
 

@@ -5,6 +5,11 @@ name: Deploy producao
 on:
   push:
     branches: [main]
+    # Documentacao e material da defesa nao entram na imagem: nao ha por que
+    # rebuildar e reiniciar a producao por eles.
+    paths-ignore:
+      - "**/*.md"
+      - "estudo_defesa/**"
   workflow_dispatch:
 
 # Nunca dois deploys ao mesmo tempo no mesmo servidor.
