@@ -1,5 +1,12 @@
 # Deploy do TitasBot no Google Cloud
 
+> **Substituido.** A producao roda hoje na VPS da Locaweb — veja
+> [DEPLOY_VPS.md](DEPLOY_VPS.md). Este documento fica como historico do deploy
+> anterior no Cloud Run, que no plano gratuito ficava lento e caia. O
+> `Dockerfile` mudou desde entao: o banco vetorial nao e mais gerado durante o
+> build (nao ha mais o `--secret id=openai_api_key`), e sim no primeiro boot,
+> dentro de um volume.
+
 Este deploy publica o TitasBot como um unico servico Cloud Run no projeto `siadon`, sem reutilizar VM, IP fixo, Cloud SQL ou outros recursos antigos do SIAD.
 
 ## Arquitetura

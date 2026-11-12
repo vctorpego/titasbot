@@ -38,7 +38,7 @@ jobs:
       - name: Rodar testes
         working-directory: back
         run: |
-          pytest -q \
+          python -m pytest -q \
             tests/test_helpers.py \
             tests/test_intents.py \
             tests/test_chat_service_rules.py \
@@ -105,7 +105,9 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 \
             "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
             'cd /opt/titasbot
-             for i in $(seq 1 30); do
+             # Ate 15 min: na primeira subida (ou quando a base muda) o
+             # container gera o indice vetorial antes de atender.
+             for i in $(seq 1 90); do
                if docker compose exec -T app python -c \
                    "import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8080/health\", timeout=5)" \
                    >/dev/null 2>&1; then
