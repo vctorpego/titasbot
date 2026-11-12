@@ -15,3 +15,11 @@ langchain-google-genai==4.1.1
 # e baixado no 1o uso. rouge-score calcula a similaridade lexical (ROUGE-L).
 sentence-transformers
 rouge-score
+
+# Estudo comparativo de metricas (scripts/generate_answers.py, score_answers.py,
+# analyze_metrics.py). nltk: BLEU, chrF e METEOR (METEOR precisa de
+# `python -m nltk.downloader wordnet omw-1.4`). bert-score: BERTScore (opcional;
+# baixa o modelo BERTSCORE_MODEL no 1o uso). scipy: correlacoes e Kendall tau.
+nltk
+bert-score
+scipy

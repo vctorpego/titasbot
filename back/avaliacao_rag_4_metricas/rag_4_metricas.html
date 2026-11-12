@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Avaliacao RAG - 4 metricas</title>
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fb; color: #111827; }
+    main { max-width: 1220px; margin: 0 auto; padding: 32px 20px; }
+    h1 { margin: 0 0 8px; }
+    h2 { margin: 28px 0 12px; }
+    .lead, .muted { color: #4b5563; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 24px; }
+    .card { background: #fff; border: 1px solid #d9e2ec; border-radius: 8px; padding: 16px; }
+    .card strong { display: block; font-size: 30px; color: #0f766e; margin-bottom: 5px; }
+    .card span { color: #4b5563; font-size: 13px; }
+    .table-wrap { overflow-x: auto; background: #fff; border: 1px solid #d9e2ec; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 9px 11px; border-bottom: 1px solid #e5e7eb; text-align: left; white-space: nowrap; }
+    th { background: #f9fafb; }
+    .methodology { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 22px 0 26px; }
+    .method { background: #fff; border: 1px solid #d9e2ec; border-radius: 8px; padding: 16px; }
+    .method h3 { margin: 0 0 8px; font-size: 16px; }
+    .method p { margin: 7px 0; color: #374151; line-height: 1.45; }
+    .formula { display: block; margin-top: 8px; padding: 8px 10px; border-radius: 6px; background: #f3f4f6; color: #111827; font-family: Consolas, monospace; font-size: 13px; white-space: normal; }
+    .cases { display: grid; gap: 14px; }
+    .case { background: #fff; border: 1px solid #d9e2ec; border-radius: 8px; padding: 16px; }
+    .case h3 { margin: 0 0 7px; font-size: 17px; }
+    .case .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .tag { display: inline-flex; padding: 3px 8px; border-radius: 6px; background: #eef2ff; color: #312e81; font-size: 12px; font-weight: 700; }
+    .tag.ok { background: #ecfdf5; color: #065f46; }
+    .tag.warn { background: #fff7ed; color: #9a3412; }
+    .tag.bad { background: #fef2f2; color: #991b1b; }
+    .columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr); gap: 14px; margin-top: 12px; }
+    .answer, .expected, .chunks { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; background: #f9fafb; }
+    .answer p, .expected p { white-space: pre-wrap; }
+    .chunk { margin: 0 0 10px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; }
+    .chunk:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+    .chunk strong { display: block; margin-bottom: 4px; }
+    .chunk p { margin: 5px 0; white-space: pre-wrap; }
+    @media (max-width: 980px) { .columns { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Avaliacao RAG - 4 metricas</h1>
+    <p class="lead">DeepSeek com RAG avaliado em duas etapas: recuperacao dos trechos e geracao da resposta.</p>
+    <section class="cards"><article class="card"><strong>45.0%</strong><span>Hit@5 - recuperacao</span></article><article class="card"><strong>30.0%</strong><span>Precision@5 - recuperacao</span></article><article class="card"><strong>34.0%</strong><span>Answer Correctness - geracao</span></article><article class="card"><strong>88.8%</strong><span>Faithfulness - geracao</span></article></section>
+    <h2>Como o teste e calculado</h2>
+    <section class="methodology">
+        <article class="method">
+          <h3>Fluxo do teste</h3>
+          <p>Cada pergunta do gabarito e enviada ao TitasBot usando DeepSeek com RAG. O sistema salva a resposta final e os cinco primeiros trechos recuperados, mantendo fonte, pagina e score interno do recuperador.</p>
+          <code class="formula">Entrada: pergunta oficial + gabarito + evidencias anotadas</code>
+        </article>
+        
+        <article class="method">
+          <h3>Hit@5</h3>
+          <p>Verifica se pelo menos um dos cinco primeiros trechos contem evidencia suficiente para responder a pergunta. A suficiencia e definida pelas evidencias anotadas em rag_stage_eval_cases.json.</p>
+          <code class="formula">Hit@5 = 1 se existe chunk suficiente no top 5; senao 0</code>
+        </article>
+        
+        <article class="method">
+          <h3>Precision@5</h3>
+          <p>Mede quantos dos cinco primeiros trechos recuperados sao relevantes. Um trecho e relevante quando contem a quantidade minima de termos de evidencia configurada para aquele caso.</p>
+          <code class="formula">Precision@5 = chunks relevantes no top 5 / 5</code>
+        </article>
+        
+        <article class="method">
+          <h3>Answer Correctness</h3>
+          <p>Avalia a resposta final contra a resposta do gabarito usando DeepEval. O criterio penaliza fatos ausentes, anos errados, listas incompletas, classificacoes erradas e informacoes inventadas.</p>
+          <code class="formula">Aprovado quando score &gt;= threshold do caso (padrao 0.55)</code>
+        </article>
+        
+        <article class="method">
+          <h3>Faithfulness</h3>
+          <p>Avalia se a resposta final foi fiel ao contexto recuperado. A pergunta aqui nao e se o gabarito foi coberto, mas se a resposta contradiz ou inventa algo alem dos trechos fornecidos.</p>
+          <code class="formula">Aprovado quando score &gt;= threshold do caso (padrao 0.70)</code>
+        </article>
+        
+        <article class="method">
+          <h3>Diagnostico</h3>
+          <p>Combina as etapas para apontar onde ocorreu o problema: recuperacao, geracao, ambas, ou nenhum erro. Isso separa casos em que o contexto veio ruim de casos em que o contexto estava bom mas a resposta falhou.</p>
+          <code class="formula">ok | retrieval_error | generation_error | both_error</code>
+        </article>
+        </section>
+    <h2>Resumo por categoria</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Categoria</th><th>Casos</th><th>Hit@5</th><th>Precision@5</th><th>Correctness</th><th>Faithfulness</th><th>OK</th><th>Recuperacao</th><th>Geracao</th><th>Ambas</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>historia</td>
+          <td>4</td>
+          <td>75.0%</td>
+          <td>75.0%</td>
+          <td>50.0%</td>
+          <td>100.0%</td>
+          <td>1</td>
+          <td>0</td>
+          <td>2</td>
+          <td>1</td>
+        </tr>
+        
+        <tr>
+          <td>resultados</td>
+          <td>5</td>
+          <td>40.0%</td>
+          <td>24.0%</td>
+          <td>28.0%</td>
+          <td>80.0%</td>
+          <td>0</td>
+          <td>0</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        
+        <tr>
+          <td>orientadores</td>
+          <td>5</td>
+          <td>60.0%</td>
+          <td>28.0%</td>
+          <td>42.0%</td>
+          <td>95.0%</td>
+          <td>1</td>
+          <td>0</td>
+          <td>2</td>
+          <td>2</td>
+        </tr>
+        
+        <tr>
+          <td>metricas_historicas</td>
+          <td>3</td>
+          <td>33.3%</td>
+          <td>13.3%</td>
+          <td>26.7%</td>
+          <td>100.0%</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        
+        <tr>
+          <td>projetos</td>
+          <td>1</td>
+          <td>0.0%</td>
+          <td>0.0%</td>
+          <td>30.0%</td>
+          <td>100.0%</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        
+        <tr>
+          <td>tecnologia</td>
+          <td>1</td>
+          <td>0.0%</td>
+          <td>0.0%</td>
+          <td>20.0%</td>
+          <td>100.0%</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        
+        <tr>
+          <td>financeiro</td>
+          <td>1</td>
+          <td>0.0%</td>
+          <td>0.0%</td>
+          <td>0.0%</td>
+          <td>0.0%</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Casos avaliados</h2>
+    <section class="cases">
+    <article class="case">
+      <h3>#2 historia - q02_qual_era_primeiro_nome_equipe</h3>
+      <p>Qual era o primeiro nome da equipe Titãs da Robótica?</p>
+      <div class="meta">
+        <span class="tag ok">ok</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 100.0%</span>
+        <span class="tag">Correctness: 90.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>O primeiro nome da equipe Titãs da Robótica era &quot;Asimov&quot;.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>O primeiro nome da equipe era Asimov.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.736</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Asimov</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.727</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Asimov</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.718</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Asimov</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 107) | score 0.684</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Asimov</p>
+      <p>de uma mudança em seu nome, o que entristeceu a todos. A partir de agora, os orientadores e os participantes se uniram para discutir ideias. A seguir, o depoimento da professora Joanita Araújo Espanhol sobre o processo de registro da marca dos Titãs da Robótica. A decisão de registrar a marca “Titãs da Robótica” surgiu da necessidade de consolidar uma identidade própria para a equipe. Antes, competíamos sob o nome Asimov, mas, diante de preocupações com possíveis contestações, optamos por escolher um nome que re...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 56) | score 0.648</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Asimov</p>
+      <p>equipe já competiu, destacando a recente expansão rumo a Minas Gerais. Figura 27 – Mapa do Brasil da Equipe Asimov em 2015 Fonte: MapChart 3.1. Criação da equipe de robótica asimov Após a Chamada para Apoio a Projetos 17/2014 feita pelo CNPq e a aprovação do projeto submetido ao mesmo pelo professor Renan Osório Rios, a equipe de robótica do Ifes Campus Colatina foi oficialmente criada. O primeiro nome da equipe, “Asimov”, foi dado em homenagem a Isaac Asimov, bioquímico e um dos maiores escritores de ficção cie...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#4 historia - q04_ano_equipe_foi_criada</h3>
+      <p>Em que ano a equipe foi criada?</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 60.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>A equipe foi criada em 2014, após a Chamada para Apoio a Projetos 17/2014 do CNPq e a aprovação do projeto pelo professor Renan Osório Rios. O início oficial das atividades ocorreu em 2015.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>A equipe foi proposta em 2014, com a submissão do projeto de pesquisa &quot;Robótica educacional para o aprendizado de programação&quot; ao CNPq. Após a aprovação do projeto, as atividades passaram a ser desenvolvidas em 2015, no Ifes Campus Colatina.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 56) | score 0.729</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2014, 2015, CNPq, Ifes Campus Colatina</p>
+      <p>equipe já competiu, destacando a recente expansão rumo a Minas Gerais. Figura 27 – Mapa do Brasil da Equipe Asimov em 2015 Fonte: MapChart 3.1. Criação da equipe de robótica asimov Após a Chamada para Apoio a Projetos 17/2014 feita pelo CNPq e a aprovação do projeto submetido ao mesmo pelo professor Renan Osório Rios, a equipe de robótica do Ifes Campus Colatina foi oficialmente criada. O primeiro nome da equipe, “Asimov”, foi dado em homenagem a Isaac Asimov, bioquímico e um dos maiores escritores de ficção cie...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 56) | score 0.684</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2015, CNPq, Ifes Campus Colatina</p>
+      <p>3. Temporada 2015 O ano de 2015 marcou o início oficial da primeira equipe de robótica do Ifes Campus Colatina. Após a aprovação do CNPq, o projeto que antes vivia em esboços saiu do papel e ganhou nome, forma e personalidade. &quot;Asimov&quot; não era mais apenas uma referência ao mestre da ficção científica, tornava-se agora uma equipe de carne, osso e circuitos, pronta para escrever sua própria história. Este capítulo conta como um grupo de estudantes, movido pela vontade de aprender, deu vida a um projeto que iria mu...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.641</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Ifes Campus Colatina</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.633</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Ifes Campus Colatina</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.587</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2015, Ifes Campus Colatina</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#5 historia - q05_quem_idealizou_criacao_equipe</h3>
+      <p>Quem idealizou a criação da equipe?</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 100.0%</span>
+        <span class="tag">Correctness: 50.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Renato Lopes de Oliveira idealizou a criação da equipe.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>A equipe de robótica foi idealizada por Renato Lopes de Oliveira, enquanto cursava a graduação em Sistemas de Informação no Ifes Campus Colatina.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 6) | score 0.680</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Ifes Campus Colatina</p>
+      <p>da Robótica, com a criação de sua primeira formação composta exclusivamente por alunas. A iniciativa, orientada por um viés inclusivo e transformador, emergiu da percepção crítica acerca da escassa representatividade feminina nas áreas da ciência e tecnologia, em especial no universo da robótica. A Figura 11 apresenta a primeira equipe feminina dos Titãs da Robótica. Figura 11 – Equipe Feminina Fonte: Ifes. O grupo foi responsável por contribuir decisivamente para que o Ifes Campus Colatina fosse reconhecido com...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.635</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Ifes Campus Colatina</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 62) | score 0.617</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Renato Lopes de Oliveira, Sistemas de Informação</p>
+      <p>Formada por Renato Lopes de Oliveira, Alexandre Costa, Artur Schaefer, Rafael dos Santos, Kassio P. Schaider e Matheus de Oliveira Jage, do Bacharelado em Sistemas de Informação, e Caian Monteiro, do Curso Técnico em Informática, a Asimov disputou uma das categorias do torneio, que reunia 21 equipes formadas por estudantes do ensino médio, técnico e superior. As provas envolviam o desenvolvimento de robôs autônomos com sensores, processadores e dispositivos de bordo, capazes de executar tarefas definidas pelas r...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.600</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Sistemas de Informação, Ifes Campus Colatina</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.575</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> Ifes Campus Colatina</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#7 historia - q07_ano_equipe_participou_primeira_competicao</h3>
+      <p>Em que ano a equipe participou da primeira competição?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 40.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>2015</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>A equipe competiu pela primeira vez em 2015 na LARC.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 62) | score 0.768</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2015</p>
+      <p>3.2.4. A primeira competição O ano de 2015 marcou a estreia da equipe Asimov no cenário competitivo da robótica educacional, representando o Ifes Campus Colatina com entusiasmo. Após dez meses de preparação intensa, o grupo embarcou para Vitória, Espírito Santo, onde participou do II Torneio de Robótica da Ufes (TRUFES ), realizado entre os dias 10 e 12 de junho no prédio CT-XII do Centro Tecnológico, no campus de Goiabeiras. Era a primeira vez que os alunos competiam em um evento desse porte, o que tornava a ex...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.701</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2015</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.689</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.671</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 83) | score 0.620</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>competiu na modalidade Seguidor de Linha, alcançando a oitava colocação, um resultado respeitável diante do alto nível técnico das equipes participantes. 5.3.2. OBR A equipe Asimov participou da etapa estadual da Olimpíada Brasileira de Robótica (OBR) em 2017, conquistando a 8ª colocação geral na modalidade prática, realizada em Vitória no dia 12 de agosto. Representando o Ifes Campus Colatina, os alunos Vinícius Nunes, Brenda Comper e Mateus Krause, sob orientação do professor Diego Rossi, demonstraram grande e...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#8 resultados - q08_quais_foram_classificacoes_equipe_temporada</h3>
+      <p>Quais foram as classificações da equipe na temporada de 2015?</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 20.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- 1° lugar (SEK, Liga TRUFES, Nível Regional)
+- 3° lugar (SEK, Liga LARC, Nível Internacional)</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>SEK: 1° lugar — TRUFES (Regional)
+SEK: 3° lugar — LARC (Internacional)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Tabelas.pdf (pagina 1) | score 0.716</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2015, SEK, TRUFES, LARC, 1° lugar, 3° lugar</p>
+      <p>Tabela 1 – Pódios da Equipe Asimov em 2015 Modalidade Classificação Liga Nível SEK 1° lugar TRUFES Regional SEK 3° lugar LARC Internacional Fonte: Autoria Própria Tabela 2 – Orientadores da Equipe Asimov em 2015 Orientador Equipe Igor Carlos Pulini SEK Renan Osório Rios SEK Fonte: Autoria Própria Tabela 3 – Integrantes da Equipe SEK em 2015 Alunos Nível Alexandre Costa Graduação Artur Schaefer Graduação Caian Monteiro de Oliveira Meireles Ensino Médio Kassio Pereira Schaider Graduação Matheus de Oliveira Jage Gr...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#10 resultados - q10_quais_foram_classificacoes_equipe_temporada</h3>
+      <p>Quais foram as classificações da equipe na temporada de 2017?</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 40.0%</span>
+        <span class="tag">Correctness: 50.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- CoSpace: 1° lugar (LARC, Internacional)
+- Futebol 2D: 1° lugar (IRONCup, Nacional)
+- Futebol 2D: 1° lugar (LARC, Internacional)
+- Humanoide: 1° lugar (LARC, Internacional)
+- Prática: 8° lugar (OBR, Regional)
+- Seguidor de Linha: 8° lugar (IRONCup, Nacional)
+- SEK: 2° lugar (TRUFES, Regional)
+- SEK: 3° lugar (TRUFES, Regional)
+- SEK: 4° lugar (LARC, Internacional)
+- Teórica: Medalha de Bronze (LARC, Internacional)</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>CoSpace: 1° lugar — LARC (Internacional)
+Futebol 2D: 1° lugar — IRONCUP (Nacional)
+Futebol 2D: 1° lugar — LARC (Internacional)
+Humanoide: 1° lugar — LARC (Internacional)
+Prática: 8° lugar — OBR (Regional)
+Seguidor de Linha: 8° lugar — IRONCUP (Nacional)
+SEK: 2° lugar — TRUFES (Regional)
+SEK: 3° lugar — TRUFES (Regional)
+SEK: 4° lugar — LARC (Internacional)
+Teórica: Medalha de Bronze — OBR (Nacional)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Tabelas.pdf (pagina 3) | score 0.623</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2017, CoSpace, Futebol 2D, Humanoide, LARC, IRONCUP, SEK, Teórica</p>
+      <p>Rodney Schultz Kuster Graduação Vinicius Zorzanelli Graduação Fonte: Autoria Própria. Tabela 9 – Integrantes da Equipe Teórica em 2016 Alunos Nível Ana Clara Ensino Médio Camila S. Moura Ensino Médio Felipe Cazotti Ensino Médio Lucas Giubert Ensino Médio Lucas Perim Ensino Médio Lucio Ribeiro Ensino Médio Fonte: Autoria Própria. Tabela 10 – Pódios da Equipe Asimov em 2017 Modalidade Classificação Torneio Nível CoSpace 1° lugar LARC Internacional Futebol 2D 1° lugar IRONCup Nacional Futebol 2D 1° lugar LARC Inter...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Tabelas.pdf (pagina 5) | score 0.618</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2017, CoSpace, Futebol 2D, LARC, IRONCUP, Teórica</p>
+      <p>Fonte: Autoria Própria Tabela 17 – Integrantes da Equipe Teórica em 2017 Alunos Nível Arthur Parpaiola Gonçalves Ensino Médio Felipe Lorenzoni Cazotti Ensino Médio Gabriela Araújo dos Santos Ensino Médio João Vitor Jacobsen Ramos Ensino Médio Júlio César Bridi Ensino Médio Larissa de Oliveira Andreatta Ensino Médio Laysa Jacome dos Santos Costalonga Ensino Médio Lucas Perim Ensino Médio Luis Antonio Marchetti Lubiana Ensino Médio Matheus Soprani Silva Ensino Médio Pedro Lucas Alves Pereira Ensino Médio Fonte: Au...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#15 resultados - q15_quais_foram_classificacoes_equipe_temporada</h3>
+      <p>Quais foram as classificações da equipe na temporada de 2022?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 20.0%</span>
+        <span class="tag">Correctness: 0.0%</span>
+        <span class="tag">Faithfulness: 0.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Não encontrei informação suficiente na base para responder com segurança.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Futebol 2D: 2° lugar — IRONCUP (Nacional)
+Prática: 1° lugar — OBR (Regional)
+Prática: 12° lugar — OBR (Nacional)
+SEK: 3° lugar — CBR (Nacional)
+Teórica: Medalha de Bronze — OBR (Nacional)
+Teórica: Medalha de Prata — OBR (Nacional)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.702</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Prática</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.690</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> Futebol 2D, Prática, SEK, Teórica</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.475</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 63) | score 0.453</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>Fonte: Autoria Própria. A seguir, apresenta-se o relato de Caian Monteiro de Oliveira Meireles, integrante da Asimov, a primeira equipe de robótica do Ifes Campus Colatina. Me envolvi com a equipe de robótica quando era aluno do curso Técnico em Informática no Ifes Campus Colatina. Fiquei sabendo do projeto por meio do professor orientador Renan Osório Rios, e foi assim que entrei para o time. Participar da LARC 2015 foi uma experiência incrível e de muito aprendizado. Já havíamos competido na TRUFES 2015, então...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#17 resultados - q17_quais_foram_classificacoes_equipe_temporada</h3>
+      <p>Quais foram as classificações da equipe na temporada de 2024?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 0.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- Rescue: 5° lugar em 2024</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Futebol 2D: 2° lugar — CBR (Nacional)
+Futebol 2D: 3° lugar — IRONCUP (Nacional)
+Prática: 1° lugar — OBR (Regional)
+Prática: 3° lugar — OBR (Regional)
+Prática: 6° lugar — OBR (Nacional)
+RoboCup Rescue: 5° lugar — ROBOCUP (Mundial)
+SEK: 1° lugar — CBR (Nacional)
+Teórica: 2 Medalhas de Honra ao Mérito — OBR (Nacional)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.801</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2024, Mundial</p>
+      <p>tecnológico em nível nacional e internacional. A figura 6 apresenta a equipe Titãs da Robótica no mundial da RoboCup 2024 em Eindhoven, Holanda. Figura 6 – Equipe Titãs da Robótica no mundial da RoboCup 2024 Fonte: Autoria própria. Além dos resultados alcançados em competições, a equipe Titãs da Robótica também protagonizou iniciativas extensionistas de forte caráter educativo e social nas escolas da rede pública de ensino do município de Colatina, desenvolvidas em 2019 vinculadas ao Laboratório de Extensão em T...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.654</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2024, Mundial</p>
+      <p>internacional é determinante. A Tabela 4 apresenta a classificação da equipe nas participações internacionais na RoboCup. Tabela 4 - Desempenho internacional na RoboCup. Modalidade Classificação Ano Soccer 12° lugar 2019 Rescue 5° lugar 2024 Fonte: Autoria própria. Assim, os pódios conquistados pela equipe não devem ser compreendidos apenas como vitórias pontuais, mas como evidências empíricas da eficácia da robótica educacional na formação de competências técnicas, cognitivas e sociais. Ao articular ensino, pes...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#33 resultados - q33_quais_anos_equipe_participou_mundial</h3>
+      <p>Em quais anos a equipe participou do Mundial RoboCup?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 40.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- A equipe participou do Mundial RoboCup nos anos de 2019 e 2024.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>A equipe Titãs da Robótica participou do Mundial RoboCup em 2019, 2024 e 2025.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.679</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2019, 2024</p>
+      <p>internacional é determinante. A Tabela 4 apresenta a classificação da equipe nas participações internacionais na RoboCup. Tabela 4 - Desempenho internacional na RoboCup. Modalidade Classificação Ano Soccer 12° lugar 2019 Rescue 5° lugar 2024 Fonte: Autoria própria. Assim, os pódios conquistados pela equipe não devem ser compreendidos apenas como vitórias pontuais, mas como evidências empíricas da eficácia da robótica educacional na formação de competências técnicas, cognitivas e sociais. Ao articular ensino, pes...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.629</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.584</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2019, 2024</p>
+      <p>tecnológico em nível nacional e internacional. A figura 6 apresenta a equipe Titãs da Robótica no mundial da RoboCup 2024 em Eindhoven, Holanda. Figura 6 – Equipe Titãs da Robótica no mundial da RoboCup 2024 Fonte: Autoria própria. Além dos resultados alcançados em competições, a equipe Titãs da Robótica também protagonizou iniciativas extensionistas de forte caráter educativo e social nas escolas da rede pública de ensino do município de Colatina, desenvolvidas em 2019 vinculadas ao Laboratório de Extensão em T...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#19 orientadores - q19_quem_foram_orientadores_equipe_2015</h3>
+      <p>Quem foram os orientadores da equipe em 2015?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 60.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 75.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Igor Carlos Pulini e Renan Osório Rios foram os orientadores da equipe em 2015, ambos na modalidade SEK.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Igor Carlos Pulini (SEK)
+Renan Osório Rios (SEK)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 1.024</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2015</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Tabelas.pdf (pagina 1) | score 0.946</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2015, SEK</p>
+      <p>Tabela 1 – Pódios da Equipe Asimov em 2015 Modalidade Classificação Liga Nível SEK 1° lugar TRUFES Regional SEK 3° lugar LARC Internacional Fonte: Autoria Própria Tabela 2 – Orientadores da Equipe Asimov em 2015 Orientador Equipe Igor Carlos Pulini SEK Renan Osório Rios SEK Fonte: Autoria Própria Tabela 3 – Integrantes da Equipe SEK em 2015 Alunos Nível Alexandre Costa Graduação Artur Schaefer Graduação Caian Monteiro de Oliveira Meireles Ensino Médio Kassio Pereira Schaider Graduação Matheus de Oliveira Jage Gr...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 57) | score 0.786</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2015</p>
+      <p>robótica educacional, além de cobrir despesas com passagens, diárias e taxas de inscrição para a equipe e competidores. Esse suporte financeiro foi crucial para o sucesso do projeto e para a consolidação da equipe Asimov como uma referência em robótica educacional no Ifes Campus Colatina. De acordo com o Boletim de Pesquisa, Pós-Graduação e Extensão (PPGE) de 2015, o resultado da criação e a participação da equipe em competições de robótica foram impressionantes: “com apenas 10 meses de criação, porém com bastan...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 13) | score 0.734</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2015, SEK</p>
+      <p>Tabela 1 – Pódios da Equipe Asimov em 2015 59 Tabela 2 – Orientadores da Equipe Asimov em 2015 59 Tabela 3 – Integrantes da Equipe SEK em 2015 59 Tabela 4 – Pódios da Equipe Asimov em 2016 67 Tabela 5 – Orientadores da Equipe Asimov em 2016 68 Tabela 6 – Integrantes da Equipe Futebol 2D em 2016 68 Tabela 7 – Integrantes da Equipe Prática em 2016 69 Tabela 8 – Integrantes da Equipe SEK em 2016 69 Tabela 9 – Integrantes da Equipe Teórica em 2016 69 Tabela 10 – Pódios da Equipe Asimov em 2017 80 Tabela 11 – Orienta...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 58) | score 0.726</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> 2015, SEK</p>
+      <p>Asimov. Tabela 2 – Orientadores da Equipe Asimov em 2015 Orientador Equipe Igor Carlos Pulini SEK Renan Osório Rios SEK Fonte: Autoria Própria A Tabela 3 apresenta os nomes dos membros fundadores, que, com dedicação e trabalho em equipe, garantiram o primeiro pódio e deram vida à equipe Asimov. Tabela 3 – Integrantes da Equipe SEK em 2015 Alunos Nível Alexandre Costa Graduação Artur Schaefer Graduação Caian Monteiro de Oliveira Meireles Ensino Médio Kassio Pereira Schaider Graduação Matheus de Oliveira Jage Grad...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#21 orientadores - q21_quem_foram_orientadores_equipe_2017</h3>
+      <p>Quem foram os orientadores da equipe em 2017?</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 20.0%</span>
+        <span class="tag">Correctness: 20.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Jean Eduardo Glazar (CoSpace), Giovany Frossard Teixeira (Futebol 2D), Julio Cesar Goldner Vendramini (Humanoide) e Diego Rossi Mafioletti (Prática).</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Jean Eduardo Glazar (CoSpace)
+Giovany Frossard Teixeira (Futebol 2D)
+Julio César Goldner Vendramini (Humanoide)
+Diego Rossi Mafioletti (Prática e Seguidor de Linha)
+Igor Carlos Pulini (SEK)
+Renan Osório Rios (SEK)
+Luiz Fernando Reinoso (Teórica)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Tabelas.pdf (pagina 3) | score 0.771</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2017, Jean Eduardo Glazar, Giovany Frossard Teixeira, Julio César Goldner Vendramini, Diego Rossi Mafioletti</p>
+      <p>Medalha de Bronze OBR Nacional Fonte: Autoria Própria Tabela 11 – Orientadores da Equipe Asimov em 2017 Orientador Equipe Jean Eduardo Glazar CoSpace Giovany Frossard Teixeira Futebol 2D Julio Cesar Goldner Vendramini Humanoide Diego Rossi Mafioletti; Prática</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 13) | score 0.744</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2017</p>
+      <p>Tabela 1 – Pódios da Equipe Asimov em 2015 59 Tabela 2 – Orientadores da Equipe Asimov em 2015 59 Tabela 3 – Integrantes da Equipe SEK em 2015 59 Tabela 4 – Pódios da Equipe Asimov em 2016 67 Tabela 5 – Orientadores da Equipe Asimov em 2016 68 Tabela 6 – Integrantes da Equipe Futebol 2D em 2016 68 Tabela 7 – Integrantes da Equipe Prática em 2016 69 Tabela 8 – Integrantes da Equipe SEK em 2016 69 Tabela 9 – Integrantes da Equipe Teórica em 2016 69 Tabela 10 – Pódios da Equipe Asimov em 2017 80 Tabela 11 – Orienta...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.724</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 13) | score 0.688</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2017</p>
+      <p>13 – Integrantes da Equipe Futebol 2D em 2017 82 Tabela 14 – Integrantes da Equipe Humanoide em 2017 82 Tabela 15 – Integrantes da Equipe Prática em 2017 82 Tabela 16 – Integrantes da Equipe SEK em 2017 82 Tabela 17 – Integrantes da Equipe Teórica em 2017 83 Tabela 18 – Pódios da Equipe Asimov em 2018 97 Tabela 19 – Orientadores da Equipe Asimov em 2018 97 Tabela 20 – Integrantes da Equipe ADM em 2018 98 Tabela 21 – Integrantes da Equipe CoSpace em 2018 98 Tabela 22 – Integrantes da Equipe Futebol 2D em 2018 99 ...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 79) | score 0.651</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2017</p>
+      <p>Figura 44 – Integrantes da Equipe Asimov na Mostra de Robótica Fonte: Ifes 5.3. Competições e resultados de 2017 Em 2017, a equipe Asimov seguiu ampliando sua atuação em diversas modalidades da robótica educacional, conquistando destaque principalmente na Competição Latino-Americana e Brasileira de Robótica (LARC). O ano foi marcado por vitórias importantes nas categorias CoSpace, Futebol 2D e Humanoid Robot Racing, garantindo à equipe vagas para representar o Brasil na RoboCup 2018, no Canadá. Essas conquistas ...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#25 orientadores - q25_quem_foram_orientadores_equipe_2021</h3>
+      <p>Quem foram os orientadores da equipe em 2021?</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 40.0%</span>
+        <span class="tag">Correctness: 40.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Os orientadores da Equipe Titãs da Robótica em 2021 foram:
+
+- Joanita Araújo (Espanhol ADM)
+- Jean Eduardo Glazar (CoSpace)
+- Igor Carlos Pulini (Drone)
+- Renan Osório Rios (Drone)
+- Giovany Frossard Teixeira (Futebol 2D)
+- Ailton Souza Duarte (Osorin)
+- Alextian Bartholomeu Liberato (Osorin)
+- Ricardo Tedesco da Silva (Osorin)
+- Julio Cesar Goldner Vendramini (Prática)
+- Julio Cesar Goldner Vendramini (Seguidor de Linha)
+- Igor Carlos Pulini (SEK)
+- Renan Osório Rios (SEK)
+- Dione Souza Albuquerque de Lima (Teórica)
+- Renan Osório Rios (Teórica)</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Joanita Araújo Espanhol (ADM)
+Jean Eduardo Glazar (CoSpace)
+Igor Carlos Pulini (Drone e SEK)
+Renan Osório Rios (Drone, SEK e Teórica)
+Giovany Frossard Teixeira (Futebol 2D)
+Ailton Souza Duarte (Osorin)
+Alextian Bartholomeu Liberato (Osorin)
+Ricardo Tedesco da Silva (Osorin)
+Julio César Goldner Vendramini (Prática e Seguidor de Linha)
+Dione Souza Albuquerque de Lima (Teórica)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Tabelas.pdf (pagina 15) | score 1.101</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2021</p>
+      <p>Pedro Henrique Alves Ensino Médio Rodrigo Martins Coelho Júnior Ensino Médio Victor Alyson Fraga Correa Ensino Médio Victor Costa de Coura Ensino Médio Vinícius Eduardo Daleprane Ensino Médio Fonte: Autoria Própria Tabela 48 – Pódios da Equipe Titãs da Robótica em 2021 Modalidade Classificação Liga Nível Futebol 2D 2° lugar IRONCup Nacional Teórica Medalha de Bronze OBR Nacional Fonte: Autoria Própria. Tabela 49 – Orientadores da Equipe Titãs da Robótica em 2021</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Tabelas.pdf (pagina 15) | score 1.060</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2021, Joanita Araújo Espanhol, Jean Eduardo Glazar, Igor Carlos Pulini, Renan Osório Rios, Giovany Frossard Teixeira, Ailton Souza Duarte, Alextian Bartholomeu Liberato, Ricardo Tedesco da Silva, Julio César Goldner Vendramini, Dione Souza Albuquerque de Lima</p>
+      <p>Fonte: Autoria Própria. Tabela 49 – Orientadores da Equipe Titãs da Robótica em 2021 Orientador Equipe Joanita Araújo Espanhol ADM Jean Eduardo Glazar CoSpace Igor Carlos Pulini Drone Renan Osório Rios Drone Giovany Frossard Teixeira Futebol 2D Ailton Souza Duarte Osorin Alextian Bartholomeu Liberato Osorin Ricardo Tedesco da Silva Osorin Julio Cesar Goldner Vendramini Prática Julio Cesar Goldner Vendramini Seguidor de Linha Igor Carlos Pulini SEK Renan Osório Rios SEK Dione Souza Albuquerque de Lima Teórica Ren...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 150) | score 0.864</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2021, Joanita Araújo Espanhol, Jean Eduardo Glazar, Igor Carlos Pulini, Renan Osório Rios, Giovany Frossard Teixeira, Ailton Souza Duarte, Alextian Bartholomeu Liberato, Ricardo Tedesco da Silva, Julio César Goldner Vendramini, Dione Souza Albuquerque de Lima</p>
+      <p>A Tabela 49 apresenta os orientadores que guiaram os Titãs da Robótica neste período de transição de trabalho remoto para a retomada gradual das atividades presenciais em 2021. Tabela 49 – Orientadores da Equipe Titãs da Robótica em 2021 Orientador Equipe Joanita Araújo Espanhol ADM Jean Eduardo Glazar CoSpace Igor Carlos Pulini Drone Renan Osório Rios Drone Giovany Frossard Teixeira Futebol 2D Ailton Souza Duarte Osorin Alextian Bartholomeu Liberato Osorin Ricardo Tedesco da Silva Osorin Julio Cesar Goldner Ven...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 14) | score 0.745</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2021</p>
+      <p>Tabela 42 – Integrantes da Equipe Prática em 2019 144 Tabela 43 – Integrantes da Equipe Futebol 2D em 2020 145 Tabela 44 – Integrantes da Equipe Lego Sumô em 2020 145 Tabela 45 – Integrantes da Equipe Seguidor de Linha em 2020 145 Tabela 46 – Integrantes da Equipe SEK em 2020 145 Tabela 47 – Integrantes da Equipe Teórica em 2020 145 Tabela 48 – Pódios da Equipe Titãs da Robótica em 2021 150 Tabela 49 – Orientadores da Equipe Titãs da Robótica em 2021 151 Tabela 50 – Integrantes da Equipe ADM em 2021 151 Tabela 5...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.743</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#28 orientadores - q28_quem_foram_orientadores_equipe_2024</h3>
+      <p>Quem foram os orientadores da equipe em 2024?</p>
+      <div class="meta">
+        <span class="tag ok">ok</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 20.0%</span>
+        <span class="tag">Correctness: 100.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Os orientadores da equipe em 2024 foram: Gustavo Ludovico Guidoni (Drone), Giovany Frossard Teixeira (Futebol 2D), Eduardo Max Amaro Amaral (Luva Robótica e Osorin), Ricardo Tedesco da Silva (Osorin), Julio Cesar Goldner Vendramini (Prática), Igor Carlos Pulini (SEK), Renan Osório Rios (SEK) e Allan Fernandes Balardino (Teórica).</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Gustavo Ludovico Guidoni (Drone)
+Giovany Frossard Teixeira (Futebol 2D)
+Eduardo Max Amaro Amaral (Luva Robótica e Osorin)
+Ricardo Tedesco da Silva (Osorin)
+Julio César Goldner Vendramini (Prática)
+Igor Carlos Pulini (SEK)
+Renan Osório Rios (SEK)
+Allan Fernandes Balardino (Teórica)</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 187) | score 1.007</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> 2024, Gustavo Ludovico Guidoni, Giovany Frossard Teixeira, Eduardo Max Amaro Amaral, Ricardo Tedesco da Silva, Julio César Goldner Vendramini, Igor Carlos Pulini, Renan Osório Rios, Allan Fernandes Balardino</p>
+      <p>Prática 6° lugar OBR Nacional RoboCup Rescue 5° lugar RoboCup Mundial SEK 1° lugar CBR Nacional Teórica Honra ao Mérito OBR Nacional Fonte: Autoria Própria A Tabela 75 apresenta os nomes dos orientadores que, em 2024, compartilharam não apenas conhecimento, mas também inspiração e apoio. Tabela 75 – Orientadores da Equipe Titãs da Robótica em 2024 Orientador Equipe Gustavo Ludovico Guidoni Drone Giovany Frossard Teixeira Futebol 2D Eduardo Max Amaro Amaral Luva Robótica Eduardo Max Amaro Amaral Osorin Ricardo Te...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 198) | score 0.744</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2024</p>
+      <p>setembro de 2024, a equipe Titãs da Robótica também obteve resultados notáveis. Formada por Isabela Garcia Tissianel e Davi Curto Pessanha, sob orientação do professor Allan Balardino, a equipe conquistou a Medalha de Honra ao Mérito. A prova avaliou conhecimentos aprofundados em programação, física, matemática e lógica aplicados à robótica, demonstrando a sólida formação e dedicação dos alunos do campus Colatina. 198</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 14) | score 0.738</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2024</p>
+      <p>– Orientadores da Equipe Titãs da Robótica em 2024 188 Tabela 76 – Participantes da Equipe Drone em 2024 188 Tabela 77 – Integrantes da Equipe Futebol 2D em 2024 188 Tabela 78 – Integrantes da Equipe Osorin em 2024 189 Tabela 79 – Integrantes da Equipe Pesquisa em 2024 189 Tabela 80 – Integrantes da Equipe Prática em 2024 189 Tabela 81 – Integrantes da Equipe SEK em 2024 190 Tabela 82 – Integrantes da Equipe Teórica em 2024 190</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 14) | score 0.730</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> 2024</p>
+      <p>64 – Integrantes da Equipe SEK em 2022 167 Tabela 65 – Integrantes da Equipe Teórica em 2022 167 Tabela 66 – Pódios da Equipe Titãs da Robótica em 2023 175 Tabela 67 – Orientadores da Equipe Titãs da Robótica em 2023 175 Tabela 68 – Integrantes da Equipe Drone em 2023 176 Tabela 69 – Integrantes da Equipe Futebol 2D em 2023 176 Tabela 70 – Integrantes da Equipe Osorin em 2023 176 Tabela 71 – Integrantes da Equipe Prática em 2023 177 Tabela 72 – Integrantes da Equipe SEK em 2023 177 Tabela 73 – Integrantes da Equ...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.726</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#38 orientadores - q38_liste_todos_orientadores_ja_passaram</h3>
+      <p>Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 0.0%</span>
+        <span class="tag">Correctness: 20.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- Igor Carlos Pulini
+- Renan Osório Rios</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Ailton Souza Duarte
+Alan Balardino
+Alextian Bartholomeu Liberato
+André Avelino
+Arthur Belato
+Diego Rossi Mafioletti
+Dione Souza Albuquerque de Lima
+Eduardo Max Amaro Amaral
+Fabio Bigati
+Giovany Frossard Teixeira
+Gustavo Ludovico Guidoni
+Igor Carlos Pulini
+Jaimel de Oliveira Lima
+Jean Eduardo Glazar
+Joanita Araújo Espanhol
+Josiane Dalmasio Clabunde
+Julio Cesar Goldner Vendramini
+Luis Fernando Reinoso
+Renan Osório Rios
+Ricardo Tedesco da Silva</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.566</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 58) | score 0.557</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Igor Carlos Pulini, Renan Osório Rios</p>
+      <p>Asimov. Tabela 2 – Orientadores da Equipe Asimov em 2015 Orientador Equipe Igor Carlos Pulini SEK Renan Osório Rios SEK Fonte: Autoria Própria A Tabela 3 apresenta os nomes dos membros fundadores, que, com dedicação e trabalho em equipe, garantiram o primeiro pódio e deram vida à equipe Asimov. Tabela 3 – Integrantes da Equipe SEK em 2015 Alunos Nível Alexandre Costa Graduação Artur Schaefer Graduação Caian Monteiro de Oliveira Meireles Ensino Médio Kassio Pereira Schaider Graduação Matheus de Oliveira Jage Grad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.536</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.490</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>tecnológico em nível nacional e internacional. A figura 6 apresenta a equipe Titãs da Robótica no mundial da RoboCup 2024 em Eindhoven, Holanda. Figura 6 – Equipe Titãs da Robótica no mundial da RoboCup 2024 Fonte: Autoria própria. Além dos resultados alcançados em competições, a equipe Titãs da Robótica também protagonizou iniciativas extensionistas de forte caráter educativo e social nas escolas da rede pública de ensino do município de Colatina, desenvolvidas em 2019 vinculadas ao Laboratório de Extensão em T...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#30 metricas_historicas - q30_quantos_estudantes_participaram_equipe_total</h3>
+      <p>Quantos estudantes participaram da equipe no total?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 0.0%</span>
+        <span class="tag">Correctness: 20.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>180 estudantes participaram da equipe no total.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Desde sua fundação, a equipe Titãs da Robótica contou com a participação ativa de 191 estudantes. Entre eles, 152 são alunos do sexo masculino e 39 do sexo feminino.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.716</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.703</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 7) | score 0.689</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>águas em sua trajetória educativa. O projeto envolveu, ao desenrolar sua história, a participação direta de 180 estudantes, sendo 143 do sexo masculino e 37 do sexo feminino. A equipe foi formada por alunos do ensino médio integrado ao técnico e estudantes da graduação. Além disso, 19 orientadores contribuíram com o projeto, sendo 16 homens e 3 mulheres, dos quais 18 eram professores e 1 era aluno do curso superior de Sistemas de Informação. A figura 14 apresenta a equipe Titãs da Robótica, composta por estudant...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 45) | score 0.628</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>equipe já competiu, destacando apenas o estado do Espírito Santo, ponto de partida da história da equipe de robótica do Ifes Campus Colatina. Figura 21 – Mapa do Brasil da Equipe Asimov em 2014 Fonte: Mapchart 2.1. Problema de evasão dos cursos de informática Em abril de 2013, uma comissão formada por diversos servidores do Instituto uniu, no relatório Estudo sobre as Causas da Evasão Escolar do Ifes Campus Colatina e Propostas Para Reduzir o Número de Evadidos , resultados da pesquisa sobre a evasão escolar no ...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.585</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#31 metricas_historicas - q31_liste_todos_subgrupos_ja_existiram</h3>
+      <p>Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 20.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- Os subgrupos que já existiram na equipe Titãs da Robótica são: SEK, Futebol 2D, CoSpace, Humanoide, além das provas Prática e Teórica.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Os subgrupos que já fizeram parte da equipe Titãs da Robótica são:
+ADM
+Challenge
+CoSpace
+Drone
+Futebol 2D
+Humanoide
+Lego Sumô
+OBI
+Osorin
+Pesquisa
+Prática
+Seguidor de Linha
+SEK
+Teórica</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.708</strong>
+      <span class="tag warn">relevante</span>
+      <p><em>Termos:</em> CoSpace, Futebol 2D, Humanoide, OBI, Prática, SEK, Teórica</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.650</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 10) | score 0.608</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> ADM</p>
+      <p>Carniça 90 Figura 51 – Equipe Asimov de 2017 92 Figura 52 – Mapa do Brasil da Equipe Asimov em 2018 94 Figura 53 – Integrantes da Equipe Administrativa 96 Figura 54 – Entrega das menções honrosas à equipe Asimov pelo Pró-Reitor de Extensão Renato Tannure. 97 Figura 55 – Equipe Asimov de 2018 104 Figura 56 – Pódio do TRUFES 107 Figura 57 – Mapa do Brasil da Equipe Titãs da Robótica em 2019 108 Figura 58 – Vencedor do edital de Logomarca 109 Figura 59 – Logomarca dos Titãs da Robótica 110 Figura 60 – Mikael e Rosa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.515</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Prática</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 22) | score 0.502</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Prática</p>
+      <p>robótica do Ifes Campus Colatina, que surgiu sob o nome “Asimov” e, mais tarde, passou a ser reconhecida como “Titãs da Robótica”. A Figura 1 apresenta o mapa-múndi que ilustra o alcance global dos Titãs da Robótica, com os países em que a equipe competiu marcados em vermelho e as nações cuja participação foi impossibilitada por restrições orçamentárias sinalizadas em azul. Figura 1 – Mapa-mundi da equipe de Titãs da Robótica Fonte: Mapchart. 1.1. O que é robótica educacional? Encontrar uma definição exata para ...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#32 metricas_historicas - q32_liste_todos_campeonatos_equipe_ja</h3>
+      <p>Liste todos os campeonatos em que a equipe já participou.</p>
+      <div class="meta">
+        <span class="tag warn">generation_error</span>
+        <span class="tag">Hit@5: 100.0%</span>
+        <span class="tag">Precision@5: 20.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- RoboCup 2024 (mundial, em Eindhoven, Holanda)
+- Olimpíada Brasileira de Robótica (OBR)
+- Torneio de Robótica da Ufes (TRUFES)
+- LARC
+- IRONCup</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>TRUFES — Torneio de Robótica da Ufes
+LARC — Latin American Robotics Competition
+OBR — Olimpíada Brasileira de Robótica
+IRONCup — Copa Nacional de Robótica do Inatel
+CBR — Competição Brasileira de Robótica
+RoboCup — Copa do Mundo de Robôs
+OBI — Olimpíada Brasileira de Informática</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.752</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> OBI</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.656</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> RoboCup</p>
+      <p>tecnológico em nível nacional e internacional. A figura 6 apresenta a equipe Titãs da Robótica no mundial da RoboCup 2024 em Eindhoven, Holanda. Figura 6 – Equipe Titãs da Robótica no mundial da RoboCup 2024 Fonte: Autoria própria. Além dos resultados alcançados em competições, a equipe Titãs da Robótica também protagonizou iniciativas extensionistas de forte caráter educativo e social nas escolas da rede pública de ensino do município de Colatina, desenvolvidas em 2019 vinculadas ao Laboratório de Extensão em T...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 66) | score 0.621</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> TRUFES, OBR</p>
+      <p>Olimpíada Brasileira de Robótica (OBR) e dominou o Torneio de Robótica da Ufes (TRUFES ), conquistando pódios em múltiplas categorias. O reconhecimento não veio apenas nas competições: o Governo do Estado, através do governador Renato Casagrande, prestou homenagem oficial à equipe. A Figura 36 apresenta a equipe de robótica junto com o prefeito de Colatina em 2016, Leonardo Deptulski. Figura 36 – Equipe Asimov em visita ao prefeito de Colatina Leonardo Deptulski Fonte: Autoria Própria. A Tabela 4 apresenta os pó...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.611</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 96) | score 0.531</strong>
+      <span class="tag ok">suficiente</span>
+      <p><em>Termos:</em> TRUFES, LARC, OBR, IRONCup</p>
+      <p>Figura 54 – Entrega das menções honrosas à equipe Asimov pelo Pró-Reitor de Extensão Renato Tannure. Fonte: Ifes. A Tabela 18 apresenta os pódios obtidos pelos Asimov no ano de 2018, resultado de muito planejamento e trabalho em equipe. Tabela 18 – Pódios da Equipe Asimov em 2018 Modalidade Classificação Torneio Nível CoSpace 2° lugar LARC Internacional Futebol 2D 1° lugar LARC Nacional Futebol 2D 2° lugar IRONCup Internacional Prática 3° lugar OBR Regional Seguidor de Linha 10° lugar IRONCup Nacional SEK 1° lug...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#34 projetos - q34_quais_projetos_ensino_pesquisa_extensao</h3>
+      <p>Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 0.0%</span>
+        <span class="tag">Correctness: 30.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- Plataforma robótica móvel (ensino e pesquisa): projeto para experimentação prática de conceitos avançados de robótica, como ROS e SLAM, realizado no LabMAKER do Ifes Campus Colatina, com participação de estudantes de graduação em Sistemas de Informação.
+- Projeto de robótica educacional (ensino): iniciativa para estudantes dos cursos técnicos de informática para internet e bacharelado em sistemas de informação, visando reduzir a evasão escolar e melhorar o desempenho em programação; foi nesse projeto que a equipe Asimov (posteriormente Titãs da Robótica) foi instituída.
+- Projeto Caderno Digital (extensão): ação implementada na Escola Estadual Lions Club de Colatina, voltada a alunos do Ensino Fundamental II, para tornar o pensamento computacional mais acessível por meio de lógica de programação e fundamentos de robótica, vinculada ao LETER em 2019.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Os projetos de ensino, pesquisa e extensão que envolveram os Titãs da Robótica são:
+10 anos dos Titãs da Robótica: do estadual ao mundial.
+Aplicativo IFeira Colatina.
+Caderno Digital.
+Construção de uma estrutura robótica de reabilitação baseada no framework ROS.
+Desafios na realização de oficinas de robótica em escolas públicas: um relato de experiência.
+Desenvolvimento de biblioteca Python para robótica educacional com compatibilidade ao kit LEGO EV3 em Linux embarcado.
+Espaços do Saber.
+Jogos Digitais: Princípios, Conceitos e Práticas.
+Plataforma Robótica Móvel Utilizada no Ensino de ROS e SLAM.
+Programação para Leigos com App Inventor.
+Programação para Leigos com o Raspberry Pi.
+Programe-se.
+Protagonismo Estudantil através da Robótica Educacional.
+Protetores faciais e laringoscópios.
+Protótipos Educacionais: Utilizando o Arduino para o Aprendizado de Programação Inicial.
+Robótica educacional para o aprendizado de programação.
+Utilização do Scratch como Ferramenta de Ensino no Desenvolvimento de Robôs Interativos.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 7) | score 0.746</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>Anais da Mostra Nacional de Robótica - MNR 2025 Ensino Superior, Pós-graduação e Pesquisa desestimuladas a se aproximarem das áreas STEM (Ciência, Tecnologia, Engenharia e Matemática). Como parte das iniciativas da equipe Titãs da Robótica que visam promover a integração entre ensino, pesquisa e extensão, foi desenvolvida a plataforma robótica móvel voltada ao ensino e à experimentação prática de conceitos avançados de robótica, como ROS (Robot Operating System) e SLAM (Simultaneous Localization and Mapping). A ...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.727</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.629</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> Caderno Digital</p>
+      <p>tecnológico em nível nacional e internacional. A figura 6 apresenta a equipe Titãs da Robótica no mundial da RoboCup 2024 em Eindhoven, Holanda. Figura 6 – Equipe Titãs da Robótica no mundial da RoboCup 2024 Fonte: Autoria própria. Além dos resultados alcançados em competições, a equipe Titãs da Robótica também protagonizou iniciativas extensionistas de forte caráter educativo e social nas escolas da rede pública de ensino do município de Colatina, desenvolvidas em 2019 vinculadas ao Laboratório de Extensão em T...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.628</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 22) | score 0.363</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina, que surgiu sob o nome “Asimov” e, mais tarde, passou a ser reconhecida como “Titãs da Robótica”. A Figura 1 apresenta o mapa-múndi que ilustra o alcance global dos Titãs da Robótica, com os países em que a equipe competiu marcados em vermelho e as nações cuja participação foi impossibilitada por restrições orçamentárias sinalizadas em azul. Figura 1 – Mapa-mundi da equipe de Titãs da Robótica Fonte: Mapchart. 1.1. O que é robótica educacional? Encontrar uma definição exata para ...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#35 tecnologia - q35_quais_tecnologias_sao_utilizadas_pela</h3>
+      <p>Quais tecnologias são utilizadas pela equipe Titãs da Robótica?</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 0.0%</span>
+        <span class="tag">Correctness: 20.0%</span>
+        <span class="tag">Faithfulness: 100.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>- As tecnologias utilizadas pela equipe Titãs da Robótica incluem robótica educacional, programação, lógica de programação, pensamento computacional e fundamentos de robótica. A equipe também participa de competições organizadas em subgrupos especializados, abrangendo categorias como SEK, Futebol 2D, CoSpace e Humanoide, além das provas Prática e Teórica.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>A equipe utiliza kits LEGO Mindstorms EV3 e Spike Prime, plataformas Arduino e Raspberry Pi, além de recursos de impressão 3D. Esses materiais são empregados na construção e programação dos robôs, envolvendo sensores, motores, atuadores e controladores. As principais linguagens de programação utilizadas são Scratch, Python, C e C++.</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\MNR2025-ART Titãs.pdf (pagina 5) | score 0.767</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> C++</p>
+      <p>tecnológico em nível nacional e internacional. A figura 6 apresenta a equipe Titãs da Robótica no mundial da RoboCup 2024 em Eindhoven, Holanda. Figura 6 – Equipe Titãs da Robótica no mundial da RoboCup 2024 Fonte: Autoria própria. Além dos resultados alcançados em competições, a equipe Titãs da Robótica também protagonizou iniciativas extensionistas de forte caráter educativo e social nas escolas da rede pública de ensino do município de Colatina, desenvolvidas em 2019 vinculadas ao Laboratório de Extensão em T...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.657</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> C++</p>
+      <p>público-alvo os estudantes dos cursos técnicos de informática para internet e do bacharelado em sistemas de informação. O objetivo principal era utilizar a robótica como ferramenta para reduzir a evasão escolar e melhorar o desempenho em disciplinas técnicas, especialmente programação, por meio de práticas lúdicas, colaborativas e baseadas em projetos. Com a finalidade de institucionalizar a robótica como uma prática pedagógica para fomentar pensamento computacional e engajar os estudantes em atividades desafiad...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.651</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> C++</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\MNR2025-ART Titãs.pdf (pagina 7) | score 0.567</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> C++</p>
+      <p>águas em sua trajetória educativa. O projeto envolveu, ao desenrolar sua história, a participação direta de 180 estudantes, sendo 143 do sexo masculino e 37 do sexo feminino. A equipe foi formada por alunos do ensino médio integrado ao técnico e estudantes da graduação. Além disso, 19 orientadores contribuíram com o projeto, sendo 16 homens e 3 mulheres, dos quais 18 eram professores e 1 era aluno do curso superior de Sistemas de Informação. A figura 14 apresenta a equipe Titãs da Robótica, composta por estudant...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.504</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> C++</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    
+    <article class="case">
+      <h3>#37 financeiro - q37_liste_todos_patrocinadores_equipe_titas</h3>
+      <p>Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.</p>
+      <div class="meta">
+        <span class="tag bad">both_error</span>
+        <span class="tag">Hit@5: 0.0%</span>
+        <span class="tag">Precision@5: 0.0%</span>
+        <span class="tag">Correctness: 0.0%</span>
+        <span class="tag">Faithfulness: 0.0%</span>
+      </div>
+      <div class="columns">
+        <div class="answer">
+          <strong>Resposta gerada</strong>
+          <p>Nao encontrei informacao suficiente na base para responder com seguranca.</p>
+        </div>
+        <div class="expected">
+          <strong>Resposta do gabarito</strong>
+          <p>Apex Partners Gestão de Ativos
+Basis Tecnologia da Informação
+Fábrica de Esquadrias Galon
+Frisa
+FULLTECH
+Im Digital
+Imagination Media
+Matriz Sistemas
+Metalosa Industria Metalúrgica
+Moveedu Cursos Profissionalizantes
+Seek Informatica
+SIAD
+SmartIrriga
+Vixteam Consultoria &amp; Sistemas</p>
+        </div>
+        <div class="chunks">
+          <strong>Top 5 trechos recuperados</strong>
+          
+    <div class="chunk">
+      <strong>#1 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 56) | score 0.629</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>equipe já competiu, destacando a recente expansão rumo a Minas Gerais. Figura 27 – Mapa do Brasil da Equipe Asimov em 2015 Fonte: MapChart 3.1. Criação da equipe de robótica asimov Após a Chamada para Apoio a Projetos 17/2014 feita pelo CNPq e a aprovação do projeto submetido ao mesmo pelo professor Renan Osório Rios, a equipe de robótica do Ifes Campus Colatina foi oficialmente criada. O primeiro nome da equipe, “Asimov”, foi dado em homenagem a Isaac Asimov, bioquímico e um dos maiores escritores de ficção cie...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#2 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 60) | score 0.601</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica. A Figura 30 apresenta a equipe Asimov em 2015 com os primeiros uniformes. Figura 30 – Uniformes da Equipe Asimov Fonte: Autoria Própria 3.2.3. Organização da caravana A primeira viagem da equipe Titãs da Robótica a foi um marco importante. Com a caravana organizada com muito esforço, a equipe se preparou para representar o Ifes Campus Colatina em uma competição de alto nível. Os alunos estavam empolgados, mas também apreensivos 60</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#3 base\MNR2025-ART Titãs.pdf (pagina 3) | score 0.583</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>robótica do Ifes Campus Colatina. Figura 1 – Equipe Asimov, a primeira equipe de robótica do Ifes Campus Colatina Fonte: Ifes. A constituição da equipe Titãs da Robótica buscou estabelecer o desenvolvimento integral dos estudantes por meio de desafios que exigem a articulação de múltiplas habilidades e a mobilização de várias áreas do saber. Para tanto, a metodologia adotada estruturou a equipe em subgrupos especializados, de acordo com as categorias das competições de robótica, entre elas SEK, Futebol 2D, CoSpa...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#4 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 10) | score 0.564</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>Figura 39 – Ônibus de viagem para a LARC 2016 74 Figura 40 – Equipe Asimov no TRUFES 75 Figura 41 – Encontro com o Governador do Estado 76 Figura 42 – Mapa do Brasil da Equipe Asimov em 2017 77 Figura 43 – Uniforme da equipe Asimov com Patrocinadores 79 Figura 44 – Integrantes da Equipe Asimov na Mostra de Robótica 80 Figura 45 – Equipe Prática na OBR Estadual em 2017 85 Figura 46 – Ônibus de Viagem para a LARC 2017 87 Figura 47 – Equipe CoSpace com o orientador Jean 87 Figura 48 – Equipe Futebol 2D com o orient...</p>
+    </div>
+    
+    <div class="chunk">
+      <strong>#5 base\Titãs da Robótica - LIVRO otimizado.pdf (pagina 66) | score 0.546</strong>
+      <span class="tag bad">baixo sinal</span>
+      <p><em>Termos:</em> nenhum termo anotado</p>
+      <p>Olimpíada Brasileira de Robótica (OBR) e dominou o Torneio de Robótica da Ufes (TRUFES ), conquistando pódios em múltiplas categorias. O reconhecimento não veio apenas nas competições: o Governo do Estado, através do governador Renato Casagrande, prestou homenagem oficial à equipe. A Figura 36 apresenta a equipe de robótica junto com o prefeito de Colatina em 2016, Leonardo Deptulski. Figura 36 – Equipe Asimov em visita ao prefeito de Colatina Leonardo Deptulski Fonte: Autoria Própria. A Tabela 4 apresenta os pó...</p>
+    </div>
+    
+        </div>
+      </div>
+    </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,2564 @@
+[
+  {
+    "id": "q01_quem_sao_titas_robotica",
+    "answer_type": "descritiva",
+    "key_facts": [
+      {
+        "text": "equipe de robótica",
+        "kind": "terms",
+        "all": [
+          [
+            "robotica"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Ifes Campus Colatina",
+        "kind": "terms",
+        "all": [
+          [
+            "ifes",
+            "instituto federal"
+          ],
+          [
+            "colatina"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "estudantes e orientadores",
+        "kind": "terms",
+        "all": [
+          [
+            "re:estudantes|alunos"
+          ],
+          [
+            "re:orientador|professor|servidor"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "competições",
+        "kind": "terms",
+        "all": [
+          [
+            "re:competic|campeonato|torneio|olimpiada"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q02_qual_era_primeiro_nome_equipe",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "Asimov",
+        "kind": "terms",
+        "all": [
+          [
+            "asimov"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q03_por_equipe_mudou_nome",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "registro de marca / questões legais",
+        "kind": "terms",
+        "all": [
+          [
+            "marca"
+          ],
+          [
+            "re:registr|legal|juridic|direito"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q04_ano_equipe_foi_criada",
+    "answer_type": "descritiva",
+    "key_facts": [
+      {
+        "text": "proposta em 2014",
+        "kind": "terms",
+        "all": [
+          [
+            "2014"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "atividades a partir de 2015",
+        "kind": "terms",
+        "all": [
+          [
+            "2015"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "projeto submetido ao CNPq",
+        "kind": "terms",
+        "all": [
+          [
+            "cnpq"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q05_quem_idealizou_criacao_equipe",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "Renato Lopes de Oliveira",
+        "kind": "terms",
+        "all": [
+          [
+            "re:renato\\s+lopes"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q06_qual_foi_objetivo_principal_criacao",
+    "answer_type": "descritiva",
+    "key_facts": [
+      {
+        "text": "ensino de programação",
+        "kind": "terms",
+        "all": [
+          [
+            "re:programac"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "abordagem pedagógica / robótica educacional",
+        "kind": "terms",
+        "all": [
+          [
+            "re:pedagog|educacional|ensino|aprendizagem|aprendizado"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "protagonismo em competições",
+        "kind": "terms",
+        "all": [
+          [
+            "re:protagonismo|competic"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "redução da evasão escolar",
+        "kind": "terms",
+        "all": [
+          [
+            "re:evasao"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q07_ano_equipe_participou_primeira_competicao",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "2015",
+        "kind": "terms",
+        "all": [
+          [
+            "2015"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "LARC",
+        "kind": "terms",
+        "all": [
+          [
+            "re:larc|latin\\s+american"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q08_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "SEK: 1° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 3° lugar — LARC (Internacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q09_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Futebol 2D: 1° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 1° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 30° lugar — OBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 1° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 1° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 2° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Bronze — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q10_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "CoSpace: 1° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 1° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 1° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Humanoide: 1° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 8° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Seguidor de Linha: 8° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 2° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 3° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 4° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Bronze — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q11_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "CoSpace: 2° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 1° lugar — LARC (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 2° lugar — IRONCUP (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 3° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Seguidor de Linha: 10° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 1° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 2° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Bronze — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q12_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "CoSpace: 2° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 3° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 3° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 2° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 42° lugar — OBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "RoboCup Soccer: 12° lugar — ROBOCUP (Mundial)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 1° lugar — LARC (Internacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 2° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Bronze — OBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Prata — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q13_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Futebol 2D: 1° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 1° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 1° lugar — TRUFES (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Seguidor de Linha: 14° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 2° lugar — CBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q14_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Futebol 2D: 2° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Bronze — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q15_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Futebol 2D: 2° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 1° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 12° lugar — OBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 3° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Bronze — OBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: Medalha de Prata — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q16_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Prática: 1° lugar — OBR (Regional)",
+        "kind": "placement",
+        "with_level": true
+      },
+      {
+        "text": "Prática: 1° lugar — OBR (Nacional)",
+        "kind": "placement",
+        "with_level": true
+      },
+      {
+        "text": "SEK: 1° lugar — CBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q17_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Futebol 2D: 2° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 3° lugar — IRONCUP (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 1° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 3° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 6° lugar — OBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "RoboCup Rescue: 5° lugar — ROBOCUP (Mundial)",
+        "kind": "placement"
+      },
+      {
+        "text": "SEK: 1° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: 2 Medalhas de Honra ao Mérito — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q18_quais_foram_classificacoes_equipe_temporada",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Futebol 2D: 1° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Futebol 2D: 6° lugar — ROBOCUP (Mundial)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 1° lugar — OBR (Regional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Prática: 2° lugar — OBR (Regional)",
+        "kind": "placement",
+        "with_level": true
+      },
+      {
+        "text": "Prática: 2° lugar — OBR (Nacional)",
+        "kind": "placement",
+        "with_level": true
+      },
+      {
+        "text": "Rescue Line: 19° lugar — ROBOCUP (Mundial)",
+        "kind": "placement"
+      },
+      {
+        "text": "SuperTeam: 1° lugar — ROBOCUP (Mundial)",
+        "kind": "placement"
+      },
+      {
+        "text": "SuperTeam: 1° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Challenge: 1° lugar — CBR (Nacional)",
+        "kind": "placement"
+      },
+      {
+        "text": "Teórica: 1 Medalha de Ouro — OBR (Nacional)",
+        "kind": "placement"
+      }
+    ]
+  },
+  {
+    "id": "q19_quem_foram_orientadores_equipe_2015",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q20_quem_foram_orientadores_equipe_2016",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard",
+        "kind": "name"
+      },
+      {
+        "text": "Diego Rossi Mafioletti",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Josiane Dalmasio",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q21_quem_foram_orientadores_equipe_2017",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Diego Rossi Mafioletti",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Fernando Reinoso",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q22_quem_foram_orientadores_equipe_2018",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Joanita Araújo Espanhol",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Fábio Luiz Bigati",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Fernando Reinoso",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q23_quem_foram_orientadores_equipe_2019",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Joanita Araújo Espanhol",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Belato",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "André Avelino",
+        "kind": "name"
+      },
+      {
+        "text": "Dione Souza Albuquerque de Lima",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q24_quem_foram_orientadores_equipe_2020",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Joanita Araújo Espanhol",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Dione Souza Albuquerque de Lima",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q25_quem_foram_orientadores_equipe_2021",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Joanita Araújo Espanhol",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Ailton Souza Duarte",
+        "kind": "name"
+      },
+      {
+        "text": "Alextian Bartholomeu Liberato",
+        "kind": "name"
+      },
+      {
+        "text": "Ricardo Tedesco da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Dione Souza Albuquerque de Lima",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q26_quem_foram_orientadores_equipe_2022",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Alextian Bartholomeu Liberato",
+        "kind": "name"
+      },
+      {
+        "text": "Ricardo Tedesco da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Dione Souza Albuquerque de Lima",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q27_quem_foram_orientadores_equipe_2023",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Gustavo Ludovico Guidoni",
+        "kind": "name"
+      },
+      {
+        "text": "Ricardo Tedesco da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Eduardo Max Amaro Amaral",
+        "kind": "name"
+      },
+      {
+        "text": "Alextian Bartholomeu Liberato",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramin",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Dione Souza Albuquerque de Lima",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q28_quem_foram_orientadores_equipe_2024",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Gustavo Ludovico Guidoni",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Eduardo Max Amaro Amaral",
+        "kind": "name"
+      },
+      {
+        "text": "Ricardo Tedesco da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Allan Fernandes Balardino",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q29_quem_foram_orientadores_equipe_2025",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "Julio César Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Gustavo Ludovico Guidoni",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Eduardo Max Amaro Amaral",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Jaimel de Oliveira Lima",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q30_quantos_estudantes_participaram_equipe_total",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "191 estudantes",
+        "kind": "terms",
+        "all": [
+          [
+            "191"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "152 do sexo masculino",
+        "kind": "terms",
+        "all": [
+          [
+            "152"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "39 do sexo feminino",
+        "kind": "terms",
+        "all": [
+          [
+            "39"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q31_liste_todos_subgrupos_ja_existiram",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "ADM",
+        "kind": "terms",
+        "all": [
+          [
+            "ADM"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Challenge",
+        "kind": "terms",
+        "all": [
+          [
+            "Challenge"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "CoSpace",
+        "kind": "terms",
+        "all": [
+          [
+            "CoSpace"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Drone",
+        "kind": "terms",
+        "all": [
+          [
+            "Drone"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Futebol 2D",
+        "kind": "terms",
+        "all": [
+          [
+            "Futebol 2D"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Humanoide",
+        "kind": "terms",
+        "all": [
+          [
+            "Humanoide"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Lego Sumô",
+        "kind": "terms",
+        "all": [
+          [
+            "Lego Sumô"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "OBI",
+        "kind": "terms",
+        "all": [
+          [
+            "OBI"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Osorin",
+        "kind": "terms",
+        "all": [
+          [
+            "Osorin"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Pesquisa",
+        "kind": "terms",
+        "all": [
+          [
+            "Pesquisa"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Prática",
+        "kind": "terms",
+        "all": [
+          [
+            "Prática"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Seguidor de Linha",
+        "kind": "terms",
+        "all": [
+          [
+            "Seguidor de Linha"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "SEK",
+        "kind": "terms",
+        "all": [
+          [
+            "SEK"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Teórica",
+        "kind": "terms",
+        "all": [
+          [
+            "Teórica"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q32_liste_todos_campeonatos_equipe_ja",
+    "answer_type": "lista_curta",
+    "key_facts": [
+      {
+        "text": "TRUFES — Torneio de Robótica da Ufes",
+        "kind": "terms",
+        "all": [
+          [
+            "re:trufes"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "LARC — Latin American Robotics Competition",
+        "kind": "terms",
+        "all": [
+          [
+            "re:larc|latin american"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "OBR — Olimpíada Brasileira de Robótica",
+        "kind": "terms",
+        "all": [
+          [
+            "re:\\bobr\\b|olimpiada brasileira de robotica"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "IRONCup — Copa Nacional de Robótica do Inatel",
+        "kind": "terms",
+        "all": [
+          [
+            "re:iron\\s*cup"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "CBR — Competição Brasileira de Robótica",
+        "kind": "terms",
+        "all": [
+          [
+            "re:\\bcbr\\b|competicao brasileira de robotica"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "RoboCup — Copa do Mundo de Robôs",
+        "kind": "terms",
+        "all": [
+          [
+            "re:robo\\s*cup"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "OBI — Olimpíada Brasileira de Informática",
+        "kind": "terms",
+        "all": [
+          [
+            "re:\\bobi\\b|olimpiada brasileira de informatica"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q33_quais_anos_equipe_participou_mundial",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "2019",
+        "kind": "terms",
+        "all": [
+          [
+            "2019"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "2024",
+        "kind": "terms",
+        "all": [
+          [
+            "2024"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "2025",
+        "kind": "terms",
+        "all": [
+          [
+            "2025"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q34_quais_projetos_ensino_pesquisa_extensao",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "10 anos dos Titãs da Robótica: do estadual ao mundial",
+        "kind": "terms",
+        "all": [
+          [
+            "re:10 anos"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Aplicativo IFeira Colatina",
+        "kind": "terms",
+        "all": [
+          [
+            "re:ifeira"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Caderno Digital",
+        "kind": "terms",
+        "all": [
+          [
+            "re:caderno digital"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Construção de uma estrutura robótica de reabilitação baseada no framework ROS",
+        "kind": "terms",
+        "all": [
+          [
+            "re:reabilitac"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Desafios na realização de oficinas de robótica em escolas públicas: um relato de experiência",
+        "kind": "terms",
+        "all": [
+          [
+            "re:oficinas"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Desenvolvimento de biblioteca Python para robótica educacional com compatibilidade ao kit LEGO EV3 em Linux embarcado",
+        "kind": "terms",
+        "all": [
+          [
+            "re:biblioteca python"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Espaços do Saber",
+        "kind": "terms",
+        "all": [
+          [
+            "re:espacos do saber"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Jogos Digitais: Princípios, Conceitos e Práticas",
+        "kind": "terms",
+        "all": [
+          [
+            "re:jogos digitais"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Plataforma Robótica Móvel Utilizada no Ensino de ROS e SLAM",
+        "kind": "terms",
+        "all": [
+          [
+            "re:slam"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Programação para Leigos com App Inventor",
+        "kind": "terms",
+        "all": [
+          [
+            "re:app inventor"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Programação para Leigos com o Raspberry Pi",
+        "kind": "terms",
+        "all": [
+          [
+            "re:leigos com o raspberry"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Programe-se",
+        "kind": "terms",
+        "all": [
+          [
+            "re:programe se"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Protagonismo Estudantil através da Robótica Educacional",
+        "kind": "terms",
+        "all": [
+          [
+            "re:protagonismo estudantil"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Protetores faciais e laringoscópios",
+        "kind": "terms",
+        "all": [
+          [
+            "re:protetores faciais|laringoscop"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Protótipos Educacionais: Utilizando o Arduino para o Aprendizado de Programação Inicial",
+        "kind": "terms",
+        "all": [
+          [
+            "re:prototipos educacionais|arduino para o aprendizado"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Robótica educacional para o aprendizado de programação",
+        "kind": "terms",
+        "all": [
+          [
+            "re:robotica educacional para o aprendizado"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Utilização do Scratch como Ferramenta de Ensino no Desenvolvimento de Robôs Interativos",
+        "kind": "terms",
+        "all": [
+          [
+            "re:scratch como ferramenta"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q35_quais_tecnologias_sao_utilizadas_pela",
+    "answer_type": "descritiva",
+    "key_facts": [
+      {
+        "text": "LEGO Mindstorms EV3",
+        "kind": "terms",
+        "all": [
+          [
+            "re:ev3|mindstorms"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Spike Prime",
+        "kind": "terms",
+        "all": [
+          [
+            "spike"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Arduino",
+        "kind": "terms",
+        "all": [
+          [
+            "arduino"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Raspberry Pi",
+        "kind": "terms",
+        "all": [
+          [
+            "raspberry"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "impressão 3D",
+        "kind": "terms",
+        "all": [
+          [
+            "re:impress\\w*\\s+3d|3d"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Scratch",
+        "kind": "terms",
+        "all": [
+          [
+            "scratch"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Python",
+        "kind": "terms",
+        "all": [
+          [
+            "python"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "C / C++",
+        "kind": "terms",
+        "all": [
+          [
+            "re:\\bc\\b"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q36_como_participar_equipe_titas_robotica",
+    "answer_type": "descritiva",
+    "key_facts": [
+      {
+        "text": "qualquer estudante do Ifes Colatina",
+        "kind": "terms",
+        "all": [
+          [
+            "re:qualquer|todos os|todas as|independente"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "seleção por perfil/interesse/disponibilidade",
+        "kind": "terms",
+        "all": [
+          [
+            "re:perfil|interesse|disponibilidade"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "rendimento escolar satisfatório",
+        "kind": "terms",
+        "all": [
+          [
+            "re:rendimento|desempenho|notas"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q37_liste_todos_patrocinadores_equipe_titas",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Apex Partners Gestão de Ativos",
+        "kind": "terms",
+        "all": [
+          [
+            "re:apex"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Basis Tecnologia da Informação",
+        "kind": "terms",
+        "all": [
+          [
+            "re:basis"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Fábrica de Esquadrias Galon",
+        "kind": "terms",
+        "all": [
+          [
+            "re:galon"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Frisa",
+        "kind": "terms",
+        "all": [
+          [
+            "re:frisa"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "FULLTECH",
+        "kind": "terms",
+        "all": [
+          [
+            "re:fulltech|full tech"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Im Digital",
+        "kind": "terms",
+        "all": [
+          [
+            "re:im digital"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Imagination Media",
+        "kind": "terms",
+        "all": [
+          [
+            "re:imagination media"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Matriz Sistemas",
+        "kind": "terms",
+        "all": [
+          [
+            "re:matriz sistemas|matriz"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Metalosa Industria Metalúrgica",
+        "kind": "terms",
+        "all": [
+          [
+            "re:metalosa"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Moveedu Cursos Profissionalizantes",
+        "kind": "terms",
+        "all": [
+          [
+            "re:moveedu|move edu"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Seek Informatica",
+        "kind": "terms",
+        "all": [
+          [
+            "re:seek"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "SIAD",
+        "kind": "terms",
+        "all": [
+          [
+            "re:siad"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "SmartIrriga",
+        "kind": "terms",
+        "all": [
+          [
+            "re:smart\\s*irriga"
+          ]
+        ],
+        "scope": "answer"
+      },
+      {
+        "text": "Vixteam Consultoria & Sistemas",
+        "kind": "terms",
+        "all": [
+          [
+            "re:vixteam|vix team"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  },
+  {
+    "id": "q38_liste_todos_orientadores_ja_passaram",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Ailton Souza Duarte",
+        "kind": "name"
+      },
+      {
+        "text": "Alan Balardino",
+        "kind": "name"
+      },
+      {
+        "text": "Alextian Bartholomeu Liberato",
+        "kind": "name"
+      },
+      {
+        "text": "André Avelino",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Belato",
+        "kind": "name"
+      },
+      {
+        "text": "Diego Rossi Mafioletti",
+        "kind": "name"
+      },
+      {
+        "text": "Dione Souza Albuquerque de Lima",
+        "kind": "name"
+      },
+      {
+        "text": "Eduardo Max Amaro Amaral",
+        "kind": "name"
+      },
+      {
+        "text": "Fabio Bigati",
+        "kind": "name"
+      },
+      {
+        "text": "Giovany Frossard Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Gustavo Ludovico Guidoni",
+        "kind": "name"
+      },
+      {
+        "text": "Igor Carlos Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "Jaimel de Oliveira Lima",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Eduardo Glazar",
+        "kind": "name"
+      },
+      {
+        "text": "Joanita Araújo Espanhol",
+        "kind": "name"
+      },
+      {
+        "text": "Josiane Dalmasio Clabunde",
+        "kind": "name"
+      },
+      {
+        "text": "Julio Cesar Goldner Vendramini",
+        "kind": "name"
+      },
+      {
+        "text": "Luis Fernando Reinoso",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Osório Rios",
+        "kind": "name"
+      },
+      {
+        "text": "Ricardo Tedesco da Silva",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q39_liste_todos_estudantes_ja_passaram",
+    "answer_type": "lista_longa",
+    "key_facts": [
+      {
+        "text": "Aldair Schmitberger Junior",
+        "kind": "name"
+      },
+      {
+        "text": "Alexandre Ferreira Costa",
+        "kind": "name"
+      },
+      {
+        "text": "Alexsander Benica Gonçalves",
+        "kind": "name"
+      },
+      {
+        "text": "Alisson Luiz de Souza Vighini",
+        "kind": "name"
+      },
+      {
+        "text": "Álisson Melquíades",
+        "kind": "name"
+      },
+      {
+        "text": "Álvaro Paulo Melquiades da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Amanda Ferreira Merelis",
+        "kind": "name"
+      },
+      {
+        "text": "Amanda Margon Nicoli",
+        "kind": "name"
+      },
+      {
+        "text": "Ana Clara Chieppe Vargas",
+        "kind": "name"
+      },
+      {
+        "text": "Ana Luiza Rogerio de Menezes Ahnert",
+        "kind": "name"
+      },
+      {
+        "text": "André Bergamini Peter Krause",
+        "kind": "name"
+      },
+      {
+        "text": "André Corrente Corrêa",
+        "kind": "name"
+      },
+      {
+        "text": "André Gabrescht Rossi",
+        "kind": "name"
+      },
+      {
+        "text": "André Garcia Holtz",
+        "kind": "name"
+      },
+      {
+        "text": "Anna Luísa Reis Becevelli",
+        "kind": "name"
+      },
+      {
+        "text": "Anna Raquel Sandrini",
+        "kind": "name"
+      },
+      {
+        "text": "Anna Tália dos Reis Soares",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Cardoso Neitzel",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Fernandes de Paiva Costa",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Ferreira Guedes",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Martins Caletti",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Parpaiola Gonçalves",
+        "kind": "name"
+      },
+      {
+        "text": "Arthur Poubel Belato",
+        "kind": "name"
+      },
+      {
+        "text": "Artur Muniz Foletto",
+        "kind": "name"
+      },
+      {
+        "text": "Artur Schaefer",
+        "kind": "name"
+      },
+      {
+        "text": "Bárbara Esteves da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Beatriz Marques Franco",
+        "kind": "name"
+      },
+      {
+        "text": "Bernardo Dias de Souza",
+        "kind": "name"
+      },
+      {
+        "text": "Bernardo Pereira Muller",
+        "kind": "name"
+      },
+      {
+        "text": "Bernardo Schmiedel Raymundo",
+        "kind": "name"
+      },
+      {
+        "text": "Bernardo Werneck Teixeira",
+        "kind": "name"
+      },
+      {
+        "text": "Bianca Patrício Rodrigues",
+        "kind": "name"
+      },
+      {
+        "text": "Brenda Comper",
+        "kind": "name"
+      },
+      {
+        "text": "Breno Fernandes Luchi",
+        "kind": "name"
+      },
+      {
+        "text": "Breno Maia Costa",
+        "kind": "name"
+      },
+      {
+        "text": "Bruno Orletti Gava",
+        "kind": "name"
+      },
+      {
+        "text": "Caian Monteiro de Oliveira Meireles",
+        "kind": "name"
+      },
+      {
+        "text": "Caio Gomes Braga",
+        "kind": "name"
+      },
+      {
+        "text": "Camila Stacul Moura",
+        "kind": "name"
+      },
+      {
+        "text": "Carla Tohnes",
+        "kind": "name"
+      },
+      {
+        "text": "Carlos Alberto Rodrigues Netto",
+        "kind": "name"
+      },
+      {
+        "text": "Christian Rodrigues da Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Daniel Fieni Pereira",
+        "kind": "name"
+      },
+      {
+        "text": "Daniel Tadeu Donateli",
+        "kind": "name"
+      },
+      {
+        "text": "Davi Curto Pessanha",
+        "kind": "name"
+      },
+      {
+        "text": "Davi Ragazzi Muniz",
+        "kind": "name"
+      },
+      {
+        "text": "Douglas Allan Braga",
+        "kind": "name"
+      },
+      {
+        "text": "Douglas Braga Soares",
+        "kind": "name"
+      },
+      {
+        "text": "Edgar Alves Arrigoni",
+        "kind": "name"
+      },
+      {
+        "text": "Eduarda Azevedo de Oliveira",
+        "kind": "name"
+      },
+      {
+        "text": "Elis Fernandes de Moraes",
+        "kind": "name"
+      },
+      {
+        "text": "Ester da Silva Nunes",
+        "kind": "name"
+      },
+      {
+        "text": "Felipe Lorenzoni Cazotti",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriel Dominicini da Fonseca",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriel Garcia Tissianel",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriel Lasaro",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriel Macedo Liberato",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriel Mallaguetti Rodrigues de Souza",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriel Rocha do Nascimento",
+        "kind": "name"
+      },
+      {
+        "text": "Gabriela Araújo dos Santos",
+        "kind": "name"
+      },
+      {
+        "text": "Geanderson Lemonte",
+        "kind": "name"
+      },
+      {
+        "text": "Ghabriel Borges Campi",
+        "kind": "name"
+      },
+      {
+        "text": "Guibson Oliveira Krause",
+        "kind": "name"
+      },
+      {
+        "text": "Guilherme Furtado Ronconi Vieiras",
+        "kind": "name"
+      },
+      {
+        "text": "Guilherme Ratti Moraes",
+        "kind": "name"
+      },
+      {
+        "text": "Gustavo da Costa Zucolotto",
+        "kind": "name"
+      },
+      {
+        "text": "Gustavo Linhaus Fernandes",
+        "kind": "name"
+      },
+      {
+        "text": "Gustavo Nunes Guedes",
+        "kind": "name"
+      },
+      {
+        "text": "Heitor Falconi Cassaro",
+        "kind": "name"
+      },
+      {
+        "text": "Henrique Almeida de Oliveira",
+        "kind": "name"
+      },
+      {
+        "text": "Henrique Frisso Oliveira",
+        "kind": "name"
+      },
+      {
+        "text": "Héricles Santos Fernandes",
+        "kind": "name"
+      },
+      {
+        "text": "Iarlen Lucas Pimenta de Sousa",
+        "kind": "name"
+      },
+      {
+        "text": "Isabela Garcia Tissianel",
+        "kind": "name"
+      },
+      {
+        "text": "Isadora dos Santos Massarioli",
+        "kind": "name"
+      },
+      {
+        "text": "Isaias Constantino dos Santos",
+        "kind": "name"
+      },
+      {
+        "text": "Izadora Vanderlei Bonifacio",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Pandolfi",
+        "kind": "name"
+      },
+      {
+        "text": "Jean Rodrigues Vieira",
+        "kind": "name"
+      },
+      {
+        "text": "Jhenifer de Barros Belem",
+        "kind": "name"
+      },
+      {
+        "text": "Jhordan Pereira Ortolani",
+        "kind": "name"
+      },
+      {
+        "text": "João Guilherme Adamkosky Botti",
+        "kind": "name"
+      },
+      {
+        "text": "João Lucas Trimolett Rebuli",
+        "kind": "name"
+      },
+      {
+        "text": "João Pedro Correia",
+        "kind": "name"
+      },
+      {
+        "text": "João Pedro Ferron Bravin",
+        "kind": "name"
+      },
+      {
+        "text": "João Pedro Gonçalves Pulini",
+        "kind": "name"
+      },
+      {
+        "text": "João Ricardo Mattedi Cetto",
+        "kind": "name"
+      },
+      {
+        "text": "João Vitor Jacobsen Ramos",
+        "kind": "name"
+      },
+      {
+        "text": "Joel Hanerth",
+        "kind": "name"
+      },
+      {
+        "text": "José Acácio de Alvarenga Valandro",
+        "kind": "name"
+      },
+      {
+        "text": "Juliano Monteiro Gonçalves",
+        "kind": "name"
+      },
+      {
+        "text": "Júlio César Bridi",
+        "kind": "name"
+      },
+      {
+        "text": "Júlio Cézar Lemonte",
+        "kind": "name"
+      },
+      {
+        "text": "Kadichari Gomes Marçal Lima",
+        "kind": "name"
+      },
+      {
+        "text": "Karoliny Andrisen do Prado Neppel",
+        "kind": "name"
+      },
+      {
+        "text": "Kássio Pereira Schaider",
+        "kind": "name"
+      },
+      {
+        "text": "Lara Calegario Guedes",
+        "kind": "name"
+      },
+      {
+        "text": "Larissa de Oliveira Andreatta",
+        "kind": "name"
+      },
+      {
+        "text": "Laura Alves Rodrigues",
+        "kind": "name"
+      },
+      {
+        "text": "Layla Maria dos Santos Couto",
+        "kind": "name"
+      },
+      {
+        "text": "Laysa Jacome dos Santos Costalonga",
+        "kind": "name"
+      },
+      {
+        "text": "Leonan Pereira Pinto",
+        "kind": "name"
+      },
+      {
+        "text": "Leonardo Batista",
+        "kind": "name"
+      },
+      {
+        "text": "Lisânia Soares Miranda",
+        "kind": "name"
+      },
+      {
+        "text": "Lorenzo Henrique Willians da Silva Rebelo",
+        "kind": "name"
+      },
+      {
+        "text": "Lucas Boeloni Rodrigues da Rocha",
+        "kind": "name"
+      },
+      {
+        "text": "Lucas Folador Nunes",
+        "kind": "name"
+      },
+      {
+        "text": "Lucas Gatti Fernandes",
+        "kind": "name"
+      },
+      {
+        "text": "Lucas Giubert",
+        "kind": "name"
+      },
+      {
+        "text": "Lucas Perim",
+        "kind": "name"
+      },
+      {
+        "text": "Lucas Stefenoni Ramos",
+        "kind": "name"
+      },
+      {
+        "text": "Lucio Ribeiro",
+        "kind": "name"
+      },
+      {
+        "text": "Luis Antonio Marchetti Lubiana",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Eduardo Bravin",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Felipe Reali Falqueto",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Fernando Binda Pimenta",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Fernando Martinelli Zorzanelli",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Gustavo Gomes Damasceno",
+        "kind": "name"
+      },
+      {
+        "text": "Luiz Henrique Loureiro Galvão",
+        "kind": "name"
+      },
+      {
+        "text": "Marcelo Mandato Junior",
+        "kind": "name"
+      },
+      {
+        "text": "Marco Antonio de Paula Dornel",
+        "kind": "name"
+      },
+      {
+        "text": "Maria Clara Crisostomo Gama",
+        "kind": "name"
+      },
+      {
+        "text": "Maria Regina Crislane Zeni",
+        "kind": "name"
+      },
+      {
+        "text": "Mariana Rodrigues Hubner",
+        "kind": "name"
+      },
+      {
+        "text": "Mariany Meireles Barbosa Lima",
+        "kind": "name"
+      },
+      {
+        "text": "Marlon Onorio",
+        "kind": "name"
+      },
+      {
+        "text": "Mateus Barauna Schader",
+        "kind": "name"
+      },
+      {
+        "text": "Mateus Beltrame Gasparini",
+        "kind": "name"
+      },
+      {
+        "text": "Mateus Krause",
+        "kind": "name"
+      },
+      {
+        "text": "Mateus Padovan Pereira",
+        "kind": "name"
+      },
+      {
+        "text": "Mateus Werneck",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Goldner Alves de Oliveira",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Luciano Sesana Goldner",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Oliveira Jagi",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Saick de Martin",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Soprani Silva",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Spelta Zacche",
+        "kind": "name"
+      },
+      {
+        "text": "Matheus Zambaldi Marim",
+        "kind": "name"
+      },
+      {
+        "text": "Maykel Rodrigues",
+        "kind": "name"
+      },
+      {
+        "text": "Maytê Chaves Ferreira",
+        "kind": "name"
+      },
+      {
+        "text": "Miguel Pevidor Cruz",
+        "kind": "name"
+      },
+      {
+        "text": "Mikael Botassi de Oliveira",
+        "kind": "name"
+      },
+      {
+        "text": "Milena de Sales",
+        "kind": "name"
+      },
+      {
+        "text": "Murilo Antonio Spalenza",
+        "kind": "name"
+      },
+      {
+        "text": "Murilo Rossoni Delesposte",
+        "kind": "name"
+      },
+      {
+        "text": "Natanael Alves Belmiro",
+        "kind": "name"
+      },
+      {
+        "text": "Nícolas Louzada Borchardt Gomes",
+        "kind": "name"
+      },
+      {
+        "text": "Nícolas Pagini Perin",
+        "kind": "name"
+      },
+      {
+        "text": "Nicolly do Carmo Reis",
+        "kind": "name"
+      },
+      {
+        "text": "Nycolas Eduardo Fernandes Monjardim",
+        "kind": "name"
+      },
+      {
+        "text": "Paulo Andre dos Santos Lagasse",
+        "kind": "name"
+      },
+      {
+        "text": "Paulo Araujo dos Santos",
+        "kind": "name"
+      },
+      {
+        "text": "Paulo Henrique Araujo Loss",
+        "kind": "name"
+      },
+      {
+        "text": "Paulo Sérgio Amorim Mônico",
+        "kind": "name"
+      },
+      {
+        "text": "Pedro Henrique Alves",
+        "kind": "name"
+      },
+      {
+        "text": "Pedro Henrique Juvereth de Castro",
+        "kind": "name"
+      },
+      {
+        "text": "Pedro Henrique Marcillino de Souza",
+        "kind": "name"
+      },
+      {
+        "text": "Pedro Iglesias Abreu",
+        "kind": "name"
+      },
+      {
+        "text": "Pedro José Bello Barcellos",
+        "kind": "name"
+      },
+      {
+        "text": "Pedro Lucas Alves Pereira",
+        "kind": "name"
+      },
+      {
+        "text": "Priscila Fabrete Candido",
+        "kind": "name"
+      },
+      {
+        "text": "Racla Alves Mendes Nascimento",
+        "kind": "name"
+      },
+      {
+        "text": "Rafael dos Santos",
+        "kind": "name"
+      },
+      {
+        "text": "Renan Frassi Fornaciari",
+        "kind": "name"
+      },
+      {
+        "text": "Renato Lopes de Oliveira",
+        "kind": "name"
+      },
+      {
+        "text": "Ricardo Souza Violetti",
+        "kind": "name"
+      },
+      {
+        "text": "Richard Joanathan Holz Ditbenner",
+        "kind": "name"
+      },
+      {
+        "text": "Roberto Mendes Kiefer",
+        "kind": "name"
+      },
+      {
+        "text": "Rodney Schultz Kuster",
+        "kind": "name"
+      },
+      {
+        "text": "Rodrigo Adão dos Santos",
+        "kind": "name"
+      },
+      {
+        "text": "Rodrigo Gasparini do Livramento",
+        "kind": "name"
+      },
+      {
+        "text": "Rodrigo Martins Coelho Júnior",
+        "kind": "name"
+      },
+      {
+        "text": "Ronan Gonçalves Jardim",
+        "kind": "name"
+      },
+      {
+        "text": "Sávio Araújo Pagung",
+        "kind": "name"
+      },
+      {
+        "text": "Teo Giambarba Roseiro",
+        "kind": "name"
+      },
+      {
+        "text": "Thayane Leal Gomes",
+        "kind": "name"
+      },
+      {
+        "text": "Victor Alyson Fraga Correa",
+        "kind": "name"
+      },
+      {
+        "text": "Victor Cordeiro de Sousa",
+        "kind": "name"
+      },
+      {
+        "text": "Victor Costa de Coura",
+        "kind": "name"
+      },
+      {
+        "text": "Victor Hugo Salles",
+        "kind": "name"
+      },
+      {
+        "text": "Victor Lopes Pego",
+        "kind": "name"
+      },
+      {
+        "text": "Vinícius Eduardo Daleprane",
+        "kind": "name"
+      },
+      {
+        "text": "Vinícius Machado de Souza",
+        "kind": "name"
+      },
+      {
+        "text": "Vinícius Rossmann Nunes",
+        "kind": "name"
+      },
+      {
+        "text": "Vinicius Zorzanelli",
+        "kind": "name"
+      },
+      {
+        "text": "Vinycius Fernandes da Rocha",
+        "kind": "name"
+      },
+      {
+        "text": "Vitor Nicchio Alves",
+        "kind": "name"
+      },
+      {
+        "text": "Waschington Luiz Menezes Filho",
+        "kind": "name"
+      },
+      {
+        "text": "William Wallace Cristo Bulian",
+        "kind": "name"
+      },
+      {
+        "text": "Yasmin Zambaldi Marim",
+        "kind": "name"
+      },
+      {
+        "text": "Ykaro Schmitd Amaral",
+        "kind": "name"
+      }
+    ]
+  },
+  {
+    "id": "q40_qual_valor_total_captado_patrocinio",
+    "answer_type": "fato_curto",
+    "key_facts": [
+      {
+        "text": "reconhece que não há informação confiável",
+        "kind": "terms",
+        "all": [
+          [
+            "re:nao (?:contem|possui|tem|ha|encontr|disp|consta|sei|foi possivel|localizei|identifiquei)|sem informac|nao ha dados|informac\\w* (?:confiav|disponiv)"
+          ]
+        ],
+        "scope": "answer"
+      }
+    ]
+  }
+]

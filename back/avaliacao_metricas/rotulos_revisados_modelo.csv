@@ -1,0 +1,241 @@
+﻿answer_key;label;rotulo_automatico;cobertura;pergunta
+anthropic|no_rag|q01_quem_sao_titas_robotica;;1;0,7500;Quem são os Titãs da Robótica?
+anthropic|no_rag|q02_qual_era_primeiro_nome_equipe;;1;1,0000;Qual era o primeiro nome da equipe Titãs da Robótica?
+anthropic|no_rag|q03_por_equipe_mudou_nome;;0;0,0000;Por que a equipe mudou de nome?
+anthropic|no_rag|q04_ano_equipe_foi_criada;;0;0,0000;Em que ano a equipe foi criada?
+anthropic|no_rag|q05_quem_idealizou_criacao_equipe;;0;0,0000;Quem idealizou a criação da equipe?
+anthropic|no_rag|q06_qual_foi_objetivo_principal_criacao;;0;0,2500;Qual foi o objetivo principal da criação da equipe?
+anthropic|no_rag|q07_ano_equipe_participou_primeira_competicao;;0;0,0000;Em que ano a equipe participou da primeira competição?
+anthropic|no_rag|q08_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2015?
+anthropic|no_rag|q09_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2016?
+anthropic|no_rag|q10_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2017?
+anthropic|no_rag|q11_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2018?
+anthropic|no_rag|q12_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2019?
+anthropic|no_rag|q13_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2020?
+anthropic|no_rag|q14_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2021?
+anthropic|no_rag|q15_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2022?
+anthropic|no_rag|q16_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2023?
+anthropic|no_rag|q17_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2024?
+anthropic|no_rag|q18_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2025?
+anthropic|no_rag|q19_quem_foram_orientadores_equipe_2015;;0;0,0000;Quem foram os orientadores da equipe em 2015?
+anthropic|no_rag|q20_quem_foram_orientadores_equipe_2016;;0;0,0000;Quem foram os orientadores da equipe em 2016?
+anthropic|no_rag|q21_quem_foram_orientadores_equipe_2017;;0;0,0000;Quem foram os orientadores da equipe em 2017?
+anthropic|no_rag|q22_quem_foram_orientadores_equipe_2018;;0;0,0000;Quem foram os orientadores da equipe em 2018?
+anthropic|no_rag|q23_quem_foram_orientadores_equipe_2019;;0;0,0000;Quem foram os orientadores da equipe em 2019?
+anthropic|no_rag|q24_quem_foram_orientadores_equipe_2020;;0;0,0000;Quem foram os orientadores da equipe em 2020?
+anthropic|no_rag|q25_quem_foram_orientadores_equipe_2021;;0;0,0000;Quem foram os orientadores da equipe em 2021?
+anthropic|no_rag|q26_quem_foram_orientadores_equipe_2022;;0;0,0000;Quem foram os orientadores da equipe em 2022?
+anthropic|no_rag|q27_quem_foram_orientadores_equipe_2023;;0;0,0000;Quem foram os orientadores da equipe em 2023?
+anthropic|no_rag|q28_quem_foram_orientadores_equipe_2024;;0;0,0000;Quem foram os orientadores da equipe em 2024?
+anthropic|no_rag|q29_quem_foram_orientadores_equipe_2025;;0;0,0000;Quem foram os orientadores da equipe em 2025?
+anthropic|no_rag|q30_quantos_estudantes_participaram_equipe_total;;0;0,0000;Quantos estudantes participaram da equipe no total?
+anthropic|no_rag|q31_liste_todos_subgrupos_ja_existiram;;0;0,0000;Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.
+anthropic|no_rag|q32_liste_todos_campeonatos_equipe_ja;;0;0,0000;Liste todos os campeonatos em que a equipe já participou.
+anthropic|no_rag|q33_quais_anos_equipe_participou_mundial;;0;0,0000;Em quais anos a equipe participou do Mundial RoboCup?
+anthropic|no_rag|q34_quais_projetos_ensino_pesquisa_extensao;;0;0,0000;Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?
+anthropic|no_rag|q35_quais_tecnologias_sao_utilizadas_pela;;0;0,0000;Quais tecnologias são utilizadas pela equipe Titãs da Robótica?
+anthropic|no_rag|q36_como_participar_equipe_titas_robotica;;0;0,3333;Como participar da equipe Titãs da Robótica?
+anthropic|no_rag|q37_liste_todos_patrocinadores_equipe_titas;;0;0,0000;Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.
+anthropic|no_rag|q38_liste_todos_orientadores_ja_passaram;;0;0,0000;Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+anthropic|no_rag|q39_liste_todos_estudantes_ja_passaram;;0;0,0000;Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+anthropic|no_rag|q40_qual_valor_total_captado_patrocinio;;0;0,0000;Qual é o valor total captado em patrocínio pela equipe desde a criação?
+anthropic|rag|q01_quem_sao_titas_robotica;;1;1,0000;Quem são os Titãs da Robótica?
+anthropic|rag|q02_qual_era_primeiro_nome_equipe;;1;1,0000;Qual era o primeiro nome da equipe Titãs da Robótica?
+anthropic|rag|q03_por_equipe_mudou_nome;;1;1,0000;Por que a equipe mudou de nome?
+anthropic|rag|q04_ano_equipe_foi_criada;;1;1,0000;Em que ano a equipe foi criada?
+anthropic|rag|q05_quem_idealizou_criacao_equipe;;1;1,0000;Quem idealizou a criação da equipe?
+anthropic|rag|q06_qual_foi_objetivo_principal_criacao;;1;0,7500;Qual foi o objetivo principal da criação da equipe?
+anthropic|rag|q07_ano_equipe_participou_primeira_competicao;;0;0,5000;Em que ano a equipe participou da primeira competição?
+anthropic|rag|q08_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2015?
+anthropic|rag|q09_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2016?
+anthropic|rag|q10_quais_foram_classificacoes_equipe_temporada;;0;0,6000;Quais foram as classificações da equipe na temporada de 2017?
+anthropic|rag|q11_quais_foram_classificacoes_equipe_temporada;;1;0,8750;Quais foram as classificações da equipe na temporada de 2018?
+anthropic|rag|q12_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2019?
+anthropic|rag|q13_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2020?
+anthropic|rag|q14_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2021?
+anthropic|rag|q15_quais_foram_classificacoes_equipe_temporada;;1;0,8333;Quais foram as classificações da equipe na temporada de 2022?
+anthropic|rag|q16_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2023?
+anthropic|rag|q17_quais_foram_classificacoes_equipe_temporada;;0;0,5000;Quais foram as classificações da equipe na temporada de 2024?
+anthropic|rag|q18_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2025?
+anthropic|rag|q19_quem_foram_orientadores_equipe_2015;;1;1,0000;Quem foram os orientadores da equipe em 2015?
+anthropic|rag|q20_quem_foram_orientadores_equipe_2016;;1;1,0000;Quem foram os orientadores da equipe em 2016?
+anthropic|rag|q21_quem_foram_orientadores_equipe_2017;;0;0,5714;Quem foram os orientadores da equipe em 2017?
+anthropic|rag|q22_quem_foram_orientadores_equipe_2018;;1;1,0000;Quem foram os orientadores da equipe em 2018?
+anthropic|rag|q23_quem_foram_orientadores_equipe_2019;;1;1,0000;Quem foram os orientadores da equipe em 2019?
+anthropic|rag|q24_quem_foram_orientadores_equipe_2020;;1;1,0000;Quem foram os orientadores da equipe em 2020?
+anthropic|rag|q25_quem_foram_orientadores_equipe_2021;;1;1,0000;Quem foram os orientadores da equipe em 2021?
+anthropic|rag|q26_quem_foram_orientadores_equipe_2022;;1;0,8571;Quem foram os orientadores da equipe em 2022?
+anthropic|rag|q27_quem_foram_orientadores_equipe_2023;;0;0,5556;Quem foram os orientadores da equipe em 2023?
+anthropic|rag|q28_quem_foram_orientadores_equipe_2024;;1;1,0000;Quem foram os orientadores da equipe em 2024?
+anthropic|rag|q29_quem_foram_orientadores_equipe_2025;;1;1,0000;Quem foram os orientadores da equipe em 2025?
+anthropic|rag|q30_quantos_estudantes_participaram_equipe_total;;0;0,0000;Quantos estudantes participaram da equipe no total?
+anthropic|rag|q31_liste_todos_subgrupos_ja_existiram;;0;0,2857;Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.
+anthropic|rag|q32_liste_todos_campeonatos_equipe_ja;;0;0,2857;Liste todos os campeonatos em que a equipe já participou.
+anthropic|rag|q33_quais_anos_equipe_participou_mundial;;0;0,0000;Em quais anos a equipe participou do Mundial RoboCup?
+anthropic|rag|q34_quais_projetos_ensino_pesquisa_extensao;;0;0,1176;Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?
+anthropic|rag|q35_quais_tecnologias_sao_utilizadas_pela;;0;0,0000;Quais tecnologias são utilizadas pela equipe Titãs da Robótica?
+anthropic|rag|q36_como_participar_equipe_titas_robotica;;0;0,3333;Como participar da equipe Titãs da Robótica?
+anthropic|rag|q37_liste_todos_patrocinadores_equipe_titas;;0;0,0000;Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.
+anthropic|rag|q38_liste_todos_orientadores_ja_passaram;;0;0,0000;Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+anthropic|rag|q39_liste_todos_estudantes_ja_passaram;;0;0,0942;Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+anthropic|rag|q40_qual_valor_total_captado_patrocinio;;1;1,0000;Qual é o valor total captado em patrocínio pela equipe desde a criação?
+deepseek|no_rag|q01_quem_sao_titas_robotica;;1;1,0000;Quem são os Titãs da Robótica?
+deepseek|no_rag|q02_qual_era_primeiro_nome_equipe;;1;1,0000;Qual era o primeiro nome da equipe Titãs da Robótica?
+deepseek|no_rag|q03_por_equipe_mudou_nome;;0;0,0000;Por que a equipe mudou de nome?
+deepseek|no_rag|q04_ano_equipe_foi_criada;;0;0,3333;Em que ano a equipe foi criada?
+deepseek|no_rag|q05_quem_idealizou_criacao_equipe;;0;0,0000;Quem idealizou a criação da equipe?
+deepseek|no_rag|q06_qual_foi_objetivo_principal_criacao;;0;0,0000;Qual foi o objetivo principal da criação da equipe?
+deepseek|no_rag|q07_ano_equipe_participou_primeira_competicao;;0;0,0000;Em que ano a equipe participou da primeira competição?
+deepseek|no_rag|q08_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2015?
+deepseek|no_rag|q09_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2016?
+deepseek|no_rag|q10_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2017?
+deepseek|no_rag|q11_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2018?
+deepseek|no_rag|q12_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2019?
+deepseek|no_rag|q13_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2020?
+deepseek|no_rag|q14_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2021?
+deepseek|no_rag|q15_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2022?
+deepseek|no_rag|q16_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2023?
+deepseek|no_rag|q17_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2024?
+deepseek|no_rag|q18_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2025?
+deepseek|no_rag|q19_quem_foram_orientadores_equipe_2015;;0;0,0000;Quem foram os orientadores da equipe em 2015?
+deepseek|no_rag|q20_quem_foram_orientadores_equipe_2016;;0;0,0000;Quem foram os orientadores da equipe em 2016?
+deepseek|no_rag|q21_quem_foram_orientadores_equipe_2017;;0;0,0000;Quem foram os orientadores da equipe em 2017?
+deepseek|no_rag|q22_quem_foram_orientadores_equipe_2018;;0;0,0000;Quem foram os orientadores da equipe em 2018?
+deepseek|no_rag|q23_quem_foram_orientadores_equipe_2019;;0;0,0000;Quem foram os orientadores da equipe em 2019?
+deepseek|no_rag|q24_quem_foram_orientadores_equipe_2020;;0;0,0000;Quem foram os orientadores da equipe em 2020?
+deepseek|no_rag|q25_quem_foram_orientadores_equipe_2021;;0;0,0000;Quem foram os orientadores da equipe em 2021?
+deepseek|no_rag|q26_quem_foram_orientadores_equipe_2022;;0;0,0000;Quem foram os orientadores da equipe em 2022?
+deepseek|no_rag|q27_quem_foram_orientadores_equipe_2023;;0;0,0000;Quem foram os orientadores da equipe em 2023?
+deepseek|no_rag|q28_quem_foram_orientadores_equipe_2024;;0;0,0000;Quem foram os orientadores da equipe em 2024?
+deepseek|no_rag|q29_quem_foram_orientadores_equipe_2025;;0;0,0000;Quem foram os orientadores da equipe em 2025?
+deepseek|no_rag|q30_quantos_estudantes_participaram_equipe_total;;0;0,0000;Quantos estudantes participaram da equipe no total?
+deepseek|no_rag|q31_liste_todos_subgrupos_ja_existiram;;0;0,0000;Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.
+deepseek|no_rag|q32_liste_todos_campeonatos_equipe_ja;;0;0,0000;Liste todos os campeonatos em que a equipe já participou.
+deepseek|no_rag|q33_quais_anos_equipe_participou_mundial;;0;0,0000;Em quais anos a equipe participou do Mundial RoboCup?
+deepseek|no_rag|q34_quais_projetos_ensino_pesquisa_extensao;;0;0,0000;Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?
+deepseek|no_rag|q35_quais_tecnologias_sao_utilizadas_pela;;0;0,6250;Quais tecnologias são utilizadas pela equipe Titãs da Robótica?
+deepseek|no_rag|q36_como_participar_equipe_titas_robotica;;0;0,0000;Como participar da equipe Titãs da Robótica?
+deepseek|no_rag|q37_liste_todos_patrocinadores_equipe_titas;;0;0,0000;Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.
+deepseek|no_rag|q38_liste_todos_orientadores_ja_passaram;;0;0,0000;Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+deepseek|no_rag|q39_liste_todos_estudantes_ja_passaram;;0;0,0000;Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+deepseek|no_rag|q40_qual_valor_total_captado_patrocinio;;1;1,0000;Qual é o valor total captado em patrocínio pela equipe desde a criação?
+deepseek|rag|q01_quem_sao_titas_robotica;;0;0,5000;Quem são os Titãs da Robótica?
+deepseek|rag|q02_qual_era_primeiro_nome_equipe;;1;1,0000;Qual era o primeiro nome da equipe Titãs da Robótica?
+deepseek|rag|q03_por_equipe_mudou_nome;;1;1,0000;Por que a equipe mudou de nome?
+deepseek|rag|q04_ano_equipe_foi_criada;;0;0,3333;Em que ano a equipe foi criada?
+deepseek|rag|q05_quem_idealizou_criacao_equipe;;1;1,0000;Quem idealizou a criação da equipe?
+deepseek|rag|q06_qual_foi_objetivo_principal_criacao;;0;0,5000;Qual foi o objetivo principal da criação da equipe?
+deepseek|rag|q07_ano_equipe_participou_primeira_competicao;;0;0,5000;Em que ano a equipe participou da primeira competição?
+deepseek|rag|q08_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2015?
+deepseek|rag|q09_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2016?
+deepseek|rag|q10_quais_foram_classificacoes_equipe_temporada;;0;0,6000;Quais foram as classificações da equipe na temporada de 2017?
+deepseek|rag|q11_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2018?
+deepseek|rag|q12_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2019?
+deepseek|rag|q13_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2020?
+deepseek|rag|q14_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2021?
+deepseek|rag|q15_quais_foram_classificacoes_equipe_temporada;;1;0,8333;Quais foram as classificações da equipe na temporada de 2022?
+deepseek|rag|q16_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2023?
+deepseek|rag|q17_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2024?
+deepseek|rag|q18_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2025?
+deepseek|rag|q19_quem_foram_orientadores_equipe_2015;;1;1,0000;Quem foram os orientadores da equipe em 2015?
+deepseek|rag|q20_quem_foram_orientadores_equipe_2016;;1;1,0000;Quem foram os orientadores da equipe em 2016?
+deepseek|rag|q21_quem_foram_orientadores_equipe_2017;;0;0,5714;Quem foram os orientadores da equipe em 2017?
+deepseek|rag|q22_quem_foram_orientadores_equipe_2018;;1;1,0000;Quem foram os orientadores da equipe em 2018?
+deepseek|rag|q23_quem_foram_orientadores_equipe_2019;;1;1,0000;Quem foram os orientadores da equipe em 2019?
+deepseek|rag|q24_quem_foram_orientadores_equipe_2020;;1;1,0000;Quem foram os orientadores da equipe em 2020?
+deepseek|rag|q25_quem_foram_orientadores_equipe_2021;;1;1,0000;Quem foram os orientadores da equipe em 2021?
+deepseek|rag|q26_quem_foram_orientadores_equipe_2022;;1;1,0000;Quem foram os orientadores da equipe em 2022?
+deepseek|rag|q27_quem_foram_orientadores_equipe_2023;;0;0,5556;Quem foram os orientadores da equipe em 2023?
+deepseek|rag|q28_quem_foram_orientadores_equipe_2024;;1;1,0000;Quem foram os orientadores da equipe em 2024?
+deepseek|rag|q29_quem_foram_orientadores_equipe_2025;;1;1,0000;Quem foram os orientadores da equipe em 2025?
+deepseek|rag|q30_quantos_estudantes_participaram_equipe_total;;0;0,0000;Quantos estudantes participaram da equipe no total?
+deepseek|rag|q31_liste_todos_subgrupos_ja_existiram;;0;0,4286;Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.
+deepseek|rag|q32_liste_todos_campeonatos_equipe_ja;;0;0,4286;Liste todos os campeonatos em que a equipe já participou.
+deepseek|rag|q33_quais_anos_equipe_participou_mundial;;0;0,0000;Em quais anos a equipe participou do Mundial RoboCup?
+deepseek|rag|q34_quais_projetos_ensino_pesquisa_extensao;;0;0,1176;Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?
+deepseek|rag|q35_quais_tecnologias_sao_utilizadas_pela;;0;0,3750;Quais tecnologias são utilizadas pela equipe Titãs da Robótica?
+deepseek|rag|q36_como_participar_equipe_titas_robotica;;0;0,3333;Como participar da equipe Titãs da Robótica?
+deepseek|rag|q37_liste_todos_patrocinadores_equipe_titas;;0;0,0000;Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.
+deepseek|rag|q38_liste_todos_orientadores_ja_passaram;;0;0,0000;Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+deepseek|rag|q39_liste_todos_estudantes_ja_passaram;;0;0,0942;Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+deepseek|rag|q40_qual_valor_total_captado_patrocinio;;1;1,0000;Qual é o valor total captado em patrocínio pela equipe desde a criação?
+openai|no_rag|q01_quem_sao_titas_robotica;;1;1,0000;Quem são os Titãs da Robótica?
+openai|no_rag|q02_qual_era_primeiro_nome_equipe;;1;1,0000;Qual era o primeiro nome da equipe Titãs da Robótica?
+openai|no_rag|q03_por_equipe_mudou_nome;;0;0,0000;Por que a equipe mudou de nome?
+openai|no_rag|q04_ano_equipe_foi_criada;;0;0,0000;Em que ano a equipe foi criada?
+openai|no_rag|q05_quem_idealizou_criacao_equipe;;0;0,0000;Quem idealizou a criação da equipe?
+openai|no_rag|q06_qual_foi_objetivo_principal_criacao;;0;0,5000;Qual foi o objetivo principal da criação da equipe?
+openai|no_rag|q07_ano_equipe_participou_primeira_competicao;;0;0,0000;Em que ano a equipe participou da primeira competição?
+openai|no_rag|q08_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2015?
+openai|no_rag|q09_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2016?
+openai|no_rag|q10_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2017?
+openai|no_rag|q11_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2018?
+openai|no_rag|q12_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2019?
+openai|no_rag|q13_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2020?
+openai|no_rag|q14_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2021?
+openai|no_rag|q15_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2022?
+openai|no_rag|q16_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2023?
+openai|no_rag|q17_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2024?
+openai|no_rag|q18_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2025?
+openai|no_rag|q19_quem_foram_orientadores_equipe_2015;;0;0,0000;Quem foram os orientadores da equipe em 2015?
+openai|no_rag|q20_quem_foram_orientadores_equipe_2016;;0;0,0000;Quem foram os orientadores da equipe em 2016?
+openai|no_rag|q21_quem_foram_orientadores_equipe_2017;;0;0,0000;Quem foram os orientadores da equipe em 2017?
+openai|no_rag|q22_quem_foram_orientadores_equipe_2018;;0;0,0000;Quem foram os orientadores da equipe em 2018?
+openai|no_rag|q23_quem_foram_orientadores_equipe_2019;;0;0,0000;Quem foram os orientadores da equipe em 2019?
+openai|no_rag|q24_quem_foram_orientadores_equipe_2020;;0;0,0000;Quem foram os orientadores da equipe em 2020?
+openai|no_rag|q25_quem_foram_orientadores_equipe_2021;;0;0,0000;Quem foram os orientadores da equipe em 2021?
+openai|no_rag|q26_quem_foram_orientadores_equipe_2022;;0;0,0000;Quem foram os orientadores da equipe em 2022?
+openai|no_rag|q27_quem_foram_orientadores_equipe_2023;;0;0,0000;Quem foram os orientadores da equipe em 2023?
+openai|no_rag|q28_quem_foram_orientadores_equipe_2024;;0;0,0000;Quem foram os orientadores da equipe em 2024?
+openai|no_rag|q29_quem_foram_orientadores_equipe_2025;;0;0,0000;Quem foram os orientadores da equipe em 2025?
+openai|no_rag|q30_quantos_estudantes_participaram_equipe_total;;0;0,0000;Quantos estudantes participaram da equipe no total?
+openai|no_rag|q31_liste_todos_subgrupos_ja_existiram;;0;0,0714;Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.
+openai|no_rag|q32_liste_todos_campeonatos_equipe_ja;;0;0,2857;Liste todos os campeonatos em que a equipe já participou.
+openai|no_rag|q33_quais_anos_equipe_participou_mundial;;0;0,0000;Em quais anos a equipe participou do Mundial RoboCup?
+openai|no_rag|q34_quais_projetos_ensino_pesquisa_extensao;;0;0,0588;Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?
+openai|no_rag|q35_quais_tecnologias_sao_utilizadas_pela;;0;0,6250;Quais tecnologias são utilizadas pela equipe Titãs da Robótica?
+openai|no_rag|q36_como_participar_equipe_titas_robotica;;0;0,3333;Como participar da equipe Titãs da Robótica?
+openai|no_rag|q37_liste_todos_patrocinadores_equipe_titas;;0;0,0000;Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.
+openai|no_rag|q38_liste_todos_orientadores_ja_passaram;;0;0,0000;Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+openai|no_rag|q39_liste_todos_estudantes_ja_passaram;;0;0,0000;Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+openai|no_rag|q40_qual_valor_total_captado_patrocinio;;0;0,0000;Qual é o valor total captado em patrocínio pela equipe desde a criação?
+openai|rag|q01_quem_sao_titas_robotica;;1;1,0000;Quem são os Titãs da Robótica?
+openai|rag|q02_qual_era_primeiro_nome_equipe;;1;1,0000;Qual era o primeiro nome da equipe Titãs da Robótica?
+openai|rag|q03_por_equipe_mudou_nome;;1;1,0000;Por que a equipe mudou de nome?
+openai|rag|q04_ano_equipe_foi_criada;;0;0,3333;Em que ano a equipe foi criada?
+openai|rag|q05_quem_idealizou_criacao_equipe;;1;1,0000;Quem idealizou a criação da equipe?
+openai|rag|q06_qual_foi_objetivo_principal_criacao;;0;0,5000;Qual foi o objetivo principal da criação da equipe?
+openai|rag|q07_ano_equipe_participou_primeira_competicao;;0;0,5000;Em que ano a equipe participou da primeira competição?
+openai|rag|q08_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2015?
+openai|rag|q09_quais_foram_classificacoes_equipe_temporada;;0;0,5714;Quais foram as classificações da equipe na temporada de 2016?
+openai|rag|q10_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2017?
+openai|rag|q11_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2018?
+openai|rag|q12_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2019?
+openai|rag|q13_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2020?
+openai|rag|q14_quais_foram_classificacoes_equipe_temporada;;1;1,0000;Quais foram as classificações da equipe na temporada de 2021?
+openai|rag|q15_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2022?
+openai|rag|q16_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2023?
+openai|rag|q17_quais_foram_classificacoes_equipe_temporada;;0;0,5000;Quais foram as classificações da equipe na temporada de 2024?
+openai|rag|q18_quais_foram_classificacoes_equipe_temporada;;0;0,0000;Quais foram as classificações da equipe na temporada de 2025?
+openai|rag|q19_quem_foram_orientadores_equipe_2015;;1;1,0000;Quem foram os orientadores da equipe em 2015?
+openai|rag|q20_quem_foram_orientadores_equipe_2016;;1;1,0000;Quem foram os orientadores da equipe em 2016?
+openai|rag|q21_quem_foram_orientadores_equipe_2017;;0;0,5714;Quem foram os orientadores da equipe em 2017?
+openai|rag|q22_quem_foram_orientadores_equipe_2018;;1;1,0000;Quem foram os orientadores da equipe em 2018?
+openai|rag|q23_quem_foram_orientadores_equipe_2019;;1;1,0000;Quem foram os orientadores da equipe em 2019?
+openai|rag|q24_quem_foram_orientadores_equipe_2020;;1;1,0000;Quem foram os orientadores da equipe em 2020?
+openai|rag|q25_quem_foram_orientadores_equipe_2021;;1;1,0000;Quem foram os orientadores da equipe em 2021?
+openai|rag|q26_quem_foram_orientadores_equipe_2022;;1;1,0000;Quem foram os orientadores da equipe em 2022?
+openai|rag|q27_quem_foram_orientadores_equipe_2023;;0;0,5556;Quem foram os orientadores da equipe em 2023?
+openai|rag|q28_quem_foram_orientadores_equipe_2024;;1;1,0000;Quem foram os orientadores da equipe em 2024?
+openai|rag|q29_quem_foram_orientadores_equipe_2025;;1;1,0000;Quem foram os orientadores da equipe em 2025?
+openai|rag|q30_quantos_estudantes_participaram_equipe_total;;0;0,0000;Quantos estudantes participaram da equipe no total?
+openai|rag|q31_liste_todos_subgrupos_ja_existiram;;0;0,4286;Liste todos os subgrupos que já existiram na equipe Titãs da Robótica.
+openai|rag|q32_liste_todos_campeonatos_equipe_ja;;0;0,5714;Liste todos os campeonatos em que a equipe já participou.
+openai|rag|q33_quais_anos_equipe_participou_mundial;;0;0,6667;Em quais anos a equipe participou do Mundial RoboCup?
+openai|rag|q34_quais_projetos_ensino_pesquisa_extensao;;0;0,0588;Quais projetos de ensino, pesquisa e extensão envolveram os Titãs da Robótica?
+openai|rag|q35_quais_tecnologias_sao_utilizadas_pela;;0;0,1250;Quais tecnologias são utilizadas pela equipe Titãs da Robótica?
+openai|rag|q36_como_participar_equipe_titas_robotica;;0;0,3333;Como participar da equipe Titãs da Robótica?
+openai|rag|q37_liste_todos_patrocinadores_equipe_titas;;0;0,0000;Liste todos os patrocinadores da equipe Titãs da Robótica em ordem alfabética.
+openai|rag|q38_liste_todos_orientadores_ja_passaram;;1;0,9500;Liste todos os orientadores que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+openai|rag|q39_liste_todos_estudantes_ja_passaram;;0;0,0942;Liste todos os estudantes que já passaram pela equipe Titãs da Robótica em ordem alfabética.
+openai|rag|q40_qual_valor_total_captado_patrocinio;;1;1,0000;Qual é o valor total captado em patrocínio pela equipe desde a criação?

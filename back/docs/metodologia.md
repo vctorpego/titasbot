@@ -1,5 +1,9 @@
 # Metodologia de avaliação — TitãsBot
 
+> **Atualização:** o foco atual dos testes do TCC é o estudo comparativo de métricas
+> (tradicionais × LLM), descrito em [`metodologia_metricas.md`](metodologia_metricas.md).
+> Este documento registra a fase anterior (comparação de modelos).
+
 Referência completa do processo de avaliação comparativa de modelos de linguagem:
 o que é medido, como é calculado, por que foi escolhido assim e onde estão os
 limites do que os resultados sustentam.

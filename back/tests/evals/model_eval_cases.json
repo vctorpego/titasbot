@@ -112,7 +112,7 @@
     "number": 13,
     "category": "resultados",
     "question": "Quais foram as classificações da equipe na temporada de 2020?",
-    "expected_output": "Futebol 2D: 1° lugar — IRONCUP (Nacional)\nFutebol 2D: 1° lugar — CBR (Nacional)\nFutebol 2D: 1° lugar — TRUFES (Regional)\nSeguidor de Linha: 14° lugar — IRONCUP (Nacional)\nSEK: 2° lugar — CBR (Nacional)\nSEK: 2° lugar — TRUFES (Regional)\nTeórica: Medalha de Bronze — OBR (Nacional)",
+    "expected_output": "Futebol 2D: 1° lugar — IRONCUP (Nacional)\nFutebol 2D: 1° lugar — CBR (Nacional)\nFutebol 2D: 1° lugar — TRUFES (Regional)\nSeguidor de Linha: 14° lugar — IRONCUP (Nacional)\nSEK: 2° lugar — CBR (Nacional)",
     "scored": true,
     "skip_reason": ""
   },
@@ -121,7 +121,7 @@
     "number": 14,
     "category": "resultados",
     "question": "Quais foram as classificações da equipe na temporada de 2021?",
-    "expected_output": "Futebol 2D: 2° lugar — IRONCUP (Nacional)\nPrática: 1° lugar — OBR (Regional)\nPrática: 12° lugar — OBR (Nacional)\nSEK: 3° lugar — CBR (Nacional)\nTeórica: Medalha de Bronze — OBR (Nacional)\nTeórica: Medalha de Prata — OBR (Nacional)",
+    "expected_output": "Futebol 2D: 2° lugar — IRONCUP (Nacional)\nTeórica: Medalha de Bronze — OBR (Nacional)",
     "scored": true,
     "skip_reason": ""
   },

@@ -1,0 +1,75 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Como funciona — estudo de métricas</title><style>
+  :root { color-scheme: light; }
+  body { font-family: Arial, Helvetica, sans-serif; margin: 0; background: #f6f7fb; color: #111827; }
+  main { max-width: 1180px; margin: 0 auto; padding: 32px 20px; }
+  h1 { margin: 0 0 8px; }
+  h2 { margin: 28px 0 10px; }
+  p.lead { color: #4b5563; margin-top: 0; }
+  nav { margin: 8px 0 20px; }
+  nav a { margin-right: 16px; color: #2563eb; text-decoration: none; }
+  .table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid #e5e7eb; text-align: left; white-space: nowrap; }
+  th { background: #f9fafb; position: sticky; top: 0; }
+  tbody tr:hover { background: #f3f4f6; }
+  .muted { color: #6b7280; }
+  .note { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 12px 16px; color: #9a3412; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; background: #eef2ff; color: #3730a3; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 12px 0; }
+  .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; }
+  .card strong { display: block; font-size: 22px; margin-bottom: 4px; }
+  .card span { color: #4b5563; font-size: 13px; }
+  .fam-tradicional { background: #ecfdf5; color: #065f46; }
+  .fam-llm { background: #eff6ff; color: #1e40af; }
+  .ok { background: #dcfce7 !important; }
+  .bad { background: #fee2e2 !important; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 10px 0; }
+  .filters label { font-size: 13px; color: #374151; }
+  select, button { font: inherit; padding: 4px 8px; }
+  details { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: bold; }
+  .answer-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; margin: 10px 0; }
+  .answer-card pre { white-space: pre-wrap; font-family: inherit; margin: 4px 0; max-height: 260px; overflow: auto; background: #f9fafb; padding: 8px; border-radius: 6px; }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+  .chips span { display: inline-block; margin: 2px; padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+  .bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; min-width: 80px; }
+  .bar i { display: block; height: 100%; background: #2563eb; }
+  ul.tight li { margin: 4px 0; }
+</style></head><body><main>
+<h1>Como funciona o estudo de métricas</h1>
+<nav><a href="comparacao_metricas.html">← Voltar ao relatório</a></nav>
+<h2>Pergunta de pesquisa</h2>
+<p>As métricas tradicionais de NLP (BLEU, ROUGE, similaridade de embeddings…) já foram superadas por métricas que usam um LLM para avaliar (DeepEval)
+para avaliar um chatbot RAG? Qual avalia melhor as respostas do TitãsBot?</p>
+<h2>1. Respostas</h2>
+<p>40 perguntas do gabarito oficial respondidas por três modelos medianos equivalentes (GPT-5 mini, Claude Haiku 4.5, DeepSeek Chat), cada um
+<b>com RAG</b> (base de documentos da equipe) e <b>sem RAG</b> (só o conhecimento do modelo): até 240 respostas.</p>
+<h2>2. Verdade (a partir do gabarito)</h2>
+<p>Cada resposta do gabarito foi decomposta em <b>fatos-chave</b> (um nome, um ano, uma linha "Modalidade: colocação — competição"),
+revisados por humano. A <b>cobertura</b> é a fração desses fatos presente na resposta. A resposta é <b>correta</b> (rótulo 1) se a cobertura
+atingir o mínimo do seu tipo: fato curto 100%, descritiva 75%, listas 80%. Rótulos podem ser corrigidos manualmente no explorador.</p>
+<h2>3. Métricas avaliadas</h2>
+<ul class="tight">
+  <li><b>Tradicionais lexicais:</b> Exact Match, F1 de tokens, BLEU, chrF, ROUGE-1/2/L, METEOR.</li>
+  <li><b>Tradicionais semânticas:</b> cosseno de embeddings MiniLM, BERTScore.</li>
+  <li><b>Projeto de referência:</b> 0,8 × cosseno + 0,2 × SequenceMatcher (Visualizador-do-avaliador).</li>
+  <li><b>Com LLM (DeepEval, apoiado por GPT):</b> GEval Correctness, Answer Relevancy, Faithfulness (só RAG) e Hallucination (invertida).</li>
+</ul>
+<h2>4. Como decidimos qual métrica é melhor</h2>
+<p>Cada métrica vira um classificador: <i>score ≥ threshold ⇒ correta</i>. Comparamos o veredito com a verdade:</p>
+<ul class="tight">
+  <li><b>AUC</b>: sem threshold, mede se a métrica dá notas maiores às respostas corretas.</li>
+  <li><b>Threshold global</b>: igual ao projeto de referência, testando 0,00 a 1,00 e medindo acurácia, precisão, recall e F1.</li>
+  <li><b>Threshold estratificado</b>: um threshold por tipo de resposta (fato curto, descritiva, lista curta, lista longa).</li>
+  <li><b>Validação cruzada</b>: o threshold é escolhido com as respostas de dois modelos e testado no terceiro, para não "decorar" os dados.</li>
+  <li><b>Ranking dos modelos</b>, <b>custo</b>, <b>tempo</b> e <b>estabilidade</b> (repetir a avaliação dá a mesma nota?).</li>
+</ul>
+<h2>Limitações</h2>
+<ul class="tight">
+  <li>A verdade por fatos-chave mede presença de fatos, não penaliza fatos extras inventados; por isso existe a revisão humana.</li>
+  <li>O LLM de apoio das métricas DeepEval (GPT) é da mesma família de um dos modelos avaliados.</li>
+  <li>METEOR usa sinônimos do inglês (WordNet); em português funciona praticamente como sobreposição de palavras.</li>
+</ul>
+</main></body></html>

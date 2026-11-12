@@ -1,0 +1,122 @@
+[
+  {
+    "id": "q02_qual_era_primeiro_nome_equipe",
+    "evidence_terms": ["Asimov"],
+    "min_terms_for_relevant_chunk": 1,
+    "min_terms_for_sufficient_chunk": 1
+  },
+  {
+    "id": "q04_ano_equipe_foi_criada",
+    "evidence_terms": ["2014", "2015", "CNPq", "Robótica educacional para o aprendizado de programação", "Ifes Campus Colatina"],
+    "min_terms_for_relevant_chunk": 2,
+    "min_terms_for_sufficient_chunk": 3
+  },
+  {
+    "id": "q05_quem_idealizou_criacao_equipe",
+    "evidence_terms": ["Renato Lopes de Oliveira", "Sistemas de Informação", "Ifes Campus Colatina"],
+    "min_terms_for_relevant_chunk": 1,
+    "min_terms_for_sufficient_chunk": 1
+  },
+  {
+    "id": "q07_ano_equipe_participou_primeira_competicao",
+    "evidence_terms": ["2015", "LARC"],
+    "min_terms_for_relevant_chunk": 1,
+    "min_terms_for_sufficient_chunk": 2
+  },
+  {
+    "id": "q08_quais_foram_classificacoes_equipe_temporada",
+    "evidence_terms": ["2015", "SEK", "TRUFES", "LARC", "1° lugar", "3° lugar"],
+    "min_terms_for_relevant_chunk": 2,
+    "min_terms_for_sufficient_chunk": 4
+  },
+  {
+    "id": "q10_quais_foram_classificacoes_equipe_temporada",
+    "evidence_terms": ["2017", "CoSpace", "Futebol 2D", "Humanoide", "LARC", "IRONCUP", "SEK", "Teórica"],
+    "min_terms_for_relevant_chunk": 3,
+    "min_terms_for_sufficient_chunk": 5
+  },
+  {
+    "id": "q15_quais_foram_classificacoes_equipe_temporada",
+    "evidence_terms": ["2022", "Futebol 2D", "IRONCUP", "Prática", "OBR", "SEK", "CBR", "Teórica", "medalha de prata", "medalha de bronze"],
+    "min_terms_for_relevant_chunk": 4,
+    "min_terms_for_sufficient_chunk": 6
+  },
+  {
+    "id": "q17_quais_foram_classificacoes_equipe_temporada",
+    "evidence_terms": ["2024", "Futebol 2D", "CBR", "IRONCUP", "Prática", "RoboCup Rescue", "Mundial", "SEK", "Teórica"],
+    "min_terms_for_relevant_chunk": 4,
+    "min_terms_for_sufficient_chunk": 6
+  },
+  {
+    "id": "q33_quais_anos_equipe_participou_mundial",
+    "evidence_terms": ["Mundial RoboCup", "2019", "2024", "2025"],
+    "min_terms_for_relevant_chunk": 2,
+    "min_terms_for_sufficient_chunk": 3
+  },
+  {
+    "id": "q19_quem_foram_orientadores_equipe_2015",
+    "evidence_terms": ["2015", "Renato Lopes de Oliveira", "Julio César Goldner Vendramini", "SEK"],
+    "min_terms_for_relevant_chunk": 2,
+    "min_terms_for_sufficient_chunk": 3
+  },
+  {
+    "id": "q21_quem_foram_orientadores_equipe_2017",
+    "evidence_terms": ["2017", "Jean Eduardo Glazar", "Giovany Frossard Teixeira", "Julio César Goldner Vendramini", "Diego Rossi Mafioletti", "Igor Carlos Pulini", "Renan Osório Rios", "Luiz Fernando Reinoso"],
+    "min_terms_for_relevant_chunk": 3,
+    "min_terms_for_sufficient_chunk": 5
+  },
+  {
+    "id": "q25_quem_foram_orientadores_equipe_2021",
+    "evidence_terms": ["2021", "Joanita Araújo Espanhol", "Jean Eduardo Glazar", "Igor Carlos Pulini", "Renan Osório Rios", "Giovany Frossard Teixeira", "Ailton Souza Duarte", "Alextian Bartholomeu Liberato", "Ricardo Tedesco da Silva", "Julio César Goldner Vendramini", "Dione Souza Albuquerque de Lima"],
+    "min_terms_for_relevant_chunk": 4,
+    "min_terms_for_sufficient_chunk": 6
+  },
+  {
+    "id": "q28_quem_foram_orientadores_equipe_2024",
+    "evidence_terms": ["2024", "Gustavo Ludovico Guidoni", "Giovany Frossard Teixeira", "Eduardo Max Amaro Amaral", "Ricardo Tedesco da Silva", "Julio César Goldner Vendramini", "Igor Carlos Pulini", "Renan Osório Rios", "Allan Fernandes Balardino"],
+    "min_terms_for_relevant_chunk": 4,
+    "min_terms_for_sufficient_chunk": 6
+  },
+  {
+    "id": "q38_liste_todos_orientadores_ja_passaram",
+    "evidence_terms": ["Ailton Souza Duarte", "Alan Balardino", "Alextian Bartholomeu Liberato", "André Avelino", "Arthur Belato", "Diego Rossi Mafioletti", "Dione Souza Albuquerque de Lima", "Eduardo Max Amaro Amaral", "Fabio Bigati", "Giovany Frossard Teixeira", "Gustavo Ludovico Guidoni", "Igor Carlos Pulini", "Jaimel de Oliveira Lima", "Jean Eduardo Glazar", "Joanita Araújo Espanhol", "Josiane Dalmasio Clabunde", "Julio Cesar Goldner Vendramini", "Luis Fernando Reinoso", "Renan Osório Rios", "Ricardo Tedesco da Silva"],
+    "min_terms_for_relevant_chunk": 5,
+    "min_terms_for_sufficient_chunk": 8
+  },
+  {
+    "id": "q30_quantos_estudantes_participaram_equipe_total",
+    "evidence_terms": ["191 estudantes", "152", "39"],
+    "min_terms_for_relevant_chunk": 1,
+    "min_terms_for_sufficient_chunk": 2
+  },
+  {
+    "id": "q31_liste_todos_subgrupos_ja_existiram",
+    "evidence_terms": ["ADM", "Challenge", "CoSpace", "Drone", "Futebol 2D", "Humanoide", "Lego Sumô", "OBI", "Osorin", "Pesquisa", "Prática", "Seguidor de Linha", "SEK", "Teórica"],
+    "min_terms_for_relevant_chunk": 5,
+    "min_terms_for_sufficient_chunk": 8
+  },
+  {
+    "id": "q32_liste_todos_campeonatos_equipe_ja",
+    "evidence_terms": ["TRUFES", "LARC", "OBR", "IRONCup", "CBR", "RoboCup", "OBI"],
+    "min_terms_for_relevant_chunk": 3,
+    "min_terms_for_sufficient_chunk": 4
+  },
+  {
+    "id": "q34_quais_projetos_ensino_pesquisa_extensao",
+    "evidence_terms": ["10 anos dos Titãs da Robótica", "Aplicativo IFeira Colatina", "Caderno Digital", "Robótica educacional para o aprendizado de programação", "Programe-se", "Raspberry Pi", "Scratch"],
+    "min_terms_for_relevant_chunk": 3,
+    "min_terms_for_sufficient_chunk": 5
+  },
+  {
+    "id": "q35_quais_tecnologias_sao_utilizadas_pela",
+    "evidence_terms": ["LEGO Mindstorms EV3", "Spike Prime", "Arduino", "Raspberry Pi", "impressão 3D", "Scratch", "Python", "C++"],
+    "min_terms_for_relevant_chunk": 3,
+    "min_terms_for_sufficient_chunk": 5
+  },
+  {
+    "id": "q37_liste_todos_patrocinadores_equipe_titas",
+    "evidence_terms": ["Apex Partners Gestão de Ativos", "Basis Tecnologia da Informação", "Frisa", "FULLTECH", "Matriz Sistemas", "SIAD", "SmartIrriga", "Vixteam Consultoria & Sistemas"],
+    "min_terms_for_relevant_chunk": 4,
+    "min_terms_for_sufficient_chunk": 6
+  }
+]
