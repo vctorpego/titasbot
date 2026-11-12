@@ -28,6 +28,15 @@ class Settings:
     ingest_batch_size: int
     ingest_retry_attempts: int
     chat_provider: str = ""
+    # Esforco de raciocinio (modelos de raciocinio da OpenAI: gpt-5*, o*).
+    # Vazio = padrao do provedor. As etapas auxiliares do pipeline (decidir
+    # contexto, expandir consulta, escolher evidencias, auditar escopo,
+    # canonicalizar listas) nao precisam do mesmo esforco da geracao, e nos
+    # modelos GPT-5 esse esforco e o que domina o tempo de cada chamada.
+    chat_reasoning_effort: str = ""
+    chat_fast_reasoning_effort: str = ""
+    # Imprime no log quanto tempo cada etapa levou (CHAT_LOG_TIMINGS=1).
+    log_stage_timings: bool = False
 
 
 def get_settings() -> Settings:
@@ -56,6 +65,9 @@ def get_settings() -> Settings:
         embedding_max_retries=int(os.getenv("EMBEDDING_MAX_RETRIES", "2")),
         chat_model=os.getenv("OPENAI_CHAT_MODEL", "gpt-5"),
         chat_temperature=float(os.getenv("CHAT_TEMPERATURE", "0")),
+        chat_reasoning_effort=os.getenv("CHAT_REASONING_EFFORT", ""),
+        chat_fast_reasoning_effort=os.getenv("CHAT_FAST_REASONING_EFFORT", ""),
+        log_stage_timings=os.getenv("CHAT_LOG_TIMINGS", "").strip().lower() in {"1", "true", "yes"},
         chat_provider=os.getenv("CHAT_PROVIDER", ""),
         chunk_size=int(os.getenv("CHUNK_SIZE", "900")),
         chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "180")),

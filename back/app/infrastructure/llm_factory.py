@@ -69,6 +69,7 @@ def build_chat_model(
     model: str,
     temperature: float = 0.0,
     provider: str | None = None,
+    reasoning_effort: str | None = None,
     **kwargs: Any,
 ):
     """Constroi um chat model do LangChain para OpenAI/Anthropic/Google.
@@ -83,36 +84,69 @@ def build_chat_model(
     se a API recusar especificamente por causa dele, tenta de novo sem o
     parametro -- sem exigir uma lista manual de quais modelos aceitam ou nao.
 
+    O mesmo vale para `reasoning_effort`: so e enviado a modelos de raciocinio
+    da OpenAI (ver `supports_reasoning_effort`), e se a API recusar o valor
+    (ex.: "minimal" num modelo que nao o aceita) o wrapper descarta o
+    parametro em vez de deixar a etapa falhar em silencio.
+
     Timeout: provedores compativeis com a API OpenAI, incluindo DeepSeek,
     aceitam `timeout`. Sem um teto explicito, uma chamada de avaliacao pode
     ficar presa por tempo indefinido em instabilidade de rede/provedor.
     """
     kwargs.setdefault("timeout", 120)
     resolved = resolve_provider(model, provider)
-    with_temp = init_chat_model(model, model_provider=resolved, temperature=temperature, **kwargs)
-    without_temp = None
 
-    def _client():
-        nonlocal without_temp
-        if without_temp is not None:
-            return without_temp
-        return with_temp
+    # Cada parametro opcional comeca ligado e e desligado de vez na primeira
+    # recusa da API. A ordem importa pouco: cada recusa desliga um so.
+    use = {
+        "temperature": True,
+        "reasoning_effort": bool(reasoning_effort) and supports_reasoning_effort(model, resolved),
+    }
 
-    class _TemperatureFallbackModel:
+    def _build():
+        extra: dict[str, Any] = {}
+        if use["temperature"]:
+            extra["temperature"] = temperature
+        if use["reasoning_effort"]:
+            extra["reasoning_effort"] = reasoning_effort
+        return init_chat_model(model, model_provider=resolved, **kwargs, **extra)
+
+    current = _build()
+
+    class _ParamFallbackModel:
         def __getattr__(self, name: str) -> Any:
-            return getattr(_client(), name)
+            return getattr(current, name)
 
         def invoke(self, *args: Any, **inv_kwargs: Any) -> Any:
-            nonlocal without_temp
-            try:
-                return _client().invoke(*args, **inv_kwargs)
-            except Exception as exc:
-                if without_temp is None and "temperature" in str(exc).lower():
-                    without_temp = init_chat_model(model, model_provider=resolved, **kwargs)
-                    return without_temp.invoke(*args, **inv_kwargs)
-                raise
+            nonlocal current
+            while True:
+                try:
+                    return current.invoke(*args, **inv_kwargs)
+                except Exception as exc:
+                    text = str(exc).lower()
+                    dropped = next(
+                        (p for p in ("temperature", "reasoning_effort") if use[p] and p.split("_")[0] in text),
+                        None,
+                    )
+                    if dropped is None:
+                        raise
+                    use[dropped] = False
+                    current = _build()
 
-    return _TemperatureFallbackModel()
+    return _ParamFallbackModel()
+
+
+_REASONING_MODEL_PREFIXES = ("gpt-5", "o1", "o3", "o4")
+
+
+def supports_reasoning_effort(model: str, provider: str) -> bool:
+    """`reasoning_effort` so existe nos modelos de raciocinio da OpenAI.
+
+    Enviado para Anthropic/DeepSeek ou para um gpt-4*, o parametro seria
+    rejeitado ou ignorado; por isso nem e repassado nesses casos.
+    """
+    m = (model or "").strip().lower()
+    return provider == "openai" and m.startswith(_REASONING_MODEL_PREFIXES)
 
 
 def to_text(response: Any) -> str:

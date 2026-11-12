@@ -61,6 +61,14 @@ def clean_answer(answer: str) -> str:
     return clean or INSUFFICIENT_MSG
 
 
+_UNCHANGED_MARKERS = {"", "=", "(=)", "igual", "(igual)", "mantida", "(mantida)", "ok"}
+
+
+def is_unchanged_marker(text: str) -> bool:
+    """O auditor sinaliza "mantenha a resposta como esta" com "="."""
+    return normalize_text(text or "").strip(" .\"'`") in _UNCHANGED_MARKERS
+
+
 def is_insufficient(text: str) -> bool:
     """Compara com INSUFFICIENT_MSG ignorando acentuacao/caixa.
 

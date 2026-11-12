@@ -43,6 +43,8 @@ def precision_query_boost(question: str) -> str:
         hints.extend(["ingresso", "processo seletivo", "estudantes do ifes", "elegibilidade"])
     if any(k in q for k in ("projeto", "projetos")):
         hints.extend(["ensino", "pesquisa", "extensao", "acoes", "iniciativas"])
+    if any(k in q for k in ("patrocin", "apoiador", "parceir")):
+        hints.extend(["patrocinadores", "apoiadores", "parceiros", "apoio financeiro", "empresas"])
     if any(k in q for k in ("competicao", "competicoes", "obr", "cbr", "robocup", "larc")):
         hints.extend(["competicao", "modalidade", "classificacao"])
     if any(k in q for k in ("voces", "vocês", "equipe", "titas", "titãs", "asimov")):
@@ -135,6 +137,24 @@ def is_fact_question(question: str) -> bool:
             "quantidade",
         )
     )
+
+
+_TABLE_TOPICS = (
+    "classific", "coloca", "lugar", "resultado", "podio", "medalha", "premi",
+    "orientador", "professor", "aluno", "estudante", "integrante", "membro",
+    "subgrupo", "modalidade",
+)
+
+
+def is_table_topic_question(question: str) -> bool:
+    """A pergunta e sobre o que o PDF de tabelas contem?
+
+    As tabelas tem colocacoes, orientadores e estudantes por ano. Uma pergunta
+    de lista sobre outro assunto ("quais tecnologias", "quais projetos") nao
+    deve ter o contexto restrito a elas.
+    """
+    q = normalize_text(question)
+    return any(t in q for t in _TABLE_TOPICS)
 
 
 def is_list_question(question: str) -> bool:

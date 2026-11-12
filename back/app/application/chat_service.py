@@ -1,6 +1,7 @@
 ﻿from __future__ import annotations
 
 import re
+import time
 
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -18,6 +19,7 @@ from app.domain.intents import (
     is_projects_question,
     is_social_message,
     is_student_list_question,
+    is_table_topic_question,
     needs_previous_context,
     precision_query_boost,
     should_expand_query,
@@ -33,6 +35,7 @@ from app.application.helpers import (
     filter_team_relevant_chunks,
     has_min_evidence,
     is_insufficient,
+    is_unchanged_marker,
     normalize_sources,
     parse_ids,
     split_sentences,
@@ -58,6 +61,17 @@ from app.infrastructure.retrieval import HybridRetriever, RetrievedChunk
 from app.infrastructure.text_utils import extract_terms, normalize_text
 from app.infrastructure.vectorstore import get_vectorstore
 
+# Termos que nao distinguem um assunto de outro: identidade da equipe (estao
+# em quase todo trecho) e palavras de instrucao de lista.
+_GENERIC_QUESTION_TERMS = frozenset(
+    {
+        "equipe", "titas", "robotica", "asimov", "ifes", "campus", "colatina",
+        "liste", "listar", "lista", "todos", "todas", "ordem", "alfabetica",
+        "quais", "qual", "voces", "ja", "foram", "existiram",
+    }
+)
+
+
 class TitasBotService:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
@@ -67,7 +81,21 @@ class TitasBotService:
             settings.chat_model,
             temperature=settings.chat_temperature,
             provider=(settings.chat_provider or None),
+            reasoning_effort=(settings.chat_reasoning_effort or None),
         )
+        # Mesmo modelo, menos raciocinio, para as etapas de apoio (decidir
+        # contexto, expandir consulta, escolher evidencias, revisar escopo,
+        # canonicalizar listas). Sem CHAT_FAST_REASONING_EFFORT, todas as
+        # etapas usam o modelo principal -- comportamento original.
+        if settings.chat_fast_reasoning_effort:
+            self.fast_model = build_chat_model(
+                settings.chat_model,
+                temperature=settings.chat_temperature,
+                provider=(settings.chat_provider or None),
+                reasoning_effort=settings.chat_fast_reasoning_effort,
+            )
+        else:
+            self.fast_model = self.model
 
         self.gen_prompt = ChatPromptTemplate.from_template(GEN_PROMPT)
         self.fact_prompt = ChatPromptTemplate.from_template(FACT_PROMPT)
@@ -125,7 +153,7 @@ class TitasBotService:
                     "question": question,
                 }
             )
-            decision = self._invoke_text(msg).upper()
+            decision = self._invoke_text(msg, stage="decisao_contexto", fast=True).upper()
             model_followup = decision.startswith("USE_PREVIOUS")
         except Exception:
             model_followup = False
@@ -149,12 +177,19 @@ class TitasBotService:
                 "insufficient": INSUFFICIENT_MSG,
             }
         )
-        reviewed = clean_answer(self._invoke_text(msg))
+        reviewed = clean_answer(self._invoke_text(msg, stage="escopo_equipe", fast=True))
         return reviewed or answer
 
-    def _invoke_text(self, message) -> str:
+    def _invoke_text(self, message, *, stage: str = "geracao", fast: bool = False) -> str:
+        """Chama o LLM e devolve texto.
+
+        `fast=True` usa o cliente de apoio (menos raciocinio) quando
+        configurado. `stage` so nomeia a etapa no log de tempos.
+        """
+        model = self.fast_model if fast else self.model
+        started = time.perf_counter()
         try:
-            return to_text(self.model.invoke(message)).strip()
+            return to_text(model.invoke(message)).strip()
         except Exception as exc:
             cause = getattr(exc, "__cause__", None)
             cause_msg = re.sub(r"Bearer\s+\S+", "Bearer <redacted>", str(cause)) if cause else None
@@ -163,6 +198,10 @@ class TitasBotService:
                 flush=True,
             )
             return ""
+        finally:
+            if self.settings.log_stage_timings:
+                elapsed = time.perf_counter() - started
+                print(f"[tempo] {stage:<22} {elapsed:6.1f}s{'  (apoio)' if fast else ''}", flush=True)
 
     @staticmethod
     def _known_team_alias_answer(question: str, chunks: list[RetrievedChunk]) -> ChatResult | None:
@@ -195,7 +234,10 @@ class TitasBotService:
     def _expand_queries(self, question: str) -> list[str]:
         try:
             msg = self.query_expansion_prompt.invoke({"question": question})
-            raw = self._invoke_text(msg)
+            # Fica no cliente principal: a expansao decide o que a busca
+            # encontra. Em minimal ela ocasionalmente gerou consultas que
+            # tiraram do contexto as tabelas certas (q10 caiu para 0/9 itens).
+            raw = self._invoke_text(msg, stage="expansao_consulta")
             lines = [re.sub(r"^[\-\d\.\)\s]+", "", ln).strip() for ln in raw.splitlines()]
             queries: list[str] = []
             for q in lines:
@@ -236,7 +278,12 @@ class TitasBotService:
             base = table_chunks or chunks
             return base[: min(30, len(base))]
 
-        if is_list_question(question):
+        # So restringe o contexto as tabelas quando a pergunta e sobre o que
+        # elas contem. Antes bastava um "quais" na pergunta: em "Quais
+        # tecnologias utilizam?", se um unico trecho de tabela aparecesse na
+        # busca, o contexto virava so tabelas (colocacoes e orientadores) e a
+        # resposta saia "nao encontrei" -- ou nao, conforme a busca do momento.
+        if is_list_question(question) and is_table_topic_question(question):
             table_chunks = [c for c in chunks if c.doc_kind == "table"]
             if table_chunks:
                 table_chunks.sort(key=lambda x: x.final_score, reverse=True)
@@ -249,7 +296,7 @@ class TitasBotService:
         full_context = build_context(chunks)
         try:
             sel_msg = self.evidence_selection_prompt.invoke({"question": question, "context": full_context})
-            raw = self._invoke_text(sel_msg)
+            raw = self._invoke_text(sel_msg, stage="selecao_evidencias", fast=True)
             ids = parse_ids(raw, len(chunks))
         except Exception:
             ids = []
@@ -274,7 +321,14 @@ class TitasBotService:
         chunks: list[RetrievedChunk],
         query_hint: str = "",
     ) -> str:
-        q_terms = set(extract_terms(question))
+        # "equipe", "Titas", "Robotica" etc. aparecem em quase todo trecho da
+        # base, e "liste"/"todos"/"ordem" sao instrucao, nao assunto. Contando
+        # esses termos, qualquer frase sobre a equipe pontuava contra qualquer
+        # pergunta -- "Liste os patrocinadores" devolvia fragmentos aleatorios
+        # do livro. A sobreposicao passa a usar so os termos especificos.
+        all_terms = set(extract_terms(question))
+        distinctive_terms = all_terms - _GENERIC_QUESTION_TERMS
+        q_terms = distinctive_terms or all_terms
         focus_years = set(re.findall(r"\b(?:19|20)\d{2}\b", f"{question} {query_hint}"))
         q_norm = normalize_text(question)
         rank_intent = any(k in q_norm for k in ("classific", "coloc", "lugar", "podio", "cada uma"))
@@ -333,6 +387,12 @@ class TitasBotService:
                     if any(k in s_norm for k in ("competicao", "podio", "classificacao", "lugar", "modalidade")):
                         student_bonus -= 0.35
 
+                intent_bonus = rank_bonus + participation_bonus + student_bonus
+                if distinctive_terms and overlap == 0 and intent_bonus <= 0:
+                    # A frase nao toca no assunto da pergunta; so o ano ou o
+                    # score do trecho a fariam passar.
+                    continue
+
                 score = overlap + year_bonus + rank_bonus + project_penalty + participation_bonus + student_bonus + (0.15 * c.final_score)
                 if score >= 0.15:
                     candidates.append((score, s))
@@ -380,7 +440,7 @@ class TitasBotService:
                     "insufficient": INSUFFICIENT_MSG,
                 }
             )
-            raw = self._invoke_text(msg)
+            raw = self._invoke_text(msg, stage="auditoria")
         except Exception:
             return AuditResult(status="FIX", answer=clean_answer(answer), used_ids=[])
 
@@ -389,6 +449,11 @@ class TitasBotService:
         ids = parse_ids(raw, limit_ids)
         answer_match = re.search(r"ANSWER:\s*(.*)$", raw, flags=re.IGNORECASE | re.DOTALL)
         fixed_answer = answer_match.group(1).strip() if answer_match else clean_answer(answer)
+        # Aprovada, a resposta nao e reescrita: o auditor devolve "=" e a
+        # candidata segue como esta. Antes ele repetia o texto inteiro mesmo
+        # sem mudar nada -- em respostas longas, a etapa mais lenta do pipeline.
+        if is_unchanged_marker(fixed_answer):
+            fixed_answer = answer
         fixed_answer = clean_answer(fixed_answer)
         return AuditResult(status=status, answer=fixed_answer, used_ids=ids)
 
@@ -450,7 +515,7 @@ class TitasBotService:
         msg = self.strict_refocus_prompt.invoke(
             {"question": question, "context": context, "insufficient": INSUFFICIENT_MSG}
         )
-        return clean_answer(self._invoke_text(msg))
+        return clean_answer(self._invoke_text(msg, stage="refoco"))
 
 
     #verificar para uma possivel mudança, deixar mais dinamico
@@ -513,7 +578,7 @@ class TitasBotService:
                     "Reescreva com mais detalhes e melhor explicação, sem inventar fatos:\n\n"
                     f"{base}"
                 )
-            transformed = self._invoke_text(msg).strip()
+            transformed = self._invoke_text(msg, stage="transformacao").strip()
             return clean_answer(transformed) if transformed else base
         return None
 
@@ -555,7 +620,7 @@ class TitasBotService:
                     "insufficient": INSUFFICIENT_MSG,
                 }
             )
-            normalized = clean_answer(self._invoke_text(msg))
+            normalized = clean_answer(self._invoke_text(msg, stage="canonicalizacao_lista", fast=True))
         except Exception:
             normalized = ""
 
@@ -674,7 +739,7 @@ class TitasBotService:
                 "insufficient": INSUFFICIENT_MSG,
             }
         )
-        revised = self._invoke_text(msg)
+        revised = self._invoke_text(msg, stage="revisao")
         revised = clean_answer(revised)
         if is_insufficient(revised) and has_min_evidence(selected_chunks):
             revised = self._extractive_fallback_answer(question, selected_chunks, query_hint=retrieval_query)

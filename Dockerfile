@@ -29,9 +29,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     BASE_DIR=/app/back/base \
     CHROMA_DB_PATH=/data/chroma \
     CHROMA_COLLECTION=titas_docs \
-    OPENAI_CHAT_MODEL=gpt-5-nano \
+    OPENAI_CHAT_MODEL=gpt-5-mini \
     OPENAI_EMBEDDING_MODEL=text-embedding-3-small \
-    CHAT_TEMPERATURE=0
+    CHAT_TEMPERATURE=0 \
+    CHAT_REASONING_EFFORT=low \
+    CHAT_FAST_REASONING_EFFORT=minimal
 WORKDIR /app/back
 RUN useradd --create-home --shell /usr/sbin/nologin appuser
 COPY --from=backend-builder /usr/local /usr/local
