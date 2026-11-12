@@ -97,16 +97,22 @@ jobs:
              docker compose up -d
              docker image prune -f'
 
+      # Consulta o /health dentro do proprio container: pelo Caddy, um
+      # SITE_ADDRESS com dominio responderia redirecionamento para HTTPS e o
+      # teste passaria sem nunca tocar a aplicacao.
       - name: Conferir /health
         run: |
           ssh -i ~/.ssh/id_ed25519 \
             "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
-            'for i in $(seq 1 30); do
-               if curl -fsS http://127.0.0.1/health >/dev/null; then
+            'cd /opt/titasbot
+             for i in $(seq 1 30); do
+               if docker compose exec -T app python -c \
+                   "import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8080/health\", timeout=5)" \
+                   >/dev/null 2>&1; then
                  echo "OK: aplicacao respondendo"; exit 0
                fi
                sleep 10
              done
              echo "A aplicacao nao respondeu em /health" >&2
-             docker compose -f /opt/titasbot/docker-compose.yml logs --tail 50 app >&2
+             docker compose logs --tail 60 app >&2
              exit 1'
