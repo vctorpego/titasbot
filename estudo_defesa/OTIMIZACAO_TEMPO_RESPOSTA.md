@@ -10,7 +10,7 @@ publicado em <https://vps73870.publiccloud.com.br>.
 |---|---|---|
 | Tempo mediano (bancada, 12 perguntas) | **56,8 s** | **~15–18 s** |
 | Pior caso (bancada) | 103,7 s | ~26 s |
-| **Produção, as mesmas 12 perguntas** | perguntas abertas em 81–96 s | **mediana 16,1 s, máx. 23,0 s** |
+| **Produção, as mesmas 12 perguntas** (2 rodadas) | perguntas abertas em 81–96 s | **mediana 16–18 s, máx. 25 s** |
 | "O que são os Titãs da Robótica?" | 68 s, 1.812 caracteres | 13 s, ~580 caracteres |
 | Atalhos da tela inicial falhando com "não encontrei" | aleatório (seu print) | 0 de 12 execuções |
 | "Liste os patrocinadores" | 0 de 14 sempre | 14 de 14 em parte das execuções |
@@ -145,9 +145,10 @@ Itens da referência que cada resposta acerta, várias execuções:
 
 Atalhos da tela inicial, 3 execuções cada: **0 falhas em 12**, entre 12 e 22 s.
 
-**Em produção** (site real, depois do deploy): classificações 7/9 e
-orientadores 7/8 — iguais ao baseline —, nenhuma palavra sem acento, nenhum
-título "Resumo"/"Fatos" e nenhum vazamento da regra sobre Asimov. A lista de
+**Em produção** (site real, duas rodadas depois do deploy): classificações
+7/9 e **9/9**, orientadores 7/8 nas duas, patrocinadores 0/14 e **14/14**.
+Nenhuma palavra sem acento, nenhum título "Resumo"/"Fatos" e nenhum
+vazamento da regra sobre Asimov. A lista de
 tecnologias trouxe LEGO EV3, Spike Prime, Arduino, Raspberry Pi e impressão
 3D, como a referência.
 
