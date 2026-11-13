@@ -5,11 +5,13 @@ name: Deploy producao
 on:
   push:
     branches: [main]
-    # Documentacao e material da defesa nao entram na imagem: nao ha por que
-    # rebuildar e reiniciar a producao por eles.
+    # Documentacao, material da defesa e a stack da VPS (compose, Caddyfile,
+    # .env.example -- aplicados a mao no servidor) nao entram na imagem: nao
+    # ha por que rebuildar e reiniciar a producao por eles.
     paths-ignore:
       - "**/*.md"
       - "estudo_defesa/**"
+      - "deploy/vps/**"
   workflow_dispatch:
 
 # Nunca dois deploys ao mesmo tempo no mesmo servidor.

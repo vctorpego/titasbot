@@ -2,7 +2,7 @@
 
 Trabalho feito enquanto você dormia: medir onde o tempo ia, descobrir por que
 as respostas estavam grandes, corrigir e validar. Tudo commitado na `main` e
-publicado em <https://vps73870.publiccloud.com.br>.
+publicado em <https://titasbot.duckdns.org>.
 
 ## Resumo
 
@@ -190,6 +190,9 @@ Todas já existiam no baseline **e** no seu estudo de setembro:
 
 ## Para o dia da defesa
 
+- **Endereço: <https://titasbot.duckdns.org>.** Se ele não abrir (o DuckDNS
+  é um serviço gratuito de terceiros), use a reserva
+  <https://vps73870.publiccloud.com.br> — é o mesmo servidor.
 - **Não faça push na `main` durante a apresentação.** Cada deploy recria o
   container e o site fica ~15 s fora do ar (vi dois erros 502 durante um
   deploy). Mudanças só em `.md` ou em `estudo_defesa/` não disparam mais

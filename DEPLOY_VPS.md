@@ -1,6 +1,7 @@
 # Deploy do TitasBot na VPS (Locaweb)
 
-**No ar em <https://vps73870.publiccloud.com.br>.**
+**No ar em <https://titasbot.duckdns.org>** — reserva:
+<https://vps73870.publiccloud.com.br> (mesmo servidor).
 
 Substitui o deploy no Cloud Run (`DEPLOY_GCP.md`), que no plano gratuito ficava
 lento e instavel.
@@ -108,14 +109,25 @@ docker compose -f /opt/titasbot/docker-compose.yml restart app
 
 ## Dominio e HTTPS
 
-HTTPS esta ativo em `vps73870.publiccloud.com.br`, o proprio hostname da
-Locaweb: ele ja resolve publicamente, entao o Caddy obteve o certificado
-Let's Encrypt por ACME (tls-alpn-01) e renova sozinho. Nao foi preciso comprar
-dominio.
+O site atende dois nomes, cada um com certificado Let's Encrypt proprio,
+emitido e renovado pelo Caddy:
 
-Para trocar por um dominio proprio: aponte o DNS para 191.252.109.57, edite
-`SITE_ADDRESS` no `/opt/titasbot/.env` e rode `docker compose up -d`.
-`SITE_ADDRESS=:80` volta para HTTP puro no IP.
+- **`titasbot.duckdns.org`** — endereco principal. Subdominio gratuito do
+  DuckDNS (conta Google do autor), com registro A para 191.252.109.57. O IP
+  da VPS e fixo, entao nao ha atualizador dinamico rodando. Para mudar o IP:
+  painel do duckdns.org, campo "current ip", "update ip".
+- **`vps73870.publiccloud.com.br`** — hostname da Locaweb. Nao pode ser
+  renomeado (o dominio e da Locaweb; no painel o campo nao e editavel), mas
+  continua valendo como reserva se o DuckDNS cair.
+
+Os dois vem de `SITE_ADDRESS` no `/opt/titasbot/.env`, separados por virgula.
+Para trocar ou adicionar um nome (um dominio proprio, um subdominio do Ifes):
+aponte o DNS para 191.252.109.57, edite `SITE_ADDRESS` e rode
+`docker compose up -d proxy`. `SITE_ADDRESS=:80` volta para HTTP puro no IP.
+
+Depois de criar um nome novo, alguns minutos de "nao encontrado" sao normais:
+resolvedores que consultaram o nome antes de ele existir guardam a resposta
+negativa por um tempo.
 
 ## Tempo de resposta
 
